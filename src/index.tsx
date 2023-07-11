@@ -1,8 +1,8 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
-import "./App.scss";
+const Name = 'Shayan';
 
-const el = document.getElementById("app");
+const main = () => {
+  console.log(Name);
+};
 
-ReactDOM.render(<App />, el);
+
+main();
