@@ -42,11 +42,6 @@ module.exports = {
           },
         ],
       },
-      // {
-      //   test: /\.(ts|tsx)$/,
-      //   exclude: /node_modules/,
-      //   use: ['ts-loader'],
-      // },
       {
         test: /\.(sa|sc|c)ss$/, // styles files
         use: ['style-loader', 'css-loader', 'sass-loader'],
