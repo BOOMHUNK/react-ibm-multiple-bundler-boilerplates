@@ -1,8 +1,8 @@
-const Name = 'Shayan';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import "./App.scss";
 
-const main = () => {
-  console.log(Name);
-};
+const el = document.getElementById("app");
 
-
-main();
+ReactDOM.render(<App />, el);
