@@ -4,7 +4,7 @@
   "description": "A sample react project boilerplate, configured to use typescript, sass, and babel, using webpack 5",
   "main": "src/index.js",
   "scripts": {
-    "dev": "webpack serve --mode development --env=development",
+    "dev": "webpack serve --mode development",
     "build": "webpack --mode production"
   },
   "repository": {
@@ -35,9 +35,19 @@
     "@types/node": "^20.4.1",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
     "babel-loader": "^9.1.3",
     "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.8.1",
+    "dotenv": "^16.3.1",
+    "eslint": "^8.44.0",
+    "eslint-config-standard-with-typescript": "^36.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.7.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-webpack-plugin": "^4.0.1",
     "html-webpack-plugin": "^5.5.3",
     "mini-css-extract-plugin": "^2.7.6",
     "postcss-loader": "^7.3.3",

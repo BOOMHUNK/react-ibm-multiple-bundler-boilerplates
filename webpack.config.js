@@ -1,9 +1,15 @@
+const dotenv = require('dotenv');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const ESLintPlugin = require('eslint-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+dotenv.config();
 
-const { DEV, DEBUG } = process.env;
+const DEV = process.env.DEV === 'true';
+const DEBUG = process.env.DEBUG === 'true';
+
 process.env.BABEL_ENV = DEV ? 'development' : 'production';
 process.env.NODE_ENV = DEV ? 'development' : 'production';
 
@@ -14,13 +20,12 @@ module.exports = {
   entry: './src/index.tsx',
   output: {
     path: path.join(__dirname, 'dist'), // the bundle output path
-    filename: 'bundle.js', // the name of the bundle
-    publicPath: '/',
+    filename: 'js/[name].[contenthash].bundle.js', // the name of the bundle
+    publicPath: 'auto',
   },
   devServer: {
     port: 3000, // you can change the port
-    hot: true,
-    open: true,
+    // static: path.join(__dirname, 'public'),
   },
   // proxy: {
   //   '/api': 'http://localhost:3000',
@@ -66,8 +71,12 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/i,
-        type: "asset",
+        type: 'asset',
+        generator: {
+          filename: 'static/images/[hash][ext][query]'
+        }
       },
+
     ],
   },
   resolve: {
@@ -78,11 +87,17 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.jsx', '.js'],
   },
   plugins: [
-    new MiniCssExtractPlugin(),
+    new ESLintPlugin(),
     new HtmlWebpackPlugin({
       template: 'src/index.html', // to import index.html file inside index.js
       // favicon:"./src/assets/img/logo.ico",    
     }),
     new CleanWebpackPlugin(),
+    new MiniCssExtractPlugin({ filename: 'styles/[name].[contenthash].css', }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'public', to: './' },
+      ],
+    }),
   ],
 };
