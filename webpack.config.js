@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const { DEV, DEBUG } = process.env;
 process.env.BABEL_ENV = DEV ? 'development' : 'production';
@@ -14,10 +15,17 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'), // the bundle output path
     filename: 'bundle.js', // the name of the bundle
+    publicPath: '/',
   },
   devServer: {
     port: 3000, // you can change the port
+    hot: true,
+    open: true,
   },
+  // proxy: {
+  //   '/api': 'http://localhost:3000',
+  //   changeOrigin: true,
+  // },
   module: {
     rules: [
       {
@@ -44,22 +52,36 @@ module.exports = {
       },
       {
         test: /\.(sa|sc|c)ss$/, // styles files
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: ['style-loader',
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: "/",
+              esModule: false,
+            },
+          }
+          , 'css-loader',
+          "postcss-loader",
+          'sass-loader'],
       },
       {
-        test: /\.(png|woff|woff2|eot|ttf|svg)$/, // to import images and fonts
-        loader: 'url-loader',
-        options: { limit: false },
+        test: /\.(png|jpe?g|gif|svg)$/i,
+        type: "asset",
       },
     ],
   },
   resolve: {
+    alias: {
+      // components: path.resolve(__dirname, 'src/components'),
+    },
     modules: ['node_modules'],
     extensions: ['.tsx', '.ts', '.jsx', '.js'],
   },
   plugins: [
+    new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       template: 'src/index.html', // to import index.html file inside index.js
+      // favicon:"./src/assets/img/logo.ico",    
     }),
     new CleanWebpackPlugin(),
   ],

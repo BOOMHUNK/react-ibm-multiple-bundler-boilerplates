@@ -4,7 +4,7 @@
   "description": "A sample react project boilerplate, configured to use typescript, sass, and babel, using webpack 5",
   "main": "src/index.js",
   "scripts": {
-    "dev": "webpack serve --mode development",
+    "dev": "webpack serve --mode development --env=development",
     "build": "webpack --mode production"
   },
   "repository": {
@@ -39,6 +39,8 @@
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.8.1",
     "html-webpack-plugin": "^5.5.3",
+    "mini-css-extract-plugin": "^2.7.6",
+    "postcss-loader": "^7.3.3",
     "sass": "^1.63.6",
     "sass-loader": "^13.3.2",
     "style-loader": "^3.3.3",
