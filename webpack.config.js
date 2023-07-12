@@ -19,7 +19,7 @@ module.exports = {
 
   entry: './src/index.tsx',
   output: {
-    path: path.join(__dirname, 'dist'), // the bundle output path
+    path: path.join(__dirname, 'build'), // the bundle output path
     filename: 'js/[name].[contenthash].bundle.js', // the name of the bundle
     publicPath: 'auto',
   },
