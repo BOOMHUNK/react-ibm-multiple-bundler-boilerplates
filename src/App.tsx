@@ -1,11 +1,15 @@
 import React from 'react'
+import { Button, Content } from '@carbon/react'
+import TutorialHeader from './components/TutorialHeader/TutorialHeader'
 
 const App = (): JSX.Element => {
   return (
-    <div>
-      <img src="/images/calendar-icon.svg" />
-      <h1>t</h1>
-    </div>
+    <>
+      <TutorialHeader />
+      <Content>
+        <Button>Button</Button>
+      </Content>
+    </>
   )
 }
 

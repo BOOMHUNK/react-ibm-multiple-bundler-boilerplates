@@ -1,0 +1,8 @@
+# Ignore built files except build/index.js
+**/node_modules/*
+node_modules/
+
+webpack.config.js
+dist/
+build/
+out/
