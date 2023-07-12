@@ -29,6 +29,7 @@
     "@carbon/ibm-products": "^2.3.2",
     "@carbon/react": "^1.33.2",
     "@types/carbon-components-react": "^7.55.2",
+    "eslint-config-standard": "^17.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

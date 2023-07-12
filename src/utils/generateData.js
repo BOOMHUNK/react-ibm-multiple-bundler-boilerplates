@@ -55,7 +55,6 @@ const lastNames = [
   'Nosebleeder'
 ]
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const range = (len) => {
   const arr = []
   for (let i = 0; i < len; i++) {
@@ -64,9 +63,8 @@ const range = (len) => {
   return arr
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const newPet = (extraColumns) => {
-  const extraDataProps = (Boolean(extraColumns)) && {
+  const extraDataProps = Boolean(extraColumns) && {
     ownerName: petNames[Math.floor(Math.random() * petNames.length)],
     weight: Math.floor(Math.random() * 40)
   }
@@ -78,7 +76,7 @@ const newPet = (extraColumns) => {
     visits: Math.floor(Math.random() * 40),
     health: Math.floor(Math.random() * 100)
   }
-  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+
   if (extraColumns) {
     return {
       ...defaultPet,
@@ -88,9 +86,7 @@ const newPet = (extraColumns) => {
   return defaultPet
 }
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const generateData = ({ rows, extraColumns }) => {
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const makeDataLevel = (depth = 0) => {
     const lens = [rows]
     const len = lens[depth]
