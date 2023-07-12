@@ -1,17 +1,17 @@
-const dotenv = require('dotenv');
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const ESLintPlugin = require('eslint-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-dotenv.config();
+const dotenv = require('dotenv')
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const ESLintPlugin = require('eslint-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+dotenv.config()
 
-const DEV = process.env.DEV === 'true';
-const DEBUG = process.env.DEBUG === 'true';
+const DEV = process.env.DEV === 'true'
+const DEBUG = process.env.DEBUG === 'true'
 
-process.env.BABEL_ENV = DEV ? 'development' : 'production';
-process.env.NODE_ENV = DEV ? 'development' : 'production';
+process.env.BABEL_ENV = DEV ? 'development' : 'production'
+process.env.NODE_ENV = DEV ? 'development' : 'production'
 
 module.exports = {
   mode: DEV ? 'development' : 'production',
@@ -21,10 +21,10 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'build'), // the bundle output path
     filename: 'js/[name].[contenthash].bundle.js', // the name of the bundle
-    publicPath: 'auto',
+    publicPath: 'auto'
   },
   devServer: {
-    port: 3000, // you can change the port
+    port: 3000 // you can change the port
     // static: path.join(__dirname, 'public'),
   },
   // proxy: {
@@ -43,17 +43,17 @@ module.exports = {
               presets: [
                 '@babel/preset-env',
                 '@babel/preset-react',
-                '@babel/preset-typescript',
-              ],
-            },
+                '@babel/preset-typescript'
+              ]
+            }
           },
           {
             loader: 'ts-loader',
             options: {
-              transpileOnly: true, // Only perform type checking
-            },
-          },
-        ],
+              transpileOnly: true // Only perform type checking
+            }
+          }
+        ]
       },
       {
         test: /\.(sa|sc|c)ss$/, // styles files
@@ -61,13 +61,13 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              publicPath: "/",
-              esModule: false,
-            },
-          }
-          , 'css-loader',
-          "postcss-loader",
-          'sass-loader'],
+              publicPath: '/',
+              esModule: false
+            }
+          },
+          'css-loader',
+          'postcss-loader',
+          'sass-loader']
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/i,
@@ -75,29 +75,29 @@ module.exports = {
         generator: {
           filename: 'static/images/[hash][ext][query]'
         }
-      },
+      }
 
-    ],
+    ]
   },
   resolve: {
     alias: {
       // components: path.resolve(__dirname, 'src/components'),
     },
     modules: ['node_modules'],
-    extensions: ['.tsx', '.ts', '.jsx', '.js'],
+    extensions: ['.tsx', '.ts', '.jsx', '.js']
   },
   plugins: [
     new ESLintPlugin(),
     new HtmlWebpackPlugin({
-      template: 'src/index.html', // to import index.html file inside index.js
-      // favicon:"./src/assets/img/logo.ico",    
+      template: 'src/index.html' // to import index.html file inside index.js
+      // favicon:"./src/assets/img/logo.ico",
     }),
     new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin({ filename: 'styles/[name].[contenthash].css', }),
+    new MiniCssExtractPlugin({ filename: 'styles/[name].[contenthash].css' }),
     new CopyWebpackPlugin({
       patterns: [
-        { from: 'public', to: './' },
-      ],
-    }),
-  ],
-};
+        { from: 'public', to: './' }
+      ]
+    })
+  ]
+}

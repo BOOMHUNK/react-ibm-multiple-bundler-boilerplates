@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react'
 
-const App = () => {
+const App = (): JSX.Element => {
   return (
     <div>
       <img src="/images/calendar-icon.svg" />
       <h1>t</h1>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App
