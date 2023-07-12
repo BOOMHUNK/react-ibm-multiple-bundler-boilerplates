@@ -22,10 +22,10 @@ module.exports = {
   mode: DEV ? 'development' : 'production',
   devtool: DEV ? 'source-map' : false,
 
-  entry: './src/index.tsx',
+  entry: ['./src/config.js', './src/index.tsx'],
   output: {
     path: path.join(__dirname, 'build'), // the bundle output path
-    filename: 'js/[name].[contenthash].bundle.js', // the name of the bundle
+    filename: 'js/bundle.js', // the name of the bundle
     publicPath: 'auto',
   },
   devServer: {
@@ -111,6 +111,8 @@ module.exports = {
   resolve: {
     alias: {
       // components: path.resolve(__dirname, 'src/components'),
+      'react/jsx-dev-runtime': 'react/jsx-dev-runtime.js',
+      'react/jsx-runtime.js': 'react/jsx-runtime',
     },
     modules: ['node_modules'],
     extensions: ['.tsx', '.ts', '.jsx', '.js'],

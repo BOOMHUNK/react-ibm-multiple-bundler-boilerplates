@@ -15,10 +15,10 @@ import {
 } from '@carbon/react'
 import { Switcher, Notification, UserAvatar } from '@carbon/react/icons'
 
-const TutorialHeader = (): JSX.Element => (
+const MyHeader = (): JSX.Element => (
   <HeaderContainer
     render={({ isSideNavExpanded, onClickSideNavExpand }) => (
-      <Header aria-label="Carbon Tutorial">
+      <Header aria-label="Carbon Header">
         <SkipToContent />
         <HeaderMenuButton
           aria-label="Open menu"
@@ -26,9 +26,9 @@ const TutorialHeader = (): JSX.Element => (
           isActive={isSideNavExpanded}
         />
         <HeaderName href="/" prefix="IBM">
-          Carbon Tutorial
+          Carbon Header
         </HeaderName>
-        <HeaderNavigation aria-label="Carbon Tutorial">
+        <HeaderNavigation aria-label="Carbon Header">
           <HeaderMenuItem href="/repos">Repositories</HeaderMenuItem>
         </HeaderNavigation>
         <SideNav
@@ -64,4 +64,4 @@ const TutorialHeader = (): JSX.Element => (
   />
 )
 
-export default TutorialHeader
+export default MyHeader
