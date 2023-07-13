@@ -22,7 +22,10 @@ module.exports = {
   mode: DEV ? 'development' : 'production',
   devtool: DEV ? 'source-map' : false,
 
-  entry: ['./src/config.js', './src/index.tsx'],
+  entry: [
+    './src/config.js',
+    './src/index.js',
+  ],
   output: {
     path: path.join(__dirname, 'build'), // the bundle output path
     filename: 'js/bundle.js', // the name of the bundle
