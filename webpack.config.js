@@ -20,7 +20,6 @@ process.env.NODE_ENV = DEV ? 'development' : 'production';
 
 console.log('Is Dev --------------------------> ', DEV);
 
-
 module.exports = {
   mode: DEV ? 'development' : 'production',
   devtool: DEV ? 'source-map' : false,
@@ -102,9 +101,29 @@ module.exports = {
               esModule: false,
             },
           },
-          'css-loader',
-          'postcss-loader',
-          'sass-loader',
+          'cache-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: DEV,
+            },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: DEV,
+            },
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: DEV,
+              sassOptions: {
+                hmr: true,
+                modules: true,
+              },
+            },
+          },
         ],
       },
       {
