@@ -7,3 +7,4 @@ declare module '@carbon/react' {
 }
 declare module '@carbon/react/icons';
 declare module '@carbon/ibm-products';
+declare module '@carbon/ibmdotcom-react';

@@ -4,8 +4,8 @@
   "description": "A sample react project boilerplate, configured to use typescript, sass, and babel, using webpack 5",
   "main": "src/index.js",
   "scripts": {
-    "dev": "webpack serve --mode development",
-    "build": "webpack --mode production",
+    "dev": "webpack serve --env DEV=true",
+    "build": "webpack --env DEV=false",
     "lint": "eslint .",
     "lint:fix": "eslint  --fix --ext .js,.jsx,.ts,.tsx ."
   },
@@ -27,9 +27,12 @@
   "homepage": "https://github.com/BOOMHUNK/react-ts-sass-webpack5#readme",
   "dependencies": {
     "@carbon/ibm-products": "^2.3.2",
+    "@carbon/ibmdotcom-react": "^1.48.0",
+    "@carbon/ibmdotcom-styles": "^1.48.0",
     "@carbon/react": "^1.33.2",
     "@types/carbon-components-react": "^7.55.2",
     "eslint-config-standard": "^17.1.0",
+    "process": "^0.11.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

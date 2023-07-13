@@ -3,9 +3,7 @@
 @use '@carbon/react';
 
 @use '@carbon/type';
-@use "@carbon/colors";
-
-@use './components/TutorialHeader/tutorial-header';
+@use '@carbon/colors';
 
 $feature-flags: (
   ui-shell: true,
@@ -13,7 +11,12 @@ $feature-flags: (
   enable-css-custom-properties: true,
 );
 
-.helper-text {
-  @include type.type-style('helper-text-01');
-  margin-bottom: 1rem;
-}
+@use './components/TutorialHeader/tutorial-header';
+@import '@carbon/ibmdotcom-styles/scss/components/Masthead/Masthead';
+// ---------------------------------------------
+
+
+// .helper-text {
+//   @include type.type-style('helper-text-01');
+//   margin-bottom: 1rem;
+// }

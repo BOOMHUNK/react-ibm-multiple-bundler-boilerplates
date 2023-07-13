@@ -1,5 +1,7 @@
 const dotenv = require('dotenv');
 const path = require('path');
+
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -8,27 +10,19 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 dotenv.config();
 
 const DEV = process.env.DEV === 'true';
-const DEBUG = process.env.DEBUG === 'true';
 
 process.env.BABEL_ENV = DEV ? 'development' : 'production';
 process.env.NODE_ENV = DEV ? 'development' : 'production';
 
-const useStyleSourceMap =
-  process.env.CARBON_REACT_STORYBOOK_USE_STYLE_SOURCEMAP === 'true';
-
-const useRtl = process.env.CARBON_REACT_STORYBOOK_USE_RTL === 'true';
-
 module.exports = {
   mode: DEV ? 'development' : 'production',
   devtool: DEV ? 'source-map' : false,
+  cache: DEV ? { type: 'memory' } : false,
 
-  entry: [
-    './src/config.js',
-    './src/index.js',
-  ],
+  entry: ['./src/polifills.js', './src/config.js', './src/index.js'],
   output: {
     path: path.join(__dirname, 'build'), // the bundle output path
-    filename: 'js/bundle.js', // the name of the bundle
+    filename: 'js/[name].[contenthash].bundle.js', // the name of the bundle
     publicPath: 'auto',
   },
   devServer: {
@@ -48,6 +42,8 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
+              cacheCompression: false,
+              cacheDirectory: true,
               presets: [
                 '@babel/preset-env',
                 '@babel/preset-react',
@@ -76,14 +72,11 @@ module.exports = {
           },
           'css-loader',
           'postcss-loader',
+
           {
             loader: 'sass-loader',
             options: {
-              additionalData: `
-                $feature-flags: (
-                  ui-shell: true,
-                );
-              `,
+              sourceMap: true,
             },
           },
         ],
@@ -121,7 +114,13 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.jsx', '.js'],
   },
   plugins: [
-    new ESLintPlugin(),
+    // new webpack.ProvidePlugin({
+    //   '@carbon/icons-react': {
+    //     'import': ['@carbon/icons-react-11', 'default'], // For @carbon/react
+    //     'fallback': '@carbon/icons-react-v10' // For @carbon/ibmdotcom-react
+    //   }
+    // }),
+    new ESLintPlugin({ cache: true }),
     new HtmlWebpackPlugin({
       template: 'src/index.html', // to import index.html file inside index.js
       // favicon:"./src/assets/img/logo.ico",
