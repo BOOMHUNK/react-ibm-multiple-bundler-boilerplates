@@ -6,5 +6,6 @@ declare module '@carbon/react' {
   export = Types
 }
 declare module '@carbon/react/icons';
+declare module 'carbon-for-ibm-cloud';
 declare module '@carbon/ibm-products';
 declare module '@carbon/ibmdotcom-react';

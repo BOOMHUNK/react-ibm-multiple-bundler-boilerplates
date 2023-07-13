@@ -3,6 +3,8 @@ import { Button, Content, Stack } from '@carbon/react'
 import MyHeader from './components/TutorialHeader/MyHeader'
 import { generateData } from './utils/generateData'
 import { ExpressiveCard, Datagrid, useDatagrid } from '@carbon/ibm-products'
+import { Card } from 'carbon-for-ibm-cloud'
+import './app.scss'
 
 const App = (): JSX.Element => {
   const defaultHeader: any[] = [
@@ -61,11 +63,15 @@ const App = (): JSX.Element => {
     <>
       <MyHeader />
       <Content>
+        <Card>Example Card from carbon-for-ibm-cloud module</Card>
         <Datagrid datagridState={{ ...datagridState }} />
         <ExpressiveCard>
           <Stack gap={6}>
-            <span>Content belongs here.</span>
-            <span className="helper-text">This font is the helper font</span>
+            <span>The Stack is from @carbon-react module</span>
+            <span className="helper-text">
+              The ExpressiveCard and Datagrid below are from
+              @carbon/ibm-products module
+            </span>
           </Stack>
           <Button>Card Button</Button>
         </ExpressiveCard>

@@ -7,6 +7,10 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
+
+const { EsbuildPlugin } = require('esbuild-loader');
+
 dotenv.config();
 
 const DEV = process.env.DEV === 'true';
@@ -14,10 +18,13 @@ const DEV = process.env.DEV === 'true';
 process.env.BABEL_ENV = DEV ? 'development' : 'production';
 process.env.NODE_ENV = DEV ? 'development' : 'production';
 
+console.log('Is Dev --------------------------> ', DEV);
+
+
 module.exports = {
   mode: DEV ? 'development' : 'production',
   devtool: DEV ? 'source-map' : false,
-  cache: DEV ? { type: 'memory' } : false,
+  // cache: DEV ? { type: 'memory' } : false,
 
   entry: ['./src/config.js', './src/index.js'],
   output: {
@@ -27,6 +34,7 @@ module.exports = {
   },
   devServer: {
     port: 3000, // you can change the port
+    compress: true,
     // static: path.join(__dirname, 'public'),
   },
   // proxy: {
@@ -35,34 +43,58 @@ module.exports = {
   // },
   module: {
     rules: [
+      // {
+      //   test: /\.(ts|tsx|js|jsx)$/,
+      //   exclude: /node_modules/,
+      //   use: [
+      //     {
+      //       loader: 'babel-loader',
+      //       options: {
+      //         cacheCompression: false,
+      //         cacheDirectory: true,
+      //         presets: [
+      //           '@babel/preset-env',
+      //           '@babel/preset-react',
+      //           '@babel/preset-typescript',
+      //         ],
+      //       },
+      //     },
+      //   ],
+      // },
       {
-        test: /\.(ts|tsx|js|jsx)$/,
+        // Match js, jsx, ts & tsx files
+        test: /\.[jt]sx?$/,
+        loader: 'esbuild-loader',
         exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              cacheCompression: false,
-              cacheDirectory: true,
-              presets: [
-                '@babel/preset-env',
-                '@babel/preset-react',
-                '@babel/preset-typescript',
-              ],
-            },
-          },
-          // {
-          //   loader: 'ts-loader',
-          //   options: {
-          //     transpileOnly: true,
-          //   },
-          // },
-        ],
+        options: {
+          loader: 'tsx',
+          target: 'es2015', // JavaScript version to compile to
+        },
       },
+      // {
+      //   // Match ts & tsx files
+      //   test: /\.[t]sx?$/,
+      //   loader: 'esbuild-loader',
+      //   exclude: /node_modules/,
+      //   options: {
+      //     loader: 'tsx',
+      //     target: 'es2015', // JavaScript version to compile to
+      //   },
+      // },
+      // {
+      //   // Match js, jsx files
+      //   test: /\.[j]sx?$/,
+      //   loader: 'esbuild-loader',
+      //   exclude: /node_modules/,
+      //   options: {
+      //     loader: 'jsx',
+      //     target: 'es2015', // JavaScript version to compile to
+      //   },
+      // },
       {
         test: /\.(sa|sc|c)ss$/, // styles files
         use: [
-          'style-loader',
+          // 'style-loader',
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
@@ -98,6 +130,7 @@ module.exports = {
       },
     ],
   },
+
   resolve: {
     alias: {
       // components: path.resolve(__dirname, 'src/components'),
@@ -107,6 +140,44 @@ module.exports = {
     modules: ['node_modules'],
     extensions: ['.tsx', '.ts', '.jsx', '.js'],
   },
+  optimization: {
+    minimizer: [
+      new EsbuildPlugin({
+        target: 'es2015', // Syntax to compile to (see options below for possible values)
+        css: true, // Apply minification to CSS assets
+      }),
+    ],
+    splitChunks: {
+      chunks: 'all',
+      minSize: 10000,
+      maxSize: 24000,
+      minChunks: 1,
+      enforceSizeThreshold: 24000,
+      cacheGroups: {
+        // styles: {
+        //   name: 'styles',
+        //   type: 'css/mini-extract',
+        //   chunks: 'all',
+        //   enforce: true,
+        // },
+        vendors: {
+          name: 'vendors',
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
+        },
+      },
+    },
+  },
+  performance: {
+    // hints: DEV ? 'warning' : false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000,
+  },
   plugins: [
     // new webpack.ProvidePlugin({
     //   '@carbon/icons-react': {
@@ -115,14 +186,21 @@ module.exports = {
     //   }
     // }),
     new ESLintPlugin({ cache: true }),
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: 'src/index.html', // to import index.html file inside index.js
       // favicon:"./src/assets/img/logo.ico",
     }),
-    new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin({ filename: 'styles/[name].[contenthash].css' }),
+    new MiniCssExtractPlugin({
+      filename: 'styles/[name].[contenthash].css',
+      chunkFilename: 'styles/[name].[contenthash].chunk.css',
+      ignoreOrder: true,
+    }),
     new CopyWebpackPlugin({
       patterns: [{ from: 'public', to: './' }],
+    }),
+    new CompressionPlugin({
+      threshold: 10240,
     }),
   ],
 };
