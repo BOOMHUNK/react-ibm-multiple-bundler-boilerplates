@@ -19,7 +19,7 @@ module.exports = {
   devtool: DEV ? 'source-map' : false,
   cache: DEV ? { type: 'memory' } : false,
 
-  entry: ['./src/polifills.js', './src/config.js', './src/index.js'],
+  entry: ['./src/config.js', './src/index.js'],
   output: {
     path: path.join(__dirname, 'build'), // the bundle output path
     filename: 'js/[name].[contenthash].bundle.js', // the name of the bundle
@@ -51,12 +51,12 @@ module.exports = {
               ],
             },
           },
-          {
-            loader: 'ts-loader',
-            options: {
-              transpileOnly: true, // Only perform type checking
-            },
-          },
+          // {
+          //   loader: 'ts-loader',
+          //   options: {
+          //     transpileOnly: true,
+          //   },
+          // },
         ],
       },
       {
@@ -72,13 +72,7 @@ module.exports = {
           },
           'css-loader',
           'postcss-loader',
-
-          {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: true,
-            },
-          },
+          'sass-loader',
         ],
       },
       {
