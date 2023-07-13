@@ -4,8 +4,7 @@ import MyHeader from './components/TutorialHeader/MyHeader'
 import { generateData } from './utils/generateData'
 import { ExpressiveCard, Datagrid, useDatagrid } from '@carbon/ibm-products'
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-const App = () => {
+const App = (): JSX.Element => {
   const defaultHeader: any[] = [
     // {
     //   Header: 'Row Index',
