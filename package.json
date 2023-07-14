@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
+    "tscbuild": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint  --fix --ext .js,.jsx,.ts,.tsx .",
     "preview": "vite preview"

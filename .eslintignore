@@ -3,7 +3,7 @@
 node_modules/
 
 polifills.js
-webpack.config.js
+vite.config.ts
 dist/
 build/
 out/
