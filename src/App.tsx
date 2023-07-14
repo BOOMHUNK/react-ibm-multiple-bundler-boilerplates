@@ -10,41 +10,40 @@ const App = (): JSX.Element => {
   const defaultHeader: any[] = [
     {
       Header: 'Row Index',
-      accessor: (row, i) => i,
+      accessor: (row: Record<string, any>, i: number) => i,
       sticky: 'left',
-      id: 'rowIndex' // id is required when accessor is a function.
+      id: 'rowIndex', // id is required when accessor is a function.
     },
     {
       Header: 'Pet type',
-      accessor: 'petType'
+      accessor: 'petType',
     },
     {
       Header: 'First Name',
       accessor: 'firstName',
-      sticky: 'left'
+      sticky: 'left',
     },
     {
       Header: 'Last Name',
-      accessor: 'lastName'
+      accessor: 'lastName',
     },
     {
       Header: 'Age',
       accessor: 'age',
-      width: 50
+      width: 50,
     },
     {
       Header: 'Vet Visits',
       accessor: 'visits',
-      width: 60
+      width: 60,
     },
     {
       Header: 'Health',
       accessor: 'health',
-      // eslint-disable-next-line react/prop-types
-      Cell: ({ cell: { value } }) => (
+      Cell: ({ cell: { value } }: Record<string, any>) => (
         <span className="custom-cell-wrapper">{value}</span>
-      )
-    }
+      ),
+    },
   ];
 
   const columns = React.useMemo(() => [...defaultHeader], []); // These are the columns that will be used by the datagrid
