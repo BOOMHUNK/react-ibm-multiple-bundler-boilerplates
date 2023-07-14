@@ -3,8 +3,8 @@ import esbuild from 'esbuild'
 import inlineImagePlugin from 'esbuild-plugin-inline-image'
 import { sassPlugin } from '@jgoz/esbuild-plugin-sass'
 
+import { copy } from 'esbuild-plugin-copy'
 import { clean } from 'esbuild-plugin-clean'
-import copyStaticFiles from 'esbuild-copy-static-files'
 
 esbuild
   .build({
@@ -31,14 +31,19 @@ esbuild
       }),
       inlineImagePlugin(),
       sassPlugin(),
-      copyStaticFiles({
-        src: './public',
-        dest: './build/public'
-      }),
-      copyStaticFiles({
-        src: './src/index.html',
-        dest: './build/index.html'
+      copy({
+        assets: [
+          {
+            from: ['./src/index.html'],
+            to: ['../index.html']
+          },
+          {
+            from: ['./public/**/*'],
+            to: ['../']
+          }
+        ]
       })
+
     ]
   })
   .catch(() => process.exit(1))
