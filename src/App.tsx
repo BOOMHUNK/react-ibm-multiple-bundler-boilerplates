@@ -8,43 +8,43 @@ import './app.scss';
 
 const App = (): JSX.Element => {
   const defaultHeader: any[] = [
-    // {
-    //   Header: 'Row Index',
-    //   accessor: (row, i) => i,
-    //   sticky: 'left',
-    //   id: 'rowIndex' // id is required when accessor is a function.
-    // },
-    // {
-    //   Header: 'Pet type',
-    //   accessor: 'petType'
-    // },
-    // {
-    //   Header: 'First Name',
-    //   accessor: 'firstName',
-    //   sticky: 'left'
-    // },
-    // {
-    //   Header: 'Last Name',
-    //   accessor: 'lastName'
-    // },
-    // {
-    //   Header: 'Age',
-    //   accessor: 'age',
-    //   width: 50
-    // },
-    // {
-    //   Header: 'Vet Visits',
-    //   accessor: 'visits',
-    //   width: 60
-    // },
-    // {
-    //   Header: 'Health',
-    //   accessor: 'health',
-    //   // eslint-disable-next-line react/prop-types
-    //   Cell: ({ cell: { value } }) => (
-    //     <span className="custom-cell-wrapper">{value}</span>
-    //   )
-    // }
+    {
+      Header: 'Row Index',
+      accessor: (row, i) => i,
+      sticky: 'left',
+      id: 'rowIndex' // id is required when accessor is a function.
+    },
+    {
+      Header: 'Pet type',
+      accessor: 'petType'
+    },
+    {
+      Header: 'First Name',
+      accessor: 'firstName',
+      sticky: 'left'
+    },
+    {
+      Header: 'Last Name',
+      accessor: 'lastName'
+    },
+    {
+      Header: 'Age',
+      accessor: 'age',
+      width: 50
+    },
+    {
+      Header: 'Vet Visits',
+      accessor: 'visits',
+      width: 60
+    },
+    {
+      Header: 'Health',
+      accessor: 'health',
+      // eslint-disable-next-line react/prop-types
+      Cell: ({ cell: { value } }) => (
+        <span className="custom-cell-wrapper">{value}</span>
+      )
+    }
   ];
 
   const columns = React.useMemo(() => [...defaultHeader], []); // These are the columns that will be used by the datagrid
