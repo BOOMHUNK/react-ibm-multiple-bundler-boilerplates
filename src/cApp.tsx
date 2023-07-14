@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Content, Stack } from '@carbon/react'
 import MyHeader from './components/TutorialHeader/MyHeader'
-import { generateData } from './utils/generateData'
+// import { generateData } from './utils/generateData'
 import { ExpressiveCard, Datagrid, useDatagrid } from '@carbon/ibm-products'
 import { CTA } from '@carbon/ibmdotcom-react'
 

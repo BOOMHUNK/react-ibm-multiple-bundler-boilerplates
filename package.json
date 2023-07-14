@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "webpack serve",
-    "build": "webpack",
+    "build": "node esbuild.config.js --watch",
     "lint": "eslint .",
     "lint:fix": "eslint  --fix --ext .js,.jsx,.ts,.tsx ."
   },
@@ -32,14 +32,19 @@
     "carbon-for-ibm-cloud": "^0.1.4",
     "eslint-config-standard": "^17.1.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "remove": "^0.1.5"
   },
   "devDependencies": {
+    "@jgoz/esbuild-plugin-sass": "^2.0.4",
     "@types/node": "^20.4.1",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "dotenv": "^16.3.1",
+    "esbuild": "^0.18.12",
+    "esbuild-plugin-clean": "^1.0.1",
+    "esbuild-plugin-inline-image": "^0.0.9",
     "eslint": "^8.44.0",
     "eslint-config-standard-with-typescript": "^36.0.0",
     "eslint-plugin-import": "^2.27.5",
@@ -48,5 +53,6 @@
     "eslint-plugin-react": "^7.32.2",
     "sass": "^1.63.6",
     "typescript": "^5.1.6"
-  }
+  },
+  "type": "module"
 }
