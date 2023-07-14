@@ -77,7 +77,7 @@ const App = (): JSX.Element => {
         />
         <Datagrid datagridState={{ ...datagridState }} />
         <ExpressiveCard>
-          <Stack gap={6}>
+          <Stack gap={6} >
             <span>Content belongs here.</span>
             <span className="helper-text">This font is the helper font</span>
           </Stack>

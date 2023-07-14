@@ -4,8 +4,8 @@
   "description": "A sample react project boilerplate, configured to use typescript, sass, and babel, using webpack 5",
   "main": "src/index.js",
   "scripts": {
-    "dev": "webpack serve",
-    "build": "node esbuild.config.js --watch",
+    "dev": "node esbuild.dev.config.js",
+    "build": "node esbuild.prod.config.js",
     "lint": "eslint .",
     "lint:fix": "eslint  --fix --ext .js,.jsx,.ts,.tsx ."
   },
@@ -43,6 +43,7 @@
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "dotenv": "^16.3.1",
     "esbuild": "^0.18.12",
+    "esbuild-copy-static-files": "^0.1.0",
     "esbuild-plugin-clean": "^1.0.1",
     "esbuild-plugin-inline-image": "^0.0.9",
     "eslint": "^8.44.0",

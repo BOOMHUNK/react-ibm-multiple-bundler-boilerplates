@@ -4,16 +4,18 @@ import inlineImagePlugin from 'esbuild-plugin-inline-image'
 import { sassPlugin } from '@jgoz/esbuild-plugin-sass'
 
 import { clean } from 'esbuild-plugin-clean'
-
-// const nodeModulesPath = path.resolve('node_modules')
+import copyStaticFiles from 'esbuild-copy-static-files'
 
 esbuild
   .build({
     entryPoints: ['./src/index.jsx'],
-    outfile: './build/app.js',
+    inject: ['./src/config.js'],
+    outdir: './build/assets/',
     minify: true,
     bundle: true,
     loader: {
+      '.js': 'jsx',
+      '.ts': 'tsx',
       '.eot': 'file',
       '.woff': 'file',
       '.woff2': 'file'
@@ -28,7 +30,15 @@ esbuild
         patterns: ['./build/*']
       }),
       inlineImagePlugin(),
-      sassPlugin()
+      sassPlugin(),
+      copyStaticFiles({
+        src: './public',
+        dest: './build/public'
+      }),
+      copyStaticFiles({
+        src: './src/index.html',
+        dest: './build/index.html'
+      })
     ]
   })
   .catch(() => process.exit(1))

@@ -52,6 +52,9 @@ devDependencies:
   esbuild:
     specifier: ^0.18.12
     version: 0.18.12
+  esbuild-copy-static-files:
+    specifier: ^0.1.0
+    version: 0.1.0
   esbuild-plugin-clean:
     specifier: ^1.0.1
     version: 1.0.1(esbuild@0.18.12)
@@ -1144,6 +1147,10 @@ packages:
       is-callable: 1.2.7
       is-date-object: 1.0.5
       is-symbol: 1.0.4
+
+  /esbuild-copy-static-files@0.1.0:
+    resolution: {integrity: sha512-KlpmYqANA1t2nZavEdItfcOjJC6wbHA21v35HJWN32DddGTWKNNGDKljUzbCPojmpD+wAw8/DXr5abJ4jFCE0w==}
+    dev: true
 
   /esbuild-plugin-clean@1.0.1(esbuild@0.18.12):
     resolution: {integrity: sha512-ul606g0wX6oeobBgi3EqpZtCBCwNwCDivvnshsNS5pUsRylKoxUnDqK0ZIyPinlMbP6s8Opc9y2zOeY1Plhe8Q==}

@@ -1,7 +1,7 @@
 @use '@carbon/ibm-products/scss';
 
-// @use '../_carbon-for-ibm-cloud-styles';
-@use 'carbon-for-ibm-cloud/src/components/Card';
+@use '../_carbon-for-ibm-cloud-styles';
+// @use 'carbon-for-ibm-cloud/src/components/Card';
 
 @use '@carbon/styles'; 
 // @use '@carbon/react'; // since '@carbon/styles' was used, there's no need to write this line.
