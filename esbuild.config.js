@@ -19,7 +19,9 @@ esbuild
       '.woff2': 'file'
     },
     alias: {
-      '~@ibm/plex': path.resolve('node_modules/@ibm/plex')
+      '~@ibm/plex': path.resolve('node_modules/@ibm/plex'),
+      'react/jsx-dev-runtime.js': 'react/jsx-dev-runtime',
+      'react/jsx-runtime.js': 'react/jsx-runtime'
     },
     plugins: [
       clean({
