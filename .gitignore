@@ -39,7 +39,10 @@ bower_components
 build/Release
 
 # Dependency directories
-node_modules/
+node_modules
+dist
+dist-ssr
+*.local
 jspm_packages/
 
 # Snowpack dependency directory (https://snowpack.dev/)
@@ -47,6 +50,7 @@ web_modules/
 
 # TypeScript cache
 *.tsbuildinfo
+next-env.d.ts
 
 # Optional npm cache directory
 .npm
@@ -78,6 +82,10 @@ web_modules/
 # .env.test.local
 # .env.production.local
 # .env.local
+# .env*.local
+
+# vercel
+.vercel
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -100,6 +108,8 @@ dist
 # vuepress build output
 .vuepress/dist
 
+
+
 # vuepress v2.x temp and cache directory
 .temp
 .cache
@@ -121,6 +131,16 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # yarn v2
 .yarn/cache

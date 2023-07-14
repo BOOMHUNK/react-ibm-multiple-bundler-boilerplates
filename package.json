@@ -4,9 +4,10 @@
   "description": "A sample react project boilerplate, configured to use typescript, sass, and babel, using webpack 5",
   "main": "src/index.js",
   "scripts": {
-    "dev": "webpack serve",
-    "build": "webpack",
-    "lint": "eslint .",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
     "lint:fix": "eslint  --fix --ext .js,.jsx,.ts,.tsx ."
   },
   "repository": {
@@ -31,17 +32,19 @@
     "@types/carbon-components-react": "^7.55.2",
     "carbon-for-ibm-cloud": "^0.1.4",
     "eslint-config-standard": "^17.1.0",
+    "next": "13.4.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@types/node": "^20.4.1",
-    "@types/react": "^18.2.14",
-    "@types/react-dom": "^18.2.6",
+    "@types/node": "20.4.2",
+    "@types/react": "18.2.15",
+    "@types/react-dom": "18.2.7",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "dotenv": "^16.3.1",
     "eslint": "^8.44.0",
     "eslint-config-standard-with-typescript": "^36.0.0",
+    "eslint-config-next": "13.4.10",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-n": "^15.7.0",
     "eslint-plugin-promise": "^6.1.1",

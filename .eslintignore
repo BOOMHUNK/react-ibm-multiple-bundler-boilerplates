@@ -3,7 +3,7 @@
 node_modules/
 
 polifills.js
-webpack.config.js
+next.config.js
 dist/
 build/
 out/
