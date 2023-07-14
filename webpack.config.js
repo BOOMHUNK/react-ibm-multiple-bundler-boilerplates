@@ -9,6 +9,8 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 
+const TerserPlugin = require('terser-webpack-plugin');
+
 const { EsbuildPlugin } = require('esbuild-loader');
 
 dotenv.config();
@@ -25,7 +27,7 @@ module.exports = {
   devtool: DEV ? 'source-map' : false,
   // cache: DEV ? { type: 'memory' } : false,
 
-  entry: ['./src/config.js', './src/index.js'],
+  entry: ['./src/config.js', './src/index.jsx'],
   output: {
     path: path.join(__dirname, 'build'), // the bundle output path
     filename: 'js/[name].[contenthash].bundle.js', // the name of the bundle
@@ -160,9 +162,11 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.jsx', '.js'],
   },
   optimization: {
+    // minimize: true,
     minimizer: [
+      // new TerserPlugin(),
       new EsbuildPlugin({
-        target: 'es2015', // Syntax to compile to (see options below for possible values)
+        target: 'es2016', // Syntax to compile to (see options below for possible values)
         css: true, // Apply minification to CSS assets
       }),
     ],
