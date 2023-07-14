@@ -2,6 +2,7 @@
 **/node_modules/*
 node_modules/
 
+.eslintrc.js
 polifills.js
 vite.config.ts
 dist/
