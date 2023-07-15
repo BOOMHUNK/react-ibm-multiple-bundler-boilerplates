@@ -25,7 +25,7 @@ console.log('Is Dev --------------------------> ', DEV);
 module.exports = {
   mode: DEV ? 'development' : 'production',
   devtool: DEV ? 'source-map' : false,
-  // cache: DEV ? { type: 'memory' } : false,
+  cache: DEV ? { type: 'memory' } : false,
 
   entry: ['./src/config.js', './src/index.jsx'],
   output: {
