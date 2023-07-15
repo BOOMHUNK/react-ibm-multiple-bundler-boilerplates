@@ -44,24 +44,6 @@ module.exports = {
   // },
   module: {
     rules: [
-      // {
-      //   test: /\.(ts|tsx|js|jsx)$/,
-      //   exclude: /node_modules/,
-      //   use: [
-      //     {
-      //       loader: 'babel-loader',
-      //       options: {
-      //         cacheCompression: false,
-      //         cacheDirectory: true,
-      //         presets: [
-      //           '@babel/preset-env',
-      //           '@babel/preset-react',
-      //           '@babel/preset-typescript',
-      //         ],
-      //       },
-      //     },
-      //   ],
-      // },
       {
         // Match js, jsx, ts & tsx files
         test: /\.[jt]sx?$/,
@@ -72,26 +54,6 @@ module.exports = {
           target: 'es2015', // JavaScript version to compile to
         },
       },
-      // {
-      //   // Match ts & tsx files
-      //   test: /\.[t]sx?$/,
-      //   loader: 'esbuild-loader',
-      //   exclude: /node_modules/,
-      //   options: {
-      //     loader: 'tsx',
-      //     target: 'es2015', // JavaScript version to compile to
-      //   },
-      // },
-      // {
-      //   // Match js, jsx files
-      //   test: /\.[j]sx?$/,
-      //   loader: 'esbuild-loader',
-      //   exclude: /node_modules/,
-      //   options: {
-      //     loader: 'jsx',
-      //     target: 'es2015', // JavaScript version to compile to
-      //   },
-      // },
       {
         test: /\.(sa|sc|c)ss$/, // styles files
         use: [
