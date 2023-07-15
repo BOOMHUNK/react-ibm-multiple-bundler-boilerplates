@@ -132,3 +132,4 @@ dist
 
 build/
 .serve/
+pnpm-lock.yaml
