@@ -3,7 +3,7 @@ import { Button, Content, Stack } from '@carbon/react'
 import MyHeader from '../components/TutorialHeader/MyHeader'
 import { generateData } from '../utils/generateData'
 import { ExpressiveCard, Datagrid, useDatagrid } from '@carbon/ibm-products'
-import { CTA } from '@carbon/ibmdotcom-react'
+// import { CTA } from '@carbon/ibmdotcom-react'
 
 const App = (): JSX.Element => {
   const defaultHeader: any[] = [
@@ -62,7 +62,7 @@ const App = (): JSX.Element => {
     <>
       <MyHeader />
       <Content>
-        <CTA
+        {/* <CTA
           style="feature"
           type="local"
           heading="Lorem Ipsum"
@@ -74,7 +74,7 @@ const App = (): JSX.Element => {
           cta={{
             href: 'https://www.example.com'
           }}
-        />
+        /> */}
         <Datagrid datagridState={{ ...datagridState }} />
         <ExpressiveCard>
           <Stack gap={6}>

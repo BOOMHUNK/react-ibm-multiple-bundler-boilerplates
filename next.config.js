@@ -4,9 +4,6 @@ const path = require('path');
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  experimental: {
-    unstable_runtimeJS: false
-  },
   webpack: (config) => {
     config = {
       ...config,
