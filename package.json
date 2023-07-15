@@ -24,9 +24,9 @@
   "author": "BOOMHUNK",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/BOOMHUNK/react-ibm-multiple-bundler-boilerplates.git/issues"
+    "url": "https://github.com/BOOMHUNK/react-ibm-multiple-bundler-boilerplates/issues"
   },
-  "homepage": "https://github.com/BOOMHUNK/react-ibm-multiple-bundler-boilerplates.git#readme",
+  "homepage": "https://github.com/BOOMHUNK/react-ibm-multiple-bundler-boilerplates#readme",
   "dependencies": {
     "@carbon/ibm-products": "^2.3.2",
     "@carbon/react": "^1.33.2",
