@@ -1,7 +1,7 @@
 {
   "name": "react-ts-sass-webpack5",
   "version": "1.0.0",
-  "description": "A sample react project boilerplate, configured to use typescript, sass, and babel, using webpack 5",
+  "description": "A sample react project boilerplate, configured to use typescript, sass, and babel, using vite",
   "main": "src/index.js",
   "scripts": {
     "dev": "vite",
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BOOMHUNK/react-ts-sass-webpack5.git"
+    "url": "git+https://github.com/BOOMHUNK/react-ibm-multiple-bundler-boilerplates.git"
   },
   "keywords": [
     "react",
@@ -24,9 +24,9 @@
   "author": "BOOMHUNK",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/BOOMHUNK/react-ts-sass-webpack5/issues"
+    "url": "https://github.com/BOOMHUNK/react-ibm-multiple-bundler-boilerplates.git/issues"
   },
-  "homepage": "https://github.com/BOOMHUNK/react-ts-sass-webpack5#readme",
+  "homepage": "https://github.com/BOOMHUNK/react-ibm-multiple-bundler-boilerplates.git#readme",
   "dependencies": {
     "@carbon/ibm-products": "^2.3.2",
     "@carbon/react": "^1.33.2",
