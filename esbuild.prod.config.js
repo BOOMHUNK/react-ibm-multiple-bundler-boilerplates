@@ -6,7 +6,7 @@ import { sassPlugin } from '@jgoz/esbuild-plugin-sass'
 import { copy } from 'esbuild-plugin-copy'
 import { clean } from 'esbuild-plugin-clean'
 
-esbuild
+await esbuild
   .build({
     entryPoints: ['./src/index.jsx'],
     inject: ['./src/config.js'],

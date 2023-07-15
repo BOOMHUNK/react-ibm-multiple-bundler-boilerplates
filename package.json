@@ -37,9 +37,9 @@
   },
   "devDependencies": {
     "@jgoz/esbuild-plugin-sass": "^2.0.4",
-    "@types/node": "^20.4.1",
-    "@types/react": "^18.2.14",
-    "@types/react-dom": "^18.2.6",
+    "@types/node": "^20.4.2",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "dotenv": "^16.3.1",
     "esbuild": "^0.18.12",
