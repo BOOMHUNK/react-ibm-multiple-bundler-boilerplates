@@ -2,9 +2,6 @@ import { defineConfig } from 'vite';
 import path from 'path';
 import react from '@vitejs/plugin-react';
 
-// '~@ibm/plex': path.resolve('node_modules/@ibm/plex'),
-// 'react/jsx-dev-runtime.js': 'react/jsx-dev-runtime',
-// 'react/jsx-runtime.js': 'react/jsx-runtime'
 
 // https://vitejs.dev/config/
 export default defineConfig({
