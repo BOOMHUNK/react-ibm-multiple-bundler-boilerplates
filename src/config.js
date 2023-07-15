@@ -16,3 +16,5 @@ pkg.feature.useDatagrid = true
 
 // // Live dangerously: enable all pre-release features!
 pkg.setAllFeatures(true)
+
+new EventSource('/esbuild').addEventListener('change', () => location.reload())

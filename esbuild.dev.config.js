@@ -8,9 +8,11 @@ import { clean } from 'esbuild-plugin-clean'
 
 const ctx = await esbuild
   .context({
-    entryPoints: ['./src/config.js', './src/index.jsx'],
+    entryPoints: ['./src/index.jsx'],
+    inject: ['./src/config.js'],
     outdir: './.serve/assets/',
     bundle: true,
+    sourcemap: 'inline',
     loader: {
       '.js': 'jsx',
       '.ts': 'tsx',
@@ -45,8 +47,11 @@ const ctx = await esbuild
   })
   .catch(() => process.exit(1))
 
+await ctx.watch()
 const { host, port } = await ctx.serve({
+  host: '127.0.0.1',
+  port: 3000,
   servedir: '.serve'
 })
-
-console.log(`serving development build at: ${host}:${port}`)
+console.log('watching...')
+console.log(`serving development build at: http://${host}:${port}`)
