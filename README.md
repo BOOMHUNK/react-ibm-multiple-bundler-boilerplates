@@ -1,7 +1,7 @@
 # react-ts-sass-webpack5 + ibdotcom-react
 
 A sample react project boilerplate, configured to use typescript, sass, and babel, using webpack 5
-Trying to add ibdotcom-react into this project while it has dependancies on @carbon/icons-react@10.49.1 and conflicting with our currently installed @carbon/icons-react version 11+.
+Trying to add ibdotcom-react into this project while it has dependencies on @carbon/icons-react@10.49.1 and conflicting with our currently installed @carbon/icons-react version 11+.
 + fixed undefined process by providing a simple custom plugin inside webpack.config.js:
    ```new webpack.DefinePlugin({
       process: { env: {} }
