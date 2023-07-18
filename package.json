@@ -27,6 +27,7 @@
   "homepage": "https://github.com/BOOMHUNK/react-ibm-multiple-bundler-boilerplates#readme",
   "dependencies": {
     "@carbon/ibm-products": "^2.3.2",
+    "@carbon/icons-react10": "npm:@carbon/icons-react@10.49.1",
     "@carbon/react": "^1.33.2",
     "@types/carbon-components-react": "^7.55.2",
     "carbon-for-ibm-cloud": "^0.1.4",
@@ -39,6 +40,7 @@
     "@babel/preset-env": "^7.22.7",
     "@babel/preset-react": "^7.22.5",
     "@babel/preset-typescript": "^7.22.5",
+    "@carbon/ibmdotcom-react": "^1.48.0",
     "@types/node": "^20.4.1",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",

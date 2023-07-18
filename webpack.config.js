@@ -13,6 +13,11 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 const { EsbuildPlugin } = require('esbuild-loader');
 
+
+const IconsResolver = require('./icons-resolver');
+
+
+
 dotenv.config();
 
 const DEV = process.env.DEV === 'true';
@@ -59,6 +64,20 @@ module.exports = {
       //           '@babel/preset-typescript',
       //         ],
       //       },
+      //     },
+      //   ],
+      // },
+
+      // {
+      //   test: /\.js$/,
+      //   include: [
+      //     path.resolve(__dirname, 'node_modules/carbon-components-react'),
+      //     path.resolve(__dirname, 'node_modules/@carbon/ibmdotcom-styles'),
+      //     path.resolve(__dirname, 'node_modules/@carbon/ibmdotcom-react'),
+      //   ],
+      //   use: [
+      //     {
+      //       loader: path.resolve(__dirname, 'replace-icons-loader.js'),
       //     },
       //   ],
       // },
@@ -138,6 +157,10 @@ module.exports = {
       'react/jsx-dev-runtime.js': 'react/jsx-dev-runtime',
       'react/jsx-runtime.js': 'react/jsx-runtime',
     },
+    fallback: {
+      '@carbon/icons-react': path.resolve(__dirname, 'node_modules/@carbon/icons-react10'),
+      // process: require.resolve('process/browser'),
+    },
     modules: ['node_modules'],
     extensions: ['.tsx', '.ts', '.jsx', '.js'],
   },
@@ -182,12 +205,9 @@ module.exports = {
     maxAssetSize: 512000,
   },
   plugins: [
-    // new webpack.ProvidePlugin({
-    //   '@carbon/icons-react': {
-    //     'import': ['@carbon/icons-react-11', 'default'], // For @carbon/react
-    //     'fallback': '@carbon/icons-react-v10' // For @carbon/ibmdotcom-react
-    //   }
-    // }),
+    new webpack.DefinePlugin({
+      process: { env: {} }
+    }),
     new ESLintPlugin({ cache: true }),
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
