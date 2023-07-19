@@ -1,6 +1,7 @@
 # Carbon Component Dev
 
-## A sample react project boilerplate, configured to corporate typescript, sass, babel, and vite.js while we develope some customized react components based on Carbon for React by IBM
+## A sample react project boilerplate
+configured to corporate typescript, sass, babel, and vite.js while we develope some customized react components based on Carbon for React by IBM
 
 ## Requirements
 - (recommended) pnpm to be installed using ```npm install -g pnpm```
