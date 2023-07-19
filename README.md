@@ -10,7 +10,7 @@
 - ```npm run dev```
 
 
-### Components Structure:
+## Components Structure:
 - Within components, have separate folders for:
 
       atoms - Reusable "atomic" components like inputs, buttons, etc. Name these based on their purpose like TextInput, SelectInput, etc.
