@@ -1,8 +1,8 @@
 {
-  "name": "react-ts-sass-webpack5",
+  "name": "Carbon Component Library Dev",
   "version": "1.0.0",
-  "description": "A sample react project boilerplate, configured to use typescript, sass, and babel, using vite",
-  "main": "src/index.js",
+  "description": "",
+  "main": "src/main.tsx",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -19,7 +19,8 @@
     "react",
     "ts",
     "sass",
-    "webpack5"
+    "vite",
+    "carbon"
   ],
   "author": "BOOMHUNK",
   "license": "ISC",

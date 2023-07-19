@@ -1,6 +1,6 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './cApp.js'
+import App from './App.js'
 import './index.scss'
 import './config.js';
 
