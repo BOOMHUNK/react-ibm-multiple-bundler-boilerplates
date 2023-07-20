@@ -1,6 +1,7 @@
 # Carbon Component Dev
 
-## A sample react project boilerplate, configured to corporate typescript, sass, babel, and vite.js while we develope some customized react components based on Carbon for React by IBM
+## A sample react project boilerplate
+configured to corporate typescript, sass, babel, and vite.js while we develope some customized react components based on Carbon for React by IBM
 
 ## Requirements
 - (recommended) pnpm to be installed using ```npm install -g pnpm```
@@ -10,7 +11,7 @@
 - ```npm run dev```
 
 
-### Components Structure:
+## Components Structure:
 - Within components, have separate folders for:
 
       atoms - Reusable "atomic" components like inputs, buttons, etc. Name these based on their purpose like TextInput, SelectInput, etc.
