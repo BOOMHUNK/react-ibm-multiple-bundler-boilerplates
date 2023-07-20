@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Content, SelectItem } from '@carbon/react';
+import { Content, SelectItem, Section, Heading } from '@carbon/react';
 import { FluidSelect, FluidTextInput } from './components/atoms';
 
 function generateSuffix(unitName: string) {
@@ -51,25 +51,42 @@ const App = (): JSX.Element => {
   const [amountSuffix, setAmountSuffix] = useState<string>('Gram');
   return (
     <Content>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <FluidSelect
-          id={`select-2`}
-          labelText="Select an option"
-          onChange={(e) => setAmountSuffix(generateSuffix(e.target.value))}
-        >
-          <SelectItem value="kg" text="kg" />
-          <SelectItem value="lbs" text="lbs" />
-          <SelectItem value="other" text="suffix with any length" />
-        </FluidSelect>
+      <Section style={{ marginBottom: '32px' }}>
+        <Section>
+          <Heading>Purchase Unit</Heading>
+          <p>
+            Define different packaging indexes, set their names, choose a unit
+            of measurment and their amount for more control over items.
+          </p>
 
-        <FluidTextInput
-          type="text"
-          labelText="Amount"
-          id="text-input-2"
-          suffix={amountSuffix}
-        />
-      </div>
-      as
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              margin: '8px',
+            }}
+          >
+            <FluidSelect
+              id={`select-2`}
+              labelText="Select an option"
+              onChange={(e) => setAmountSuffix(generateSuffix(e.target.value))}
+            >
+              <SelectItem value="kg" text="kg" />
+              <SelectItem value="lbs" text="lbs" />
+              <SelectItem value="other" text="suffix with any length" />
+            </FluidSelect>
+
+            <FluidTextInput
+              type="number"
+              labelText="Amount"
+              id="text-input-2"
+              suffix={amountSuffix}
+            />
+          </div>
+          <p style={{color: "#428cdb"}}>Every "Kilogram" is equal to 1000 Gram.</p>
+        </Section>
+      </Section>
+
       <FluidTextInput
         type="text"
         labelText="Amount"

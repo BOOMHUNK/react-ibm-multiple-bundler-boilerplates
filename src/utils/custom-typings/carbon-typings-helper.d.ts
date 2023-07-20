@@ -1,8 +1,8 @@
 // declare module '@carbon/react';
 declare module '@carbon/react' {
   import * as CarbonComponentsReact from 'carbon-components-react';
-  const Stack: any;
-  const Types = { ...CarbonComponentsReact, Stack };
+  const Stack, Section, Heading: any;
+  const Types = { ...CarbonComponentsReact, Stack, Section, Heading };
   export = Types;
 }
 declare module '@carbon/react/icons';
