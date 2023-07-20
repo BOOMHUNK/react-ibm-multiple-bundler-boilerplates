@@ -5,8 +5,8 @@ import useElementResizeObserver from '../../../hooks/useElementResizeObserver';
 import './_fluidTextInput.scss';
 
 interface Props extends Omit<TextInputProps, 'prefix'> {
-  suffix?: React.ReactNode;
-  prefix?: React.ReactNode;
+  suffix?: React.ReactNode | string | undefined;
+  prefix?: React.ReactNode | string | undefined;
 }
 
 export default function FluidTextInput({
@@ -14,9 +14,11 @@ export default function FluidTextInput({
   prefix,
   ...props
 }: Props): ReactElement {
-  
-  const [suffixRef, suffixSize] = useElementResizeObserver<HTMLElement>();
-  const [prefixRef, prefixSize] = useElementResizeObserver<HTMLElement>();
+  const [prefixRefState, setPrefixRefState] = useState<HTMLElement>();
+  const [suffixRefState, setSuffixRefState] = useState<HTMLElement>();
+
+  const prefixSize = useElementResizeObserver(prefixRefState);
+  const suffixSize = useElementResizeObserver(suffixRefState);
 
   return (
     <FluidForm style={{ position: 'relative' }}>
@@ -31,31 +33,68 @@ export default function FluidTextInput({
         }}
       />
       {prefix &&
-        React.cloneElement(prefix as React.ReactElement, {
-          ref: prefixRef,
-          style: {
-            ...((prefix as React.ReactElement)?.props?.style || {}),
-            position: 'absolute',
-            left: '16px',
-            top: '36px',
-            color: '#525252',
-            fontSize: '12px',
-            userSelect: 'none',
-          },
-        })}
+        (typeof prefix == 'string' ? (
+          <span
+            ref={(el: HTMLElement) => {
+              setPrefixRefState(el);
+            }}
+            style={{
+              position: 'absolute',
+              right: '16px',
+              top: '36px',
+              color: '#525252',
+              fontSize: '12px',
+              userSelect: 'none',
+            }}
+          >{prefix}</span>
+        ) : (
+          React.cloneElement(prefix as React.ReactElement, {
+            ref: (el: HTMLElement) => {
+              setPrefixRefState(el);
+            },
+            style: {
+              position: 'absolute',
+              left: '16px',
+              top: '36px',
+              color: '#525252',
+              fontSize: '12px',
+              userSelect: 'none',
+              ...((prefix as React.ReactElement)?.props?.style || {}),
+            },
+          })
+        ))}
+
       {suffix &&
-        React.cloneElement(suffix as React.ReactElement, {
-          ref: suffixRef,
-          style: {
-            ...((suffix as React.ReactElement)?.props?.style || {}),
-            position: 'absolute',
-            right: '16px',
-            top: '36px',
-            color: '#525252',
-            fontSize: '12px',
-            userSelect: 'none',
-          },
-        })}
+        (typeof suffix == 'string' ? (
+          <span
+            ref={(el: HTMLElement) => {
+              setSuffixRefState(el);
+            }}
+            style={{
+              position: 'absolute',
+              right: '16px',
+              top: '36px',
+              color: '#525252',
+              fontSize: '12px',
+              userSelect: 'none',
+            }}
+          >{suffix}</span>
+        ) : (
+          React.cloneElement(suffix as React.ReactElement, {
+            ref: (el: HTMLElement) => {
+              setSuffixRefState(el);
+            },
+            style: {
+              position: 'absolute',
+              right: '16px',
+              top: '36px',
+              color: '#525252',
+              fontSize: '12px',
+              userSelect: 'none',
+              ...((suffix as React.ReactElement)?.props?.style || {}),
+            },
+          })
+        ))}
     </FluidForm>
   );
 }

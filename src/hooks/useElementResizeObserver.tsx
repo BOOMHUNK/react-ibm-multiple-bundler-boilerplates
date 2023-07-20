@@ -5,14 +5,14 @@ type Size = {
   height: number;
 };
 
-export default function useElementResizeObserver<T extends HTMLElement>(): [React.RefObject<T>, Size] {
+export default function useElementResizeObserver(
+  element: HTMLElement | undefined
+): Size {
   const [size, setSize] = useState<Size>({ width: 0, height: 0 });
-  const ref = useRef<T>(null);
 
   useEffect(() => {
     let observer: ResizeObserver | undefined;
 
-    const element = ref.current;
     if (element) {
       observer = new ResizeObserver((entries) => {
         const { width, height } = entries[0].contentRect;
@@ -25,8 +25,7 @@ export default function useElementResizeObserver<T extends HTMLElement>(): [Reac
     return () => {
       if (observer) observer.disconnect();
     };
-  }, [ref]);
+  }, [element]);
 
-  return [ref, size];
+  return size;
 }
-

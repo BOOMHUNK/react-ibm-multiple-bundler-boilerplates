@@ -12,6 +12,41 @@ function generateSuffix(unitName: string) {
     : '';
 }
 
+const completelyCustomSuffixHTML: JSX.Element = (
+  <div
+    style={{
+      display: 'flex',
+      justifyContent: 'right',
+      alignItems: 'center',
+      gap: '8px',
+    }}
+  >
+    <span>
+      Suffix with any icons & html <strong>DESIGN</strong>*
+    </span>
+    <img src="/images/calendar-icon.svg" width={16} />
+  </div>
+);
+const completelyCustomPrefixHTML: JSX.Element = (
+  <div
+    style={{
+      backgroundColor: '#0c71cfb0',
+      borderRadius: '5px',
+      padding: '3px',
+      marginTop: '-7px',
+      display: 'flex',
+      justifyContent: 'left',
+      alignItems: 'center',
+      gap: '8px',
+    }}
+  >
+    <img src="/images/calendar-icon.svg" width={16} />
+    <span style={{ color: '#fff' }}>
+      Prefix with any icons & html <strong>DESIGN</strong>*
+    </span>
+  </div>
+);
+
 const App = (): JSX.Element => {
   const [amountSuffix, setAmountSuffix] = useState<string>('Gram');
   return (
@@ -31,18 +66,25 @@ const App = (): JSX.Element => {
           type="text"
           labelText="Amount"
           id="text-input-2"
-          suffix={<span>{amountSuffix}</span>}
-          warn={true}
-          warnText="awdawd"
+          suffix={amountSuffix}
         />
       </div>
+      as
       <FluidTextInput
-          type="text"
-          labelText="Amount"
-          id="text-input-3"
-          suffix={<span>suffix with any length</span>}
-          prefix={<span>prefix</span>}
-        />
+        type="text"
+        labelText="Amount"
+        id="text-input-3"
+        suffix={<span>suffix with any length</span>}
+        prefix={
+          amountSuffix == 'Gram' ? (
+            <span>span prefix</span>
+          ) : (
+            <div>div prefix</div>
+          )
+        }
+        warn={true}
+        warnText="Note: Any react JSX Element Can be used as suffix and prefix"
+      />
       <div
         style={{
           display: 'flex',
@@ -53,38 +95,13 @@ const App = (): JSX.Element => {
           gap: '8px',
         }}
       >
-        
-   
         <FluidTextInput
+          placeholder="placeholder text"
           type="text"
           labelText="Amount"
           id="text-input-3"
-          suffix={
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'right',
-                alignItems: 'center',
-                gap: '8px',
-              }}
-            >
-              <span>suffix with any Icon</span>
-              <img src="/images/calendar-icon.svg" width={16} />
-            </div>
-          }
-          prefix={
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'left',
-                alignItems: 'center',
-                gap: '8px',
-              }}
-            >
-              <img src="/images/calendar-icon.svg" width={16} />
-              <span>Prefix with any Icon</span>
-            </div>
-          }
+          prefix={completelyCustomPrefixHTML}
+          suffix={completelyCustomSuffixHTML}
         />
       </div>
     </Content>
