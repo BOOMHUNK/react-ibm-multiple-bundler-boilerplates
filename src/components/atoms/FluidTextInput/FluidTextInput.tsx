@@ -5,8 +5,10 @@ import useElementResizeObserver from '../../../hooks/useElementResizeObserver';
 import './_fluidTextInput.scss';
 
 interface Props extends Omit<TextInputProps, 'prefix'> {
-  suffix?: React.ReactNode | string | undefined;
+  /** The Text/ReactNode that's gonna show up as prefix in the input element */
   prefix?: React.ReactNode | string | undefined;
+  /** The Text/ReactNode that's gonna show up as suffix in the input element */
+  suffix?: React.ReactNode | string | undefined;
 }
 
 export default function FluidTextInput({
@@ -46,7 +48,9 @@ export default function FluidTextInput({
               fontSize: '12px',
               userSelect: 'none',
             }}
-          >{prefix}</span>
+          >
+            {prefix}
+          </span>
         ) : (
           React.cloneElement(prefix as React.ReactElement, {
             ref: (el: HTMLElement) => {
@@ -78,7 +82,9 @@ export default function FluidTextInput({
               fontSize: '12px',
               userSelect: 'none',
             }}
-          >{suffix}</span>
+          >
+            {suffix}
+          </span>
         ) : (
           React.cloneElement(suffix as React.ReactElement, {
             ref: (el: HTMLElement) => {
