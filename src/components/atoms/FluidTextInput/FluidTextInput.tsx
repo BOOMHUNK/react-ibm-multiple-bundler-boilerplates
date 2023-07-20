@@ -1,10 +1,12 @@
 import React, { ReactElement, useEffect, useRef, useState } from 'react';
 import { FluidForm, TextInput } from '@carbon/react';
 import { TextInputProps } from 'carbon-components-react';
-import useResizeObserver from '../../../hooks/useResizeObserver';
+import useElementResizeObserver from '../../../hooks/useElementResizeObserver';
+import './_fluidTextInput.scss';
 
-interface Props extends TextInputProps {
-  suffix?: string;
+interface Props extends Omit<TextInputProps, 'prefix'> {
+  suffix?: React.ReactNode;
+  prefix?: React.ReactNode;
 }
 
 export default function FluidTextInput({
@@ -12,8 +14,9 @@ export default function FluidTextInput({
   prefix,
   ...props
 }: Props): ReactElement {
-  const [suffixRef, suffixSize] = useResizeObserver<HTMLElement>();
-  const [prefixRef, prefixSize] = useResizeObserver<HTMLElement>();
+  
+  const [suffixRef, suffixSize] = useElementResizeObserver<HTMLElement>();
+  const [prefixRef, prefixSize] = useElementResizeObserver<HTMLElement>();
 
   return (
     <FluidForm style={{ position: 'relative' }}>
@@ -21,42 +24,38 @@ export default function FluidTextInput({
         {...props}
         style={{
           padding: `32px ${
-             suffix && suffixSize.width ? suffixSize.width + 24 : '16'
+            suffix && suffixSize.width ? suffixSize.width + 24 : '16'
           }px 13px ${
-            prefix && prefixSize.width ? prefixSize.width + 24  : '16'
+            prefix && prefixSize.width ? prefixSize.width + 24 : '16'
           }px`,
         }}
       />
-      {prefix && (
-        <span
-          ref={prefixRef}
-          style={{
+      {prefix &&
+        React.cloneElement(prefix as React.ReactElement, {
+          ref: prefixRef,
+          style: {
+            ...((prefix as React.ReactElement)?.props?.style || {}),
             position: 'absolute',
             left: '16px',
-            bottom: '16px',
+            top: '36px',
             color: '#525252',
             fontSize: '12px',
             userSelect: 'none',
-          }}
-        >
-          {prefix}
-        </span>
-      )}
-      {suffix && (
-        <span
-          ref={suffixRef}
-          style={{
+          },
+        })}
+      {suffix &&
+        React.cloneElement(suffix as React.ReactElement, {
+          ref: suffixRef,
+          style: {
+            ...((suffix as React.ReactElement)?.props?.style || {}),
             position: 'absolute',
             right: '16px',
-            bottom: '16px',
+            top: '36px',
             color: '#525252',
             fontSize: '12px',
             userSelect: 'none',
-          }}
-        >
-          {suffix}
-        </span>
-      )}
+          },
+        })}
     </FluidForm>
   );
 }

@@ -21,7 +21,6 @@ const App = (): JSX.Element => {
           id={`select-2`}
           labelText="Select an option"
           onChange={(e) => setAmountSuffix(generateSuffix(e.target.value))}
-
         >
           <SelectItem value="kg" text="kg" />
           <SelectItem value="lbs" text="lbs" />
@@ -32,17 +31,60 @@ const App = (): JSX.Element => {
           type="text"
           labelText="Amount"
           id="text-input-2"
-          suffix={amountSuffix}
-          // warn={true}
+          suffix={<span>{amountSuffix}</span>}
+          warn={true}
+          warnText="awdawd"
         />
       </div>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <FluidTextInput
+          type="text"
+          labelText="Amount"
+          id="text-input-3"
+          suffix={<span>suffix with any length</span>}
+          prefix={<span>prefix</span>}
+        />
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          width: '100%',
+          flexDirection: 'column',
+          marginTop: '8px',
+          gap: '8px',
+        }}
+      >
+        
+   
         <FluidTextInput
           type="text"
           labelText="Amount"
           id="text-input-3"
-          suffix="suffix with any length"
-          prefix="prefix"
+          suffix={
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'right',
+                alignItems: 'center',
+                gap: '8px',
+              }}
+            >
+              <span>suffix with any Icon</span>
+              <img src="/images/calendar-icon.svg" width={16} />
+            </div>
+          }
+          prefix={
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'left',
+                alignItems: 'center',
+                gap: '8px',
+              }}
+            >
+              <img src="/images/calendar-icon.svg" width={16} />
+              <span>Prefix with any Icon</span>
+            </div>
+          }
         />
       </div>
     </Content>
