@@ -6,6 +6,7 @@ import {
   Heading,
   Grid,
   Column,
+  Row,
 } from "@carbon/react";
 import { FluidSelect, FluidTextInput } from "./components/atoms";
 
@@ -29,7 +30,7 @@ const completelyCustomSuffixHTML: JSX.Element = (
     }}
   >
     <span>
-      Suffix with any icons & html <strong>DESIGN</strong>*
+      Suffix with any <strong>LAYOUT</strong>*
     </span>
     <img src="/images/calendar-icon.svg" width={16} />
   </div>
@@ -49,7 +50,7 @@ const completelyCustomPrefixHTML: JSX.Element = (
   >
     <img src="/images/calendar-icon.svg" width={16} />
     <span style={{ color: "#fff" }}>
-      Prefix with any icons & html <strong>DESIGN</strong>*
+      Prefix with any <strong>LAYOUT</strong>*
     </span>
   </div>
 );
@@ -59,8 +60,8 @@ const App = (): JSX.Element => {
   return (
     <Content>
       <Grid fullWidth>
-        <Column lg={4} />
-        <Column lg={8}>
+        <Column xlg={3} lg={4} md={1} sm={0} />
+        <Column xlg={10} lg={8} md={6} sm={4}>
           <Section style={{ marginBottom: "32px" }}>
             <Section>
               <Heading>Purchase Unit</Heading>
@@ -70,8 +71,9 @@ const App = (): JSX.Element => {
               </p>
             </Section>
           </Section>
-          <Grid>
-            <Column lg={4}>
+
+          <Grid fullWidth>
+            <Column xlg={5} lg={4} md={3} sm={4}>
               <FluidSelect
                 id={`select-2`}
                 labelText="Select an option"
@@ -84,7 +86,7 @@ const App = (): JSX.Element => {
                 <SelectItem value="other" text="suffix with any length" />
               </FluidSelect>
             </Column>
-            <Column lg={4}>
+            <Column xlg={5} lg={4} md={3} sm={4}>
               <FluidTextInput
                 type="number"
                 labelText="Amount"
@@ -93,6 +95,7 @@ const App = (): JSX.Element => {
               />
             </Column>
           </Grid>
+
           <Section>
             <p style={{ color: "#428cdb" }}>
               Every "Kilogram" is equal to 1000 Gram.
@@ -123,7 +126,7 @@ const App = (): JSX.Element => {
             suffix={completelyCustomSuffixHTML}
           />
         </Column>
-        <Column lg={4} />
+        <Column xlg={3} lg={4} md={1} sm={0} />
       </Grid>
     </Content>
   );
