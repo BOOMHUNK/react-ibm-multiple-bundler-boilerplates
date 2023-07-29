@@ -1,0 +1,16 @@
+.BigHeader {
+  font-size: 3.375rem;
+}
+.InvertedTextColor {
+  // font-weight: bolder;
+}
+
+#DarkRightPushedDiv {
+      display: flex;
+      
+      align-items: flex-end;
+      background: var(--gray-70, #525252);
+      color: var(--gray-40, #A8A8A8);
+      font-weight: 400;
+      font-size: 0.75rem;
+}
