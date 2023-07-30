@@ -1,0 +1,77 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/colors' as *;
+@use '@carbon/react/scss/breakpoint' as *;
+@use '@carbon/react/scss/theme' as *;
+
+.testimonial-problemsGone {
+  position: relative;
+
+  .invertedText {
+    color: $white;
+    position: absolute;
+    left: 0;
+    top: $spacing-05;
+    mix-blend-mode: difference;
+    max-width: 20rem;
+    @include breakpoint('sm') {
+      @include type-style('heading-03');
+      font-weight: 400;
+    }
+    @include breakpoint('md') {
+      max-width: 27rem;
+      @include type-style('heading-05');
+      font-weight: 300;
+    }
+    @include breakpoint('lg') {
+      max-width: 54rem;
+      @include type-style('heading-07');
+    }
+
+    // margin-left: -10rem;
+  }
+
+  .content-grid-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    @include type-style('legal-01');
+  }
+
+  .desc-col {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-bottom: $spacing-05;
+    @include breakpoint('lg') {
+      margin-bottom: 0;
+    }
+  }
+
+  .darkBg {
+    background-color: $gray-90;
+    color: $gray-40;
+    padding: $spacing-05;
+    min-height: 15.375rem;
+    @include breakpoint('md') {
+      min-height: 14.625rem;
+    }
+    @include breakpoint('lg') {
+      min-height: 13.75rem;
+    }
+  }
+
+  .btn-col {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+  .button {
+    width: 100%;
+    max-width: 100%;
+    @include breakpoint('lg') {
+      max-width: 16rem;
+    }
+  }
+}
