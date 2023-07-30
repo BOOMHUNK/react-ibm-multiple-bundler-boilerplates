@@ -4,37 +4,56 @@
 @use "@carbon/react/scss/breakpoint" as *;
 @use "@carbon/react/scss/theme" as *;
 
-.BigHeader {
-  font-size: 3.375rem;
-}
-.InvertedTextColor {
-  // font-weight: bolder;
-  color: white;
-  position: absolute;
-  left: 0;
-  max-width: 54rem;
-  mix-blend-mode: difference;
-  @include type-style("heading-07");
-  // margin-left: -10rem;
-}
+.testimonial-problemsGone {
+  position: relative;
 
-#ContentDiv {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  @include type-style("legal-01");
-  @include breakpoint-down('lg') {
-    display: none;
+  .invertedText {
+    // font-weight: bolder;
+    color: $white;
+    position: absolute;
+    left: 0;
+    max-width: 54rem;
+    mix-blend-mode: difference;
+    @include type-style("heading-07");
+    // margin-left: -10rem;
   }
-  // font-weight: 400;
-  // font-size: 0.75rem;
-}
 
-.darkBG {
-  background-color: $gray-90;
-  color: $gray-40;
-  padding: $spacing-05;
-  min-height: 13.75rem;
+  .contentDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    @include type-style("legal-01");
 
-  // filter: invert(100%);
+    // font-weight: 400;
+    // font-size: 0.75rem;
+  }
+
+  .darkBg {
+    background-color: $gray-90;
+    color: $gray-40;
+    padding: $spacing-05;
+    min-height: 13.75rem;
+
+    // filter: invert(100%);
+  }
+
+  .button {
+    width: 100%;
+
+    // @include breakpoint("sm") {
+    //   display: none;
+    // }
+    // @include breakpoint("md") {
+    //   display: none;
+    // }
+    @include breakpoint("lg") {
+      max-width: 256px;
+    }
+    // @include breakpoint("xlg") {
+    //   width: 256px;
+    // }
+    // @include breakpoint("max") {
+    //   width: 256px;
+    // }
+  }
 }
