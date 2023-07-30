@@ -1,13 +1,22 @@
-@use '@carbon/ibm-products/scss';
+// @use '@carbon/ibm-products/scss';
 
-@use './utils/carbon-for-ibm-cloud-styles';
-@use 'carbon-for-ibm-cloud/src/components/Card';
+// @use './utils/carbon-for-ibm-cloud-styles';
+// @use 'carbon-for-ibm-cloud/src/components/Card';
 
 // @use '@carbon/styles'; // since '@carbon/react' was used, there's no need to write this line.
-@use '@carbon/react'; 
+@use "@carbon/react" with (
+    $css--default-type: true,
+    $css--reset: true,
+    // $css--typography: true,
+  );
 
-@use '@carbon/type';
-@use '@carbon/colors';
+// @use "@carbon/type";
+
+@use "@carbon/react/scss/spacing" as *;
+@use "@carbon/react/scss/type" as *;
+@use "@carbon/react/scss/colors" as *;
+@use "@carbon/react/scss/breakpoint" as *;
+@use "@carbon/react/scss/theme" as *;
 
 $feature-flags: (
   ui-shell: true,
@@ -17,3 +26,4 @@ $feature-flags: (
 
 // ---------------------------------------------
 
+// @use "./app.scss";

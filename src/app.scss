@@ -1,16 +1,34 @@
+@use "@carbon/react/scss/spacing" as *;
+@use "@carbon/react/scss/type" as *;
+@use "@carbon/react/scss/colors" as *;
+@use "@carbon/react/scss/breakpoint" as *;
+@use "@carbon/react/scss/theme" as *;
+
 .BigHeader {
   font-size: 3.375rem;
 }
 .InvertedTextColor {
   // font-weight: bolder;
+  color: white;
+  position: absolute;
+  left: 0;
+  max-width: 54rem;
+  mix-blend-mode: difference;
+  // margin-left: -10rem;
 }
 
-#DarkRightPushedDiv {
-      display: flex;
-      
-      align-items: flex-end;
-      background: var(--gray-70, #525252);
-      color: var(--gray-40, #A8A8A8);
-      font-weight: 400;
-      font-size: 0.75rem;
+#ContentDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-weight: 400;
+  font-size: 0.75rem;
+}
+
+.darkBG {
+  background-color: $gray-90;
+  color: $gray-40;
+  padding: $spacing-05;
+  min-height: 13.75rem;
+  // filter: invert(100%);
 }
