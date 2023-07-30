@@ -18,11 +18,7 @@
 @use "@carbon/react/scss/breakpoint" as *;
 @use "@carbon/react/scss/theme" as *;
 
-$feature-flags: (
-  ui-shell: true,
-  grid-columns-16: true,
-  enable-css-custom-properties: true,
-);
+
 
 // ---------------------------------------------
 

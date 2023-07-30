@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Content, Heading, Grid, Column, Button, Stack } from "@carbon/react";
 
 import { ArrowRight } from "@carbon/react/icons";
