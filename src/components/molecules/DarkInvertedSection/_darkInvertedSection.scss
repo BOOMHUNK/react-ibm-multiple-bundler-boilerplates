@@ -1,8 +1,8 @@
-@use "@carbon/react/scss/spacing" as *;
-@use "@carbon/react/scss/type" as *;
-@use "@carbon/react/scss/colors" as *;
-@use "@carbon/react/scss/breakpoint" as *;
-@use "@carbon/react/scss/theme" as *;
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/colors' as *;
+@use '@carbon/react/scss/breakpoint' as *;
+@use '@carbon/react/scss/theme' as *;
 
 .testimonial-problemsGone {
   position: relative;
@@ -19,11 +19,13 @@
       font-weight: 400;
     }
     @include breakpoint('md') {
+      left: $spacing-05 * 2;
       max-width: 27rem;
       @include type-style('heading-05');
       font-weight: 300;
     }
     @include breakpoint('lg') {
+      left: $spacing-05 * 2;
       max-width: 54rem;
       @include type-style('heading-07');
     }
@@ -32,6 +34,7 @@
   }
 
   .content-grid-container {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
@@ -45,7 +48,7 @@
     margin-bottom: $spacing-05;
     @include breakpoint('lg') {
       margin-bottom: 0;
-      max-width:80%
+      max-width: 80%;
     }
   }
 
