@@ -1,8 +1,8 @@
-import { ReactElement } from 'react';
-import { Heading, Grid, Column, Button, Stack } from '@carbon/react';
+import { ReactElement } from "react";
+import { Heading, Grid, Column, Button, Stack } from "@carbon/react";
 
-import { ArrowRight } from '@carbon/react/icons';
-import './_darkInvertedSection.scss';
+import { ArrowRight } from "@carbon/react/icons";
+import "./_darkInvertedSection.scss";
 
 interface Props {
   Title: string;
@@ -31,13 +31,15 @@ export default function DarkInvertedSection({
               </Column>
               <Column lg={0} md={4} />
               <Column lg={5} md={3} sm={4} className="btn-col">
-                <Button
-                  className="button"
-                  renderIcon={ArrowRight}
-                  onClick={(e) => ButtonAction && ButtonAction(e)}
-                >
-                  {ButtonTitle}
-                </Button>
+                {ButtonTitle && (
+                  <Button
+                    className="button"
+                    renderIcon={ArrowRight}
+                    onClick={(e) => ButtonAction && ButtonAction(e)}
+                  >
+                    {ButtonTitle}
+                  </Button>
+                )}
               </Column>
             </Grid>
           </div>
