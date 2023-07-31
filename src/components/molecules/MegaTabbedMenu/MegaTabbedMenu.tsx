@@ -27,6 +27,7 @@ type Props = {
   lg?: number;
   xl?: number;
 };
+
 function processData(
   Data: MegaTabbedMenuData,
   rowAfterNTabs: number,
@@ -164,7 +165,12 @@ type TabContentProps = {
 function TabContent({ order, IsActive, ActiveData }: TabContentProps) {
   return (
     <div className={`tab-content ${IsActive && 'tab-content'}`}>
-      {ActiveData && IsActive && ActiveData.ContentTitle}
+      {ActiveData && IsActive && (
+        <>
+          {ActiveData.id}
+          {ActiveData.ContentTitle}
+        </>
+      )}
     </div>
   );
 }
