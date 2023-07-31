@@ -12,8 +12,9 @@
   flex-wrap: wrap !important;
 
   .tab-button {
-    background-color: #0005;
-    border: 2px #fff solid;
+    border: 0px solid $gray-20;
+    padding: $spacing-05;
+    // border: 2px #fff solid;
     height: 7rem;
     @include breakpoint('md') {
       height: 7rem;
@@ -21,12 +22,50 @@
     @include breakpoint('lg') {
       height: 9.875rem;
     }
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    .title {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      margin-bottom: 1rem;
+      @include type-style('heading-compact-02');
+
+      .icon {
+        width: 2rem;
+        height: 2rem;
+        margin-right: 1rem;
+      }
+    }
+    .desc {
+      @include type-style('legal-01');
+    }
   }
   .tab-button-active {
-    background-color: rgba(0, 0, 0, 0.605);
+    border-color: $gray-20;
+    background-color: $gray-20;
+    transition: all 0.333s;
   }
   .tab-content {
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.605);
+    overflow: hidden;
+    transition: all 0.4s;
+  }
+  .tab-content-active {
+    background-color: $gray-20;
+  }
+  .bottom-border {
+    border-bottom: 1px solid $gray-20;
+  }
+  .top-border {
+    border-top: 1px solid $gray-20;
+  }
+  .right-border {
+    border-right: 1px solid $gray-20;
+  }
+  .left-border {
+    border-left: 1px solid $gray-20;
   }
 }

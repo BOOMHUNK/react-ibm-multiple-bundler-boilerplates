@@ -9,7 +9,7 @@ import { UserProfile } from '@carbon/react/icons';
 const App = (): JSX.Element => {
   const MakeSampleData = (count: number) => {
     const singleSampleTabData: any = {
-      Icon: <UserProfile />,
+      Icon: UserProfile,
       Title: 'Customer',
       Desc: 'In publishing and graphic design, Lorem ipsum is a placeholder text ',
       ContentTitle: 'The Features:',

@@ -1,10 +1,10 @@
-import { Children, useEffect, useState } from 'react';
+import { Children, useEffect, useRef, useState } from 'react';
 import './_megaTabbedMenu.scss';
-import { Column, Grid } from '@carbon/react';
+import { Column, Grid, Row } from '@carbon/react';
 import useBreakpoints from '../../../hooks/useBreakpoints';
 
 type TabData = {
-  Icon: JSX.Element;
+  Icon: JSX;
   Title: string;
   Desc: string;
   ContentTitle: string;
@@ -54,7 +54,7 @@ function processData(
 
 export default function MegaTabbedMenu({ Data, ...Props }: Props) {
   const breakpoints = useBreakpoints(10);
-  const [rowAfterNTabs, setRowAfterNTabs] = useState<number>(6);
+  const [rowCapacity, setRowCapacity] = useState<number>(6);
   const [processedData, setProcessedData] =
     useState<ProcessedMegaTabbedMenuData>(Data);
   const [activeTab, setActiveTab] = useState<TabData | null>(null);
@@ -69,16 +69,16 @@ export default function MegaTabbedMenu({ Data, ...Props }: Props) {
       else Props.lg = Props.sm;
     } else if (!Props.md) Props.md = Props.sm;
 
-    if (breakpoints.xl && Props.xl) setRowAfterNTabs(Props.xl);
-    else if (breakpoints.lg && Props.lg) setRowAfterNTabs(Props.lg);
-    else if (breakpoints.md && Props.md) setRowAfterNTabs(Props.md);
-    else setRowAfterNTabs(Props.sm);
+    if (breakpoints.xl && Props.xl) setRowCapacity(Props.xl);
+    else if (breakpoints.lg && Props.lg) setRowCapacity(Props.lg);
+    else if (breakpoints.md && Props.md) setRowCapacity(Props.md);
+    else setRowCapacity(Props.sm);
   }, [Props.lg, Props.md, Props.sm, Props.xl, breakpoints]);
 
   useEffect(() => {
     // console.log(rowAfterNTabs);
-    processData(Data, rowAfterNTabs, setProcessedData);
-  }, [rowAfterNTabs]);
+    processData(Data, rowCapacity, setProcessedData);
+  }, [rowCapacity]);
 
   useEffect(() => {
     console.log(activeTab?.id);
@@ -96,7 +96,7 @@ export default function MegaTabbedMenu({ Data, ...Props }: Props) {
                   IsActive={
                     activeTab?.id || activeTab?.id == 0
                       ? singleProcessedData ==
-                        Math.floor(activeTab.id / rowAfterNTabs) + 1
+                        Math.floor(activeTab.id / rowCapacity) + 1
                       : false
                   }
                   ActiveData={activeTab as TabData}
@@ -105,10 +105,36 @@ export default function MegaTabbedMenu({ Data, ...Props }: Props) {
                 />
               );
             } else {
+              const borderClasses = (): string => {
+                const s = new Set<string>();
+                if (singleProcessedData?.id || singleProcessedData?.id == 0) {
+                  if (singleProcessedData.id == 0) {
+                    s.add('top-border');
+                    s.add('left-border');
+                    s.add('bottom-border');
+                    s.add('right-border');
+                  } else if (singleProcessedData.id == Data.length - 1) {
+                    s.add('bottom-border');
+                    s.add('right-border');
+                    if (singleProcessedData.id < rowCapacity)
+                      s.add('top-border');
+                  } else {
+                    s.add('right-border');
+                    s.add('bottom-border');
+                    if (singleProcessedData.id < rowCapacity)
+                      s.add('top-border');
+                    if (singleProcessedData.id % rowCapacity == 0)
+                      s.add('left-border');
+                  }
+                }
+                return [...s].join(' ');
+              };
+
               return (
                 <TabButtun
+                  BordersClasses={borderClasses()}
                   Data={singleProcessedData}
-                  TotalTabsCount={rowAfterNTabs}
+                  TotalTabsCount={rowCapacity}
                   IsActive={activeTab?.id == singleProcessedData.id}
                   OnClick={(isActive) =>
                     !isActive
@@ -132,6 +158,7 @@ type TabButtunProps = {
   IsActive: boolean;
   TotalTabsCount: number;
   OnClick: (isActive: boolean) => any;
+  BordersClasses: string;
 };
 
 function TabButtun({
@@ -139,18 +166,24 @@ function TabButtun({
   TotalTabsCount,
   IsActive,
   OnClick,
+  BordersClasses,
 }: TabButtunProps) {
   return (
     <div
-      className={`tab-button ${IsActive && 'tab-button-active'}`}
+      className={`tab-button ${
+        IsActive && 'tab-button-active'
+      } ${BordersClasses}
+      )}`}
       style={{
         width: `${100.0 / TotalTabsCount}%`,
       }}
       onClick={() => OnClick(IsActive)}
     >
-      {Data.Icon}
-      {Data.Title}
-      {Data.Desc}
+      <div className="title">
+        <Data.Icon className="icon" />
+        {Data.Title}
+      </div>
+      <div className="desc">{Data.Desc}</div>
     </div>
   );
 }
@@ -163,12 +196,29 @@ type TabContentProps = {
   order: number;
 };
 function TabContent({ order, IsActive, ActiveData }: TabContentProps) {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [contentHeight, setContentHeight] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (IsActive && contentRef.current) {
+      setContentHeight(`${Math.max(contentRef.current.scrollHeight, 128)}px`);
+    } else {
+      setContentHeight(null);
+    }
+  }, [IsActive]);
+
   return (
-    <div className={`tab-content ${IsActive && 'tab-content'}`}>
+    <div
+      // condensed
+      className={`tab-content ${IsActive && 'tab-content-active'}`}
+      style={{ height: contentHeight || 0 }}
+      ref={contentRef}
+    >
       {ActiveData && IsActive && (
         <>
-          {ActiveData.id}
           {ActiveData.ContentTitle}
+          <br />
+          {ActiveData.id}
         </>
       )}
     </div>
