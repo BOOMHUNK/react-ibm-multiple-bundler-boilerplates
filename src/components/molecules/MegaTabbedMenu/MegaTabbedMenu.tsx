@@ -22,9 +22,9 @@ type Props = {
   Data: MegaTabbedMenuData;
 
   sm: number;
-  md?: number;
-  lg?: number;
-  xl?: number;
+  md: number;
+  lg: number;
+  xl: number;
 };
 function processData(
   Data: MegaTabbedMenuData,
@@ -62,8 +62,6 @@ export default function MegaTabbedMenu({ Data, ...Props }: Props) {
       if (Props.md) Props.lg = Props.md;
       else Props.lg = Props.sm;
     } else if (!Props.md) Props.md = Props.sm;
-
-    
 
     if (breakpoints.xl) setRowAfterNTabs(Props.xl);
     else if (breakpoints.lg) setRowAfterNTabs(Props.lg);
