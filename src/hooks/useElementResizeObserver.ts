@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 
 type Size = {
   width: number;
@@ -10,7 +10,7 @@ export default function useElementResizeObserver(
 ): Size {
   const [size, setSize] = useState<Size>({ width: 0, height: 0 });
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     let observer: ResizeObserver | undefined;
 
     if (element) {

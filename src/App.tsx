@@ -1,9 +1,9 @@
-import { Content, Heading, Grid, Column, Button, Stack } from '@carbon/react';
+import { Content, Heading, Grid, Column, Button, Stack } from "@carbon/react";
 
-import { ArrowRight } from '@carbon/react/icons';
+import { ArrowRight } from "@carbon/react/icons";
 
-import './app.scss';
-import { DarkInvertedSection } from './components/molecules';
+import "./app.scss";
+import { DarkInvertedSection, MegaTabbedMenu } from "./components/molecules";
 
 const App = (): JSX.Element => {
   return (
@@ -14,8 +14,13 @@ const App = (): JSX.Element => {
                     publishing and graphic design, Lorem ipsum is In publishing
                     and graphic design, Lorem ipsum is aIn publishing and"
         ButtonTitle="Try it now"
-        ButtonAction={(e) => console.log('Clicked!')}
+        ButtonAction={(e) => console.log("Clicked!")}
       />
+      <br />
+      <br />
+      <br />
+
+      <MegaTabbedMenu />
     </Content>
   );
 };

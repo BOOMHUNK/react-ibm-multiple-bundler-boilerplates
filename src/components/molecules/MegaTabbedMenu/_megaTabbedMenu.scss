@@ -1,0 +1,29 @@
+@use "@carbon/react/scss/spacing" as *;
+@use "@carbon/react/scss/type" as *;
+@use "@carbon/react/scss/colors" as *;
+@use "@carbon/react/scss/breakpoint" as *;
+@use "@carbon/react/scss/theme" as *;
+
+.mega-tabbed-menu {
+  position: relative;
+  display: flex !important;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  flex-wrap: wrap !important;
+
+  .tab-button {
+    background-color: #0005;
+    border: 2px #fff solid;
+    width: 100%;
+    height: 7rem;
+
+    @include breakpoint("md") {
+      width: 50%;
+      height: 7rem;
+    }
+    @include breakpoint("lg") {
+      width: 16.6667%;
+      height: 9.875rem;
+    }
+  }
+}
