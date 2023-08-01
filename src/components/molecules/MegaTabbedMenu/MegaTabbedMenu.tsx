@@ -214,22 +214,44 @@ function TabContent({ order, IsActive, ActiveData }: TabContentProps) {
 
   return (
     <div
-      className={`tab-content-parent ${IsActive && "tab-content-parent-active"}`}
+      className={`tab-content-parent ${
+        IsActive && "tab-content-parent-active"
+      }`}
       style={{ width: "100%", height: contentHeight || 0 }}
     >
-      <div
-        className={`tab-content`}
-        ref={contentRef}
-      >
+      <div className={`tab-content`} ref={contentRef}>
         {ActiveData && IsActive && (
           <div className="tab-content-container">
+            {/* {order == 3 && (
+              <>
+                to test dynamic size recalculation
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+              </>
+            )} */}
             <div className="tab-content-title">{ActiveData.ContentTitle}</div>
             <div className="tab-content-sections">
               {ActiveData.ContentSections?.length &&
-                ActiveData.ContentSections.map((item, i) => {
+                ActiveData.ContentSections.map((currentSection, i) => {
                   return (
                     <div className="tab-content-section" key={i}>
-                      {item.SectionTitle}
+                      <span className="tab-content-section-title">
+                        {currentSection.SectionTitle}
+                      </span>
+                      {currentSection.SectionPoints?.length && (
+                        <ul className="tab-content-section-points">
+                          {currentSection.SectionPoints.map(
+                            (sectionPoint, i) => (
+                              <li key={i}>{sectionPoint}</li>
+                            )
+                          )}
+                        </ul>
+                      )}
                     </div>
                   );
                 })}
