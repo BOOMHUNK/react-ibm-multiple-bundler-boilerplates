@@ -1,8 +1,9 @@
 import { Children, FC, useEffect, useRef, useState } from "react";
 import "./_megaTabbedMenu.scss";
-import { Column, Grid, Row } from "@carbon/react";
-import { ChevronDown } from "@carbon/react/icons";
+import { Button, Column, Grid, Row } from "@carbon/react";
+import { ChevronDown, ArrowRight } from "@carbon/react/icons";
 import useBreakpoints from "../../../hooks/useBreakpoints";
+import useElementResizeObserver from "../../../hooks/useElementResizeObserver";
 
 type TabData = {
   Icon: FC<any>;
@@ -14,6 +15,8 @@ type TabData = {
     SectionPoints: string[];
   }[];
   id?: number;
+  ButtonTitle?: string;
+  ButtonAction?: React.MouseEventHandler<HTMLButtonElement> | undefined;
 };
 
 type MegaTabbedMenuData = TabData[];
@@ -106,7 +109,7 @@ export default function MegaTabbedMenu({ Data, ...Props }: Props) {
                 />
               );
             } else {
-              const borderClasses = (): string => {
+              const makeBorderClasses = (): string => {
                 const s = new Set<string>();
                 if (singleProcessedData?.id || singleProcessedData?.id == 0) {
                   if (singleProcessedData.id == 0) {
@@ -117,14 +120,27 @@ export default function MegaTabbedMenu({ Data, ...Props }: Props) {
                   } else if (singleProcessedData.id == Data.length - 1) {
                     s.add("bottom-border");
                     s.add("right-border");
-                    if (singleProcessedData.id < rowCapacity)
+                    if (
+                      singleProcessedData.id < rowCapacity ||
+                      ((activeTab?.id || activeTab?.id == 0) &&
+                        Math.floor(activeTab.id / rowCapacity) + 1 ==
+                          Math.floor(singleProcessedData.id / rowCapacity))
+                    )
                       s.add("top-border");
                   } else {
                     s.add("right-border");
                     s.add("bottom-border");
-                    if (singleProcessedData.id < rowCapacity)
+                    if (
+                      singleProcessedData.id < rowCapacity ||
+                      ((activeTab?.id || activeTab?.id == 0) &&
+                        Math.floor(activeTab.id / rowCapacity) + 1 ==
+                          Math.floor(singleProcessedData.id / rowCapacity))
+                    )
                       s.add("top-border");
-                    if (singleProcessedData.id % rowCapacity == 0)
+                    if (
+                      singleProcessedData.id % rowCapacity == 0 ||
+                      activeTab?.id == singleProcessedData.id - 1
+                    )
                       s.add("left-border");
                   }
                 }
@@ -133,7 +149,7 @@ export default function MegaTabbedMenu({ Data, ...Props }: Props) {
 
               return (
                 <TabButtun
-                  BordersClasses={borderClasses()}
+                  BordersClasses={makeBorderClasses()}
                   Data={singleProcessedData}
                   TotalTabsCount={rowCapacity}
                   IsActive={activeTab?.id == singleProcessedData.id}
@@ -203,6 +219,7 @@ type TabContentProps = {
 function TabContent({ order, IsActive, ActiveData }: TabContentProps) {
   const contentRef = useRef<HTMLDivElement>(null);
   const [contentHeight, setContentHeight] = useState<string | null>(null);
+  const { height } = useElementResizeObserver(contentRef.current, 100);
 
   useEffect(() => {
     if (IsActive && contentRef.current) {
@@ -210,7 +227,7 @@ function TabContent({ order, IsActive, ActiveData }: TabContentProps) {
     } else {
       setContentHeight(null);
     }
-  }, [IsActive]);
+  }, [IsActive, height]);
 
   return (
     <div
@@ -222,18 +239,6 @@ function TabContent({ order, IsActive, ActiveData }: TabContentProps) {
       <div className={`tab-content`} ref={contentRef}>
         {ActiveData && IsActive && (
           <div className="tab-content-container">
-            {/* {order == 3 && (
-              <>
-                to test dynamic size recalculation
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-              </>
-            )} */}
             <div className="tab-content-title">{ActiveData.ContentTitle}</div>
             <div className="tab-content-sections">
               {ActiveData.ContentSections?.length &&
@@ -256,6 +261,20 @@ function TabContent({ order, IsActive, ActiveData }: TabContentProps) {
                   );
                 })}
             </div>
+            {ActiveData.ButtonTitle && (
+              <div className="tab-content-button-container">
+                <Button
+                  size="md"
+                  className="tab-content-button"
+                  renderIcon={ArrowRight}
+                  onClick={(e) =>
+                    ActiveData.ButtonAction && ActiveData.ButtonAction(e)
+                  }
+                >
+                  {ActiveData.ButtonTitle}
+                </Button>
+              </div>
+            )}
           </div>
         )}
       </div>

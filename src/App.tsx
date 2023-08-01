@@ -75,6 +75,7 @@ const App = (): JSX.Element => {
           ],
         },
       ],
+      ButtonTitle: "Buy It",
     };
     const sampleData: any = [];
     for (let i = 0; i < count; i++) sampleData.push(singleSampleTabData);

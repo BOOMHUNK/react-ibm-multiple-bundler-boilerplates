@@ -68,8 +68,8 @@
     }
   }
   .tab-button-active {
-    border-color: $gray-20;
-    background-color: $gray-20;
+    background-color: $gray-10;
+    border-color: $gray-10;
     transition: all 0.333s;
     // border-bottom: 0 !important;
   }
@@ -79,7 +79,7 @@
     transition: all 0.4s;
   }
   .tab-content-parent-active {
-    background-color: $gray-20;
+    background-color: $gray-10;
   }
   .tab-content {
     padding: $spacing-05;
@@ -97,7 +97,6 @@
     }
     .tab-content-sections {
       display: grid;
-      flex-wrap: wrap;
       width: 100%;
       height: 100%;
       grid-template-columns: 1fr;
@@ -109,7 +108,7 @@
       }
       @include breakpoint("lg") {
         grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-gap: 4.5rem 4.5rem;
+        grid-gap: 3rem 4.5rem;
       }
     }
     .tab-content-section {
@@ -131,17 +130,30 @@
         }
       }
     }
+    .tab-content-button-container {
+      margin-top: 2rem;
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    .tab-content-button {
+      width: 7.5rem;
+      @include breakpoint("sm") {
+        width: 15rem;
+      }
+    }
   }
   .bottom-border {
-    border-bottom: 1px solid $gray-20;
+    border-bottom-width: 1px;
   }
   .top-border {
-    border-top: 1px solid $gray-20;
+    border-top-width: 1px;
   }
   .right-border {
-    border-right: 1px solid $gray-20;
+    border-right-width: 1px;
   }
   .left-border {
-    border-left: 1px solid $gray-20;
+    border-left-width: 1px;
   }
 }

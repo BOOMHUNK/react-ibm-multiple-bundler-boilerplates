@@ -1,4 +1,5 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import useDebouncedCallback from './useDebounce';
 
 type Size = {
   width: number;
@@ -6,26 +7,36 @@ type Size = {
 };
 
 export default function useElementResizeObserver(
-  element: HTMLElement | undefined
+  element: HTMLElement | undefined | null, delay = 0
 ): Size {
+
   const [size, setSize] = useState<Size>({ width: 0, height: 0 });
 
-  useLayoutEffect(() => {
-    let observer: ResizeObserver | undefined;
+  const observer = useRef<ResizeObserver>();
 
-    if (element) {
-      observer = new ResizeObserver((entries) => {
-        const { width, height } = entries[0].contentRect;
+  const handleResize = useCallback(
+    (entries: ResizeObserverEntry[]) => {
+      const { width, height } = entries[0].contentRect;
+
+      // Only update if size changed
+      if (width !== size.width || height !== size.height) {
         setSize({ width, height });
-      });
+      }
+    },
+    [size, setSize]
+  );
 
-      observer.observe(element);
+  // Debounced resize handler
+  const debouncedHandleResize = useDebouncedCallback(handleResize, delay);
+
+  useLayoutEffect(() => {
+    if (element) {
+      observer.current = new ResizeObserver(debouncedHandleResize);
+      observer.current.observe(element);
     }
 
-    return () => {
-      if (observer) observer.disconnect();
-    };
-  }, [element]);
+    return () => observer.current?.disconnect();
+  }, [element, debouncedHandleResize]);
 
   return size;
 }
