@@ -1,6 +1,7 @@
 import { Children, FC, useEffect, useRef, useState } from "react";
 import "./_megaTabbedMenu.scss";
 import { Column, Grid, Row } from "@carbon/react";
+import { ChevronDown } from "@carbon/react/icons";
 import useBreakpoints from "../../../hooks/useBreakpoints";
 
 type TabData = {
@@ -184,6 +185,10 @@ function TabButtun({
         {Data.Title}
       </div>
       <div className="desc">{Data.Desc}</div>
+      <div className={`open-text ${IsActive && "open-text-active"}`}>
+        <span>Open</span>
+        <ChevronDown className={`chevron ${IsActive && "chevron-active"}`} />
+      </div>
     </div>
   );
 }
