@@ -1,10 +1,10 @@
-import { Children, useEffect, useRef, useState } from 'react';
-import './_megaTabbedMenu.scss';
-import { Column, Grid, Row } from '@carbon/react';
-import useBreakpoints from '../../../hooks/useBreakpoints';
+import { Children, FC, useEffect, useRef, useState } from "react";
+import "./_megaTabbedMenu.scss";
+import { Column, Grid, Row } from "@carbon/react";
+import useBreakpoints from "../../../hooks/useBreakpoints";
 
 type TabData = {
-  Icon: JSX;
+  Icon: FC<any>;
   Title: string;
   Desc: string;
   ContentTitle: string;
@@ -89,7 +89,7 @@ export default function MegaTabbedMenu({ Data, ...Props }: Props) {
       <Column className="mega-tabbed-menu" lg={16} md={8} sm={4}>
         {processedData?.length &&
           processedData.map((singleProcessedData, i) => {
-            if (typeof singleProcessedData == 'number') {
+            if (typeof singleProcessedData == "number") {
               // console.log('rowOrder: ', singleProcessedData);
               return (
                 <TabContent
@@ -109,25 +109,25 @@ export default function MegaTabbedMenu({ Data, ...Props }: Props) {
                 const s = new Set<string>();
                 if (singleProcessedData?.id || singleProcessedData?.id == 0) {
                   if (singleProcessedData.id == 0) {
-                    s.add('top-border');
-                    s.add('left-border');
-                    s.add('bottom-border');
-                    s.add('right-border');
+                    s.add("top-border");
+                    s.add("left-border");
+                    s.add("bottom-border");
+                    s.add("right-border");
                   } else if (singleProcessedData.id == Data.length - 1) {
-                    s.add('bottom-border');
-                    s.add('right-border');
+                    s.add("bottom-border");
+                    s.add("right-border");
                     if (singleProcessedData.id < rowCapacity)
-                      s.add('top-border');
+                      s.add("top-border");
                   } else {
-                    s.add('right-border');
-                    s.add('bottom-border');
+                    s.add("right-border");
+                    s.add("bottom-border");
                     if (singleProcessedData.id < rowCapacity)
-                      s.add('top-border');
+                      s.add("top-border");
                     if (singleProcessedData.id % rowCapacity == 0)
-                      s.add('left-border');
+                      s.add("left-border");
                   }
                 }
-                return [...s].join(' ');
+                return [...s].join(" ");
               };
 
               return (
@@ -171,7 +171,7 @@ function TabButtun({
   return (
     <div
       className={`tab-button ${
-        IsActive && 'tab-button-active'
+        IsActive && "tab-button-active"
       } ${BordersClasses}
       )}`}
       style={{
@@ -210,7 +210,7 @@ function TabContent({ order, IsActive, ActiveData }: TabContentProps) {
   return (
     <div
       // condensed
-      className={`tab-content ${IsActive && 'tab-content-active'}`}
+      className={`tab-content ${IsActive && "tab-content-active"}`}
       style={{ height: contentHeight || 0 }}
       ref={contentRef}
     >
