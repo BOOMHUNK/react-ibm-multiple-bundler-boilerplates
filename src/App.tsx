@@ -1,27 +1,77 @@
-import { Content, Heading, Grid, Column, Button, Stack } from '@carbon/react';
+import { Content, Heading, Grid, Column, Button, Stack } from "@carbon/react";
 
-import { ArrowRight } from '@carbon/react/icons';
+import { ArrowRight } from "@carbon/react/icons";
 
-import './app.scss';
-import { DarkInvertedSection, MegaTabbedMenu } from './components/molecules';
-import { UserProfile } from '@carbon/react/icons';
+import "./app.scss";
+import { DarkInvertedSection, MegaTabbedMenu } from "./components/molecules";
+import { UserProfile } from "@carbon/react/icons";
 
 const App = (): JSX.Element => {
   const MakeSampleData = (count: number) => {
     const singleSampleTabData: any = {
       Icon: UserProfile,
-      Title: 'Customer',
-      Desc: 'In publishing and graphic design, Lorem ipsum is a placeholder text ',
-      ContentTitle: 'The Features:',
+      Title: "Customer",
+      Desc: "In publishing and graphic design, Lorem ipsum is a placeholder text ",
+      ContentTitle: "The Features:",
       ContentSections: [
         {
-          SectionTitle: 'Payroll',
+          SectionTitle: "Payroll",
           SectionPoints: [
-            'In publishing and graphic design,Lorem',
-            'ipsum is a placeholder In publishing and',
-            'placeholder In publishing and graphic',
-            'ipsum is a placeholder In publishing and',
-            'placeholder In publishing and',
+            "In publishing and graphic design,Lorem",
+            "ipsum is a placeholder In publishing and",
+            "placeholder In publishing and graphic",
+            "ipsum is a placeholder In publishing and",
+            "placeholder In publishing and",
+          ],
+        },
+        {
+          SectionTitle: "Payroll",
+          SectionPoints: [
+            "In publishing and graphic design,Lorem",
+            "ipsum is a placeholder In publishing and",
+            "placeholder In publishing and graphic",
+            "ipsum is a placeholder In publishing and",
+            "placeholder In publishing and",
+          ],
+        },
+        {
+          SectionTitle: "Payroll",
+          SectionPoints: [
+            "In publishing and graphic design,Lorem",
+            "ipsum is a placeholder In publishing and",
+            "placeholder In publishing and graphic",
+            "ipsum is a placeholder In publishing and",
+            "placeholder In publishing and",
+          ],
+        },
+        {
+          SectionTitle: "Payroll",
+          SectionPoints: [
+            "In publishing and graphic design,Lorem",
+            "ipsum is a placeholder In publishing and",
+            "placeholder In publishing and graphic",
+            "ipsum is a placeholder In publishing and",
+            "placeholder In publishing and",
+          ],
+        },
+        {
+          SectionTitle: "Payroll",
+          SectionPoints: [
+            "In publishing and graphic design,Lorem",
+            "ipsum is a placeholder In publishing and",
+            "placeholder In publishing and graphic",
+            "ipsum is a placeholder In publishing and",
+            "placeholder In publishing and",
+          ],
+        },
+        {
+          SectionTitle: "Payroll",
+          SectionPoints: [
+            "In publishing and graphic design,Lorem",
+            "ipsum is a placeholder In publishing and",
+            "placeholder In publishing and graphic",
+            "ipsum is a placeholder In publishing and",
+            "placeholder In publishing and",
           ],
         },
       ],
@@ -38,7 +88,7 @@ const App = (): JSX.Element => {
                     publishing and graphic design, Lorem ipsum is In publishing
                     and graphic design, Lorem ipsum is aIn publishing and"
         ButtonTitle="Try it now"
-        ButtonAction={(e) => console.log('Clicked!')}
+        ButtonAction={(e) => console.log("Clicked!")}
       />
       <br />
       <br />

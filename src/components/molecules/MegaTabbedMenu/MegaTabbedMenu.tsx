@@ -214,18 +214,29 @@ function TabContent({ order, IsActive, ActiveData }: TabContentProps) {
 
   return (
     <div
-      // condensed
-      className={`tab-content ${IsActive && "tab-content-active"}`}
-      style={{ height: contentHeight || 0 }}
-      ref={contentRef}
+      className={`tab-content-parent ${IsActive && "tab-content-parent-active"}`}
+      style={{ width: "100%", height: contentHeight || 0 }}
     >
-      {ActiveData && IsActive && (
-        <>
-          {ActiveData.ContentTitle}
-          <br />
-          {ActiveData.id}
-        </>
-      )}
+      <div
+        className={`tab-content`}
+        ref={contentRef}
+      >
+        {ActiveData && IsActive && (
+          <div className="tab-content-container">
+            <div className="tab-content-title">{ActiveData.ContentTitle}</div>
+            <div className="tab-content-sections">
+              {ActiveData.ContentSections?.length &&
+                ActiveData.ContentSections.map((item, i) => {
+                  return (
+                    <div className="tab-content-section" key={i}>
+                      {item.SectionTitle}
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
