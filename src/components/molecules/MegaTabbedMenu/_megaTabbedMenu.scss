@@ -1,8 +1,8 @@
-@use "@carbon/react/scss/spacing" as *;
-@use "@carbon/react/scss/type" as *;
-@use "@carbon/react/scss/colors" as *;
-@use "@carbon/react/scss/breakpoint" as *;
-@use "@carbon/react/scss/theme" as *;
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/colors' as *;
+@use '@carbon/react/scss/breakpoint' as *;
+@use '@carbon/react/scss/theme' as *;
 
 .mega-tabbed-menu {
   position: relative;
@@ -12,15 +12,15 @@
   flex-wrap: wrap !important;
 
   .tab-button {
-    border: 0px solid $gray-20;
+    border: 0px solid $gray-30;
     padding: $spacing-05;
     overflow: hidden;
     // border: 2px #fff solid;
     min-height: 7rem;
-    @include breakpoint("md") {
+    @include breakpoint('md') {
       min-height: 7rem;
     }
-    @include breakpoint("lg") {
+    @include breakpoint('lg') {
       min-height: 9.875rem;
     }
     display: flex;
@@ -29,29 +29,35 @@
     align-items: flex-start;
     cursor: pointer;
     user-select: none;
-    @include type-style("heading-compact-02");
-    .title {
+    @include type-style('heading-compact-02');
+    .title-container {
+      width: 100%;
       display: flex;
-      justify-content: flex-start;
+      justify-content: space-between;
       align-items: center;
       margin-bottom: 1rem;
-
-      .icon {
-        width: 2rem;
-        height: 2rem;
-        margin-right: 1rem;
+      .title {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        .icon {
+          width: 2rem;
+          height: 2rem;
+          margin-right: 1rem;
+        }
       }
     }
     .desc {
       color: $gray-50;
-      @include type-style("legal-01");
+      @include type-style('legal-01');
     }
-    .open-text {
+
+    .expand-btn {
       margin-top: 1.5rem;
       display: flex;
-      justify-content: flex-start;
+      justify-content: flex-end;
       align-items: center;
-      color: $blue-50;
+      color: $blue-60;
       transition: all 0.4s;
       .chevron {
         margin-left: 0.5rem;
@@ -63,15 +69,27 @@
         rotate: 180deg;
       }
     }
-    .open-text-active {
+    .expand-btn-active {
       color: $gray-100 !important;
+    }
+    .expand-btn-bottom {
+      @include breakpoint-down('lg') {
+        display: none;
+      }
+    }
+    .expand-btn-top {
+      width: 100%;
+      margin-top: 0;
+      @include breakpoint('lg') {
+        display: none;
+      }
     }
   }
   .tab-button-active {
     background-color: $gray-10;
-    border-color: $gray-10;
+    border-color: $gray-20;
+    border-bottom-color: $gray-10 !important;
     transition: all 0.333s;
-    // border-bottom: 0 !important;
   }
   .tab-content-parent {
     width: 100%;
@@ -92,7 +110,7 @@
     width: 100%;
     height: 100%;
     .tab-content-title {
-      @include type-style("heading-compact-02");
+      @include type-style('heading-compact-02');
       color: $gray-100;
     }
     .tab-content-sections {
@@ -101,46 +119,61 @@
       height: 100%;
       grid-template-columns: 1fr;
       grid-gap: 2rem 0rem;
+      color: $gray-60;
 
-      @include breakpoint("md") {
-        grid-template-columns: 1fr 1fr;
-        grid-gap: 2rem 1.62rem;
-      }
-      @include breakpoint("lg") {
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-gap: 3rem 4.5rem;
-      }
-    }
-    .tab-content-section {
-      width: 100%;
-      grid-auto-columns: auto;
-      margin-top: 1.63rem;
-      .tab-content-section-title {
-        color: $blue-50;
-      }
-      .tab-content-section-points {
-        margin-top: $spacing-05;
-        padding: $spacing-02;
-        li {
-          @include type-style("body-01");
-          &:before {
-            content: "• ";
-            font-size: 9pt;
+      .tab-content-section {
+        width: 100%;
+        grid-auto-columns: auto;
+        margin-top: 1.63rem;
+        .tab-content-section-title {
+          color: $blue-60;
+        }
+        .tab-content-section-points {
+          margin-top: $spacing-05;
+          padding: $spacing-02;
+          li {
+            @include type-style('body-01');
+            &:before {
+              content: '• ';
+              font-size: 9pt;
+              margin-right: 3px;
+            }
           }
         }
+      }
+      @include breakpoint('md') {
+        grid-template-columns: 1fr 1fr;
+        grid-row-gap: 2rem;
+      }
+      @include breakpoint('lg') {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-gap: 3rem 4.5rem;
       }
     }
     .tab-content-button-container {
       margin-top: 2rem;
       width: 100%;
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
       align-items: center;
-    }
-    .tab-content-button {
-      width: 7.5rem;
-      @include breakpoint("sm") {
+      gap: 1.69rem;
+      .tab-content-tryItNow {
+        padding: 0.5rem 0.81rem;
+        @include type-style('body-compact-01');
+        color: $link-primary;
+        cursor: pointer;
+        @include breakpoint('lg') {
+          display: none;
+        }
+      }
+      .tab-content-button {
         width: 15rem;
+        @include breakpoint-down('md') {
+          width: 7.5rem !important;
+        }
+      }
+      @include breakpoint('md') {
+        justify-content: flex-end;
       }
     }
   }
