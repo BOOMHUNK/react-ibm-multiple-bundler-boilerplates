@@ -20,7 +20,12 @@ type TabData = {
 };
 
 type MegaTabbedMenuData = TabData[];
-type ProcessedTabData = TabData | number;
+type SimpleTabButtonType = {
+  IsButton: boolean;
+  ButtonTitle: string;
+  ButtonAction?: (...args: any) => any;
+};
+type ProcessedTabData = TabData | SimpleTabButtonType | number;
 type ProcessedMegaTabbedMenuData = ProcessedTabData[];
 
 type Props = {
@@ -52,7 +57,9 @@ function processData(
       processed.push(singleTabData);
     }
   }
+  processed.push({ IsButton: true, ButtonTitle: 'Watch pricing' });
   processed.push(Math.ceil(Data.length / rowAfterNTabs));
+
   setProcessedData(processed);
 }
 
@@ -109,58 +116,72 @@ export default function MegaTabbedMenu({ Data, ...Props }: Props) {
                 />
               );
             } else {
-              const makeBorderClasses = (): string => {
-                const s = new Set<string>();
-                if (singleProcessedData?.id || singleProcessedData?.id == 0) {
-                  if (singleProcessedData.id == 0) {
-                    s.add('top-border');
-                    s.add('left-border');
-                    s.add('bottom-border');
-                    s.add('right-border');
-                  } else if (singleProcessedData.id == Data.length - 1) {
-                    s.add('bottom-border');
-                    s.add('right-border');
-                    if (
-                      singleProcessedData.id < rowCapacity ||
-                      ((activeTab?.id || activeTab?.id == 0) &&
-                        Math.floor(activeTab.id / rowCapacity) + 1 ==
-                          Math.floor(singleProcessedData.id / rowCapacity))
-                    )
-                      s.add('top-border');
-                  } else {
-                    s.add('right-border');
-                    s.add('bottom-border');
-                    if (
-                      singleProcessedData.id < rowCapacity ||
-                      ((activeTab?.id || activeTab?.id == 0) &&
-                        Math.floor(activeTab.id / rowCapacity) + 1 ==
-                          Math.floor(singleProcessedData.id / rowCapacity))
-                    )
-                      s.add('top-border');
-                    if (
-                      singleProcessedData.id % rowCapacity == 0 ||
-                      activeTab?.id == singleProcessedData.id - 1
-                    )
-                      s.add('left-border');
-                  }
-                }
-                return [...s].join(' ');
-              };
+              const simpleButtonData =
+                singleProcessedData as SimpleTabButtonType;
+              if (simpleButtonData.IsButton) {
+                return (
+                  <TabButtun
+                    TotalTabsCount={rowCapacity}
+                    OnClick={(e) => {
+                      simpleButtonData.ButtonAction &&
+                        simpleButtonData.ButtonAction(e);
+                    }}
+                    key={i}
+                  />
+                );
+              } else {
+                const tabData = singleProcessedData as TabData;
 
-              return (
-                <TabButtun
-                  BordersClasses={makeBorderClasses()}
-                  Data={singleProcessedData}
-                  TotalTabsCount={rowCapacity}
-                  IsActive={activeTab?.id == singleProcessedData.id}
-                  OnClick={(isActive) =>
-                    !isActive
-                      ? setActiveTab(singleProcessedData)
-                      : setActiveTab(null)
+                const makeBorderClasses = (): string => {
+                  const s = new Set<string>();
+                  if (tabData?.id || tabData?.id == 0) {
+                    if (tabData.id == 0) {
+                      s.add('top-border');
+                      s.add('left-border');
+                      s.add('bottom-border');
+                      s.add('right-border');
+                    } else if (tabData.id == Data.length - 1) {
+                      s.add('bottom-border');
+                      s.add('right-border');
+                      if (
+                        tabData.id < rowCapacity ||
+                        ((activeTab?.id || activeTab?.id == 0) &&
+                          Math.floor(activeTab.id / rowCapacity) + 1 ==
+                            Math.floor(tabData.id / rowCapacity))
+                      )
+                        s.add('top-border');
+                    } else {
+                      s.add('right-border');
+                      s.add('bottom-border');
+                      if (
+                        tabData.id < rowCapacity ||
+                        ((activeTab?.id || activeTab?.id == 0) &&
+                          Math.floor(activeTab.id / rowCapacity) + 1 ==
+                            Math.floor(tabData.id / rowCapacity))
+                      )
+                        s.add('top-border');
+                      if (
+                        tabData.id % rowCapacity == 0 ||
+                        activeTab?.id == tabData.id - 1
+                      )
+                        s.add('left-border');
+                    }
                   }
-                  key={i}
-                />
-              );
+                  return [...s].join(' ');
+                };
+                return (
+                  <TabButtun
+                    BordersClasses={makeBorderClasses()}
+                    Data={tabData}
+                    TotalTabsCount={rowCapacity}
+                    IsActive={activeTab?.id == tabData.id}
+                    OnClick={(isActive) =>
+                      !isActive ? setActiveTab(tabData) : setActiveTab(null)
+                    }
+                    key={i}
+                  />
+                );
+              }
             }
           })}
       </Column>
@@ -171,55 +192,82 @@ export default function MegaTabbedMenu({ Data, ...Props }: Props) {
 // //////////////////////////////////////////////////////////////////////////////// //
 
 type TabButtunProps = {
-  Data: TabData;
-  IsActive: boolean;
+  Data?: TabData;
+  ButtonTitle?: SimpleTabButtonType;
+  IsActive?: boolean;
   TotalTabsCount: number;
-  OnClick: (isActive: boolean) => any;
-  BordersClasses: string;
+  OnClick: (...args: any) => any;
+  BordersClasses?: string;
 };
 
 function TabButtun({
   Data,
+  ButtonTitle,
   TotalTabsCount,
   IsActive,
   OnClick,
   BordersClasses,
 }: TabButtunProps) {
-  return (
-    <div
-      className={`tab-button ${
-        IsActive && 'tab-button-active'
-      } ${BordersClasses}
+  if (Data && IsActive != undefined)
+    return (
+      <div
+        className={`tab-button ${
+          IsActive && 'tab-button-active'
+        } ${BordersClasses}
       )}`}
-      style={{
-        width: `${100.0 / TotalTabsCount}%`,
-      }}
-      onClick={() => OnClick(IsActive)}
-    >
-      <div className="title-container">
-        <div className="title">
-          <Data.Icon className="icon" />
-          {Data.Title}
+        style={{
+          width: `${100.0 / TotalTabsCount}%`,
+        }}
+        onClick={() => OnClick(IsActive)}
+      >
+        <div className="title-container">
+          <div className="title">
+            {Data.Icon && <Data.Icon className="icon" />}
+            {Data.Title}
+          </div>
+          <div
+            className={`expand-btn expand-btn-top  ${
+              IsActive && 'expand-btn-active'
+            }`}
+          >
+            <ChevronDown
+              className={`chevron ${IsActive && 'chevron-active'}`}
+            />
+          </div>
         </div>
+        <div className="desc">{Data.Desc}</div>
         <div
-          className={`expand-btn expand-btn-top  ${
+          className={`expand-btn expand-btn-bottom ${
             IsActive && 'expand-btn-active'
           }`}
         >
+          <span>Open</span>
           <ChevronDown className={`chevron ${IsActive && 'chevron-active'}`} />
         </div>
       </div>
-      <div className="desc">{Data.Desc}</div>
+    );
+  else if (ButtonTitle)
+    return (
       <div
-        className={`expand-btn expand-btn-bottom ${
-          IsActive && 'expand-btn-active'
-        }`}
+        className={`tab-button ${
+          IsActive && 'tab-button-active'
+        } ${BordersClasses}
+      )}`}
+        style={{
+          width: `${100.0 / TotalTabsCount}%`,
+        }}
+        onClick={() => OnClick()}
       >
-        <span>Open</span>
-        <ChevronDown className={`chevron ${IsActive && 'chevron-active'}`} />
+        <div
+          className={`expand-btn expand-btn-bottom ${
+            IsActive && 'expand-btn-active'
+          }`}
+        >
+          <span>ButtonTitle</span>
+          <ChevronDown className={`chevron ${IsActive && 'chevron-active'}`} />
+        </div>
       </div>
-    </div>
-  );
+    );
 }
 
 // //////////////////////////////////////////////////////////////////////////////// //
