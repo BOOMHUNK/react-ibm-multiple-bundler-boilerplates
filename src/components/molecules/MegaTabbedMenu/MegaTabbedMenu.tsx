@@ -1,9 +1,9 @@
-import { Children, FC, useEffect, useRef, useState } from 'react';
-import './_megaTabbedMenu.scss';
-import { Button, Column, Grid, Row } from '@carbon/react';
-import { ChevronDown, ArrowRight } from '@carbon/react/icons';
-import useBreakpoints from '../../../hooks/useBreakpoints';
-import useElementResizeObserver from '../../../hooks/useElementResizeObserver';
+import { Children, FC, useEffect, useRef, useState } from "react";
+import "./_megaTabbedMenu.scss";
+import { Button, Column, Grid, Row } from "@carbon/react";
+import { ChevronDown, ArrowRight } from "@carbon/react/icons";
+import useBreakpoints from "../../../hooks/useBreakpoints";
+import useElementResizeObserver from "../../../hooks/useElementResizeObserver";
 
 type TabData = {
   Icon: FC<any>;
@@ -23,6 +23,7 @@ type MegaTabbedMenuData = TabData[];
 type SimpleTabButtonType = {
   IsButton: boolean;
   ButtonTitle: string;
+  id?: number;
   ButtonAction?: (...args: any) => any;
 };
 type ProcessedTabData = TabData | SimpleTabButtonType | number;
@@ -57,7 +58,7 @@ function processData(
       processed.push(singleTabData);
     }
   }
-  processed.push({ IsButton: true, ButtonTitle: 'Watch pricing' });
+  // processed.push({ IsButton: true, ButtonTitle: "Watch pricing" });
   processed.push(Math.ceil(Data.length / rowAfterNTabs));
 
   setProcessedData(processed);
@@ -92,7 +93,7 @@ export default function MegaTabbedMenu({ Data, ...Props }: Props) {
   }, [rowCapacity]);
 
   useEffect(() => {
-    console.log(activeTab?.id);
+    // console.log(activeTab?.id);
   }, [activeTab]);
 
   return (
@@ -100,7 +101,7 @@ export default function MegaTabbedMenu({ Data, ...Props }: Props) {
       <Column className="mega-tabbed-menu" lg={16} md={8} sm={4}>
         {processedData?.length &&
           processedData.map((singleProcessedData, i) => {
-            if (typeof singleProcessedData == 'number') {
+            if (typeof singleProcessedData == "number") {
               // console.log('rowOrder: ', singleProcessedData);
               return (
                 <TabContent
@@ -121,6 +122,7 @@ export default function MegaTabbedMenu({ Data, ...Props }: Props) {
               if (simpleButtonData.IsButton) {
                 return (
                   <TabButtun
+                    ButtonTitle={simpleButtonData.ButtonTitle}
                     TotalTabsCount={rowCapacity}
                     OnClick={(e) => {
                       simpleButtonData.ButtonAction &&
@@ -131,43 +133,42 @@ export default function MegaTabbedMenu({ Data, ...Props }: Props) {
                 );
               } else {
                 const tabData = singleProcessedData as TabData;
-
                 const makeBorderClasses = (): string => {
                   const s = new Set<string>();
                   if (tabData?.id || tabData?.id == 0) {
                     if (tabData.id == 0) {
-                      s.add('top-border');
-                      s.add('left-border');
-                      s.add('bottom-border');
-                      s.add('right-border');
+                      s.add("top-border");
+                      s.add("left-border");
+                      s.add("bottom-border");
+                      s.add("right-border");
                     } else if (tabData.id == Data.length - 1) {
-                      s.add('bottom-border');
-                      s.add('right-border');
+                      s.add("bottom-border");
+                      s.add("right-border");
                       if (
                         tabData.id < rowCapacity ||
                         ((activeTab?.id || activeTab?.id == 0) &&
                           Math.floor(activeTab.id / rowCapacity) + 1 ==
                             Math.floor(tabData.id / rowCapacity))
                       )
-                        s.add('top-border');
+                        s.add("top-border");
                     } else {
-                      s.add('right-border');
-                      s.add('bottom-border');
+                      s.add("right-border");
+                      s.add("bottom-border");
                       if (
                         tabData.id < rowCapacity ||
                         ((activeTab?.id || activeTab?.id == 0) &&
                           Math.floor(activeTab.id / rowCapacity) + 1 ==
                             Math.floor(tabData.id / rowCapacity))
                       )
-                        s.add('top-border');
+                        s.add("top-border");
                       if (
                         tabData.id % rowCapacity == 0 ||
                         activeTab?.id == tabData.id - 1
                       )
-                        s.add('left-border');
+                        s.add("left-border");
                     }
                   }
-                  return [...s].join(' ');
+                  return [...s].join(" ");
                 };
                 return (
                   <TabButtun
@@ -193,7 +194,7 @@ export default function MegaTabbedMenu({ Data, ...Props }: Props) {
 
 type TabButtunProps = {
   Data?: TabData;
-  ButtonTitle?: SimpleTabButtonType;
+  ButtonTitle?: string;
   IsActive?: boolean;
   TotalTabsCount: number;
   OnClick: (...args: any) => any;
@@ -208,11 +209,12 @@ function TabButtun({
   OnClick,
   BordersClasses,
 }: TabButtunProps) {
-  if (Data && IsActive != undefined)
+  if (Data && IsActive != undefined) {
+    console.log("It's a Tab button.");
     return (
       <div
         className={`tab-button ${
-          IsActive && 'tab-button-active'
+          IsActive && "tab-button-active"
         } ${BordersClasses}
       )}`}
         style={{
@@ -227,47 +229,42 @@ function TabButtun({
           </div>
           <div
             className={`expand-btn expand-btn-top  ${
-              IsActive && 'expand-btn-active'
+              IsActive && "expand-btn-active"
             }`}
           >
             <ChevronDown
-              className={`chevron ${IsActive && 'chevron-active'}`}
+              className={`chevron ${IsActive && "chevron-active"}`}
             />
           </div>
         </div>
         <div className="desc">{Data.Desc}</div>
         <div
           className={`expand-btn expand-btn-bottom ${
-            IsActive && 'expand-btn-active'
+            IsActive && "expand-btn-active"
           }`}
         >
           <span>Open</span>
-          <ChevronDown className={`chevron ${IsActive && 'chevron-active'}`} />
+          <ChevronDown className={`chevron ${IsActive && "chevron-active"}`} />
         </div>
       </div>
     );
-  else if (ButtonTitle)
+  } else if (ButtonTitle) {
+    console.log("It's a simple button.");
     return (
       <div
-        className={`tab-button ${
-          IsActive && 'tab-button-active'
-        } ${BordersClasses}
-      )}`}
+        className={`simple-button`}
         style={{
-          width: `${100.0 / TotalTabsCount}%`,
+          width: `${100 / TotalTabsCount}%`,
         }}
         onClick={() => OnClick()}
       >
-        <div
-          className={`expand-btn expand-btn-bottom ${
-            IsActive && 'expand-btn-active'
-          }`}
-        >
-          <span>ButtonTitle</span>
-          <ChevronDown className={`chevron ${IsActive && 'chevron-active'}`} />
+        <div className={`button-title`}>
+          <span>{ButtonTitle}</span>
+          <ArrowRight className={`arrow`} />
         </div>
       </div>
     );
+  }
 }
 
 // //////////////////////////////////////////////////////////////////////////////// //
@@ -293,9 +290,9 @@ function TabContent({ order, IsActive, ActiveData }: TabContentProps) {
   return (
     <div
       className={`tab-content-parent ${
-        IsActive && 'tab-content-parent-active'
+        IsActive && "tab-content-parent-active"
       }`}
-      style={{ width: '100%', height: contentHeight || 0 }}
+      style={{ width: "100%", height: contentHeight || 0 }}
     >
       <div className={`tab-content`} ref={contentRef}>
         {ActiveData && IsActive && (

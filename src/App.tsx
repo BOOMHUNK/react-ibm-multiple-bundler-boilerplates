@@ -79,6 +79,10 @@ const App = (): JSX.Element => {
     };
     const sampleData: any = [];
     for (let i = 0; i < count; i++) sampleData.push(singleSampleTabData);
+    sampleData.push({
+      IsButton: true,
+      ButtonTitle: "Watch pricing",
+    });
     return sampleData;
   };
   return (
