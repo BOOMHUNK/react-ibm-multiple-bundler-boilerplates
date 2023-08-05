@@ -5,33 +5,8 @@ import { ChevronDown, ArrowRight } from '@carbon/react/icons';
 import useBreakpoints from '../../../hooks/useBreakpoints';
 import useElementResizeObserver from '../../../hooks/useElementResizeObserver';
 
-type TabData = {
-  Icon: FC<any>;
-  Title: string;
-  Desc: string;
-  ContentTitle: string;
-  ContentSections: {
-    SectionTitle: string;
-    SectionPoints: string[];
-  }[];
-  id?: number;
-  ButtonTitle?: string;
-  ButtonAction?: React.MouseEventHandler<HTMLElement> | undefined;
-  SecondButtonAction?: React.MouseEventHandler<HTMLElement> | undefined;
-};
-
-type MegaTabbedMenuData = TabData[];
-type SimpleTabButtonType = {
-  IsButton: boolean;
-  ButtonTitle: string;
-  id?: number;
-  ButtonAction?: (...args: any) => any;
-};
-type ProcessedTabData = TabData | SimpleTabButtonType | number;
-type ProcessedMegaTabbedMenuData = ProcessedTabData[];
-
 type Props = {
-  Data: MegaTabbedMenuData;
+  Data: MegaTabbedMenuDataType;
 
   sm: number;
   md?: number;
@@ -40,7 +15,7 @@ type Props = {
 };
 
 function processData(
-  Data: MegaTabbedMenuData,
+  Data: MegaTabbedMenuDataType,
   rowAfterNTabs: number,
   setProcessedData: React.Dispatch<
     React.SetStateAction<ProcessedMegaTabbedMenuData>
@@ -48,7 +23,7 @@ function processData(
 ) {
   const processed: ProcessedMegaTabbedMenuData = [];
   for (let i = 0; i < Data.length; i++) {
-    const singleTabData = { ...Data[i] };
+    const singleTabData: RawData = { ...Data[i] };
     singleTabData.id = i;
     // console.log('singleTabData id: ', singleTabData.id);
 
@@ -133,7 +108,7 @@ export default function MegaTabbedMenu({ Data, ...Props }: Props) {
                   />
                 );
               } else {
-                const tabData = singleProcessedData as TabData;
+                const tabData: TabData = singleProcessedData as TabData;
                 const makeBorderClasses = (): string => {
                   const s = new Set<string>();
                   if (tabData?.id || tabData?.id == 0) {
