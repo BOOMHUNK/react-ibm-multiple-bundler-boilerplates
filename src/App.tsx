@@ -1,9 +1,11 @@
-import { Content, Heading, Grid, Column, Button, Stack } from '@carbon/react';
-
-import { ArrowRight } from '@carbon/react/icons';
+import { Content } from '@carbon/react';
 
 import './app.scss';
-import { DarkInvertedSection, MegaTabbedMenu } from './components/molecules';
+import {
+  DarkInvertedSection,
+  FileUploaderWThumbnail,
+  MegaTabbedMenu,
+} from './components/molecules';
 import { UserProfile } from '@carbon/react/icons';
 
 const App = (): JSX.Element => {
@@ -93,13 +95,22 @@ const App = (): JSX.Element => {
                     publishing and graphic design, Lorem ipsum is In publishing
                     and graphic design, Lorem ipsum is aIn publishing and"
         ButtonTitle="Try it now"
-        ButtonAction={(e) => console.log('Clicked!')}
+        ButtonAction={() => console.log('Clicked!')}
       />
       <br />
-      <br />
-      <br />
-
       <MegaTabbedMenu Data={MakeSampleData(15)} sm={1} md={2} lg={6} xl={6} />
+      <br />
+      <FileUploaderWThumbnail
+        labelTitle="Upload file"
+        labelDescription="Max file size is 500mb. Supported file types are .jpg and .png."
+        buttonLabel="Change"
+        buttonKind="primary"
+        size="md"
+        filenameStatus="edit"
+        accept={['.jpg', '.png']}
+        iconDescription="Delete file"
+        name=""
+      />
     </Content>
   );
 };
