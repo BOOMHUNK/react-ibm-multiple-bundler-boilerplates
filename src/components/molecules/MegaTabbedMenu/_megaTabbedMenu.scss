@@ -1,8 +1,8 @@
-@use "@carbon/react/scss/spacing" as *;
-@use "@carbon/react/scss/type" as *;
-@use "@carbon/react/scss/colors" as *;
-@use "@carbon/react/scss/breakpoint" as *;
-@use "@carbon/react/scss/theme" as *;
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/colors' as *;
+@use '@carbon/react/scss/breakpoint' as *;
+@use '@carbon/react/scss/theme' as *;
 
 .mega-tabbed-menu {
   position: relative;
@@ -18,10 +18,10 @@
     overflow: hidden;
     // border: 2px #fff solid;
     min-height: 7rem;
-    @include breakpoint("md") {
+    @include breakpoint('md') {
       min-height: 7rem;
     }
-    @include breakpoint("lg") {
+    @include breakpoint('lg') {
       min-height: 9.875rem;
     }
     display: flex;
@@ -30,7 +30,7 @@
     align-items: flex-start;
     cursor: pointer;
     user-select: none;
-    @include type-style("heading-compact-02");
+    @include type-style('heading-compact-02');
     .title-container {
       width: 100%;
       display: flex;
@@ -50,9 +50,9 @@
     }
     .desc {
       color: $gray-50;
-      @include type-style("legal-01");
+      @include type-style('legal-01');
     }
-
+    
     .expand-btn {
       margin-top: 1.5rem;
       display: flex;
@@ -60,6 +60,7 @@
       align-items: center;
       color: $blue-60;
       transition: all 0.4s;
+      @include type-style('body-compact-02');
       .chevron {
         margin-left: 0.5rem;
         width: 1.25rem;
@@ -74,14 +75,14 @@
       color: $gray-100 !important;
     }
     .expand-btn-bottom {
-      @include breakpoint-down("lg") {
+      @include breakpoint-down('lg') {
         display: none;
       }
     }
     .expand-btn-top {
       width: 100%;
       margin-top: 0;
-      @include breakpoint("lg") {
+      @include breakpoint('lg') {
         display: none;
       }
     }
@@ -92,7 +93,7 @@
     border-bottom-color: $gray-10 !important;
     transition: all 0.333s;
   }
-
+  
   .simple-button {
     background-color: $blue-60;
     display: flex;
@@ -102,10 +103,10 @@
     overflow: hidden;
     // border: 2px #fff solid;
     min-height: 7rem;
-    @include breakpoint("md") {
+    @include breakpoint('md') {
       min-height: 7rem;
     }
-    @include breakpoint("lg") {
+    @include breakpoint('lg') {
       min-height: 9.875rem;
     }
     .button-title {
@@ -113,9 +114,11 @@
       justify-content: left;
       align-items: center;
       width: 100%;
-      gap: $spacing-05 / 2;
+      gap: $spacing-05 * 0.5;
       color: $white;
       text-decoration: underline;
+      @include type-style('body-compact-02');
+      
       .arrow {
         width: 1.25rem;
         height: 1.25rem;
@@ -141,7 +144,7 @@
     width: 100%;
     height: 100%;
     .tab-content-title {
-      @include type-style("heading-compact-02");
+      @include type-style('heading-compact-02');
       color: $gray-100;
     }
     .tab-content-sections {
@@ -163,20 +166,20 @@
           margin-top: $spacing-05;
           padding: $spacing-02;
           li {
-            @include type-style("body-01");
+            @include type-style('body-01');
             &:before {
-              content: "• ";
+              content: '• ';
               font-size: 9pt;
               margin-right: 3px;
             }
           }
         }
       }
-      @include breakpoint("md") {
+      @include breakpoint('md') {
         grid-template-columns: 1fr 1fr;
         grid-row-gap: 2rem;
       }
-      @include breakpoint("lg") {
+      @include breakpoint('lg') {
         grid-template-columns: 1fr 1fr 1fr 1fr;
         grid-gap: 3rem 4.5rem;
       }
@@ -190,20 +193,20 @@
       gap: 1.69rem;
       .tab-content-tryItNow {
         padding: 0.5rem 0.81rem;
-        @include type-style("body-compact-01");
+        @include type-style('body-compact-01');
         color: $link-primary;
         cursor: pointer;
-        @include breakpoint("lg") {
+        @include breakpoint('lg') {
           display: none;
         }
       }
       .tab-content-button {
         width: 15rem;
-        @include breakpoint-down("md") {
+        @include breakpoint-down('md') {
           width: 7.5rem !important;
         }
       }
-      @include breakpoint("md") {
+      @include breakpoint('md') {
         justify-content: flex-end;
       }
     }
