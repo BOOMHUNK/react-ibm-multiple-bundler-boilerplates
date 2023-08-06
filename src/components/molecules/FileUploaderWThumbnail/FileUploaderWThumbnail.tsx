@@ -1,7 +1,7 @@
 import "./_fileUploaderWThumbnail.scss";
 import { FileUploader } from "@carbon/react";
 import { FileUploaderProps } from "carbon-components-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import thumb from "./assets/thumbnail-place-holder.jpg";
 
 type Props = Omit<FileUploaderProps, "multiple"> & {
@@ -12,6 +12,7 @@ export default function FileUploaderWThumbnail({
   thumbnailPlaceholderURL,
   ...Props
 }: Props) {
+  const fileUploaderRef = useRef<HTMLDivElement>(null);
   const emptyThumbnailURL = thumbnailPlaceholderURL
     ? thumbnailPlaceholderURL
     : thumb;
@@ -28,14 +29,15 @@ export default function FileUploaderWThumbnail({
   };
 
   useEffect(() => {
-    document.documentElement.style.setProperty(
-      "--thumbnail-url",
-      `url(${thumbnailUrl})`
-    );
+    fileUploaderRef.current &&
+      fileUploaderRef.current.style.setProperty(
+        "--thumbnail-url",
+        `url(${thumbnailUrl})`
+      );
   }, [thumbnailUrl]);
 
   return (
-    <div className="file-uploader-w-thumbnails">
+    <div id="file-uploader-w-thumbnails" ref={fileUploaderRef}>
       <FileUploader
         {...Props}
         multiple={false}

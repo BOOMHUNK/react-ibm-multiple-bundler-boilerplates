@@ -4,10 +4,8 @@
 @use "@carbon/react/scss/breakpoint" as *;
 @use "@carbon/react/scss/theme" as *;
 
-:root {
-  --thumbnail-url: ""; // Default value
-}
-.file-uploader-w-thumbnails {
+#file-uploader-w-thumbnails {
+  --thumbnail-url: "";
   position: relative;
   .cds--form-item {
     @include breakpoint("md") {
@@ -45,24 +43,28 @@
         }
         .cds--file__state-container {
           position: absolute !important;
-          right: 50%;
+          left: 50%;
           top: 50%;
-          transform: translate(50%, -50%);
+          transform: translate(-50%, -50%);
           background-color: rgba(0, 0, 0, 0.368);
-          background-image: url("/images/trash-can.svg");
-          background-position: center;
-          background-size: 30%;
-          background-repeat: no-repeat;
-          svg {
-            opacity: 0;
-          }
           button {
             width: 50%;
             height: 50%;
             position: absolute !important;
-            right: 50%;
+            left: 50%;
             top: 50%;
-            transform: translate(50%, -50%);
+            transform: translate(-50%, -50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url("/images/trash-can.svg");
+            background-position: center;
+            background-size: 70%;
+            background-repeat: no-repeat;
+          }
+          svg {
+            opacity: 0;
+            content: "";
           }
         }
       }
