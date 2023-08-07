@@ -110,7 +110,7 @@ const App = (): JSX.Element => {
         accept={[".jpg", ".png"]}
         iconDescription="Delete file"
         name=""
-        
+        existingFileThumbnail = "/vite.svg"
       />
     </Content>
   );
