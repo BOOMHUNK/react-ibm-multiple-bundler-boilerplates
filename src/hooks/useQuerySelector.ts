@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-function useQuerySelector<T extends HTMLElement>(
-  ref: React.RefObject<T>,
+export default function useQuerySelector<T extends HTMLElement>(
+  ref: React.RefObject<HTMLElement>,
   selector: string
 ): T | null {
   const [element, setElement] = useState<T | null>(null);

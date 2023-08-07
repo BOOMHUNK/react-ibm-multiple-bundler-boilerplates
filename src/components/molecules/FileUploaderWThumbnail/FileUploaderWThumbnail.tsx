@@ -1,4 +1,5 @@
 import './_fileUploaderWThumbnail.scss';
+import useQuerySelector from '../../../hooks/useQuerySelector';
 import { FileUploader } from '@carbon/react';
 import { FileUploaderProps } from 'carbon-components-react';
 import { MouseEvent, useEffect, useRef, useState } from 'react';
@@ -20,7 +21,15 @@ export default function FileUploaderWThumbnail({
   ...Props
 }: Props) {
   const fileUploaderRef = useRef<HTMLDivElement | null>(null);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const fileInput = useQuerySelector<HTMLInputElement>(
+    fileUploaderRef,
+    'input.cds--visually-hidden'
+  );
+
+  const fileContainer = useQuerySelector(
+    fileUploaderRef,
+    '.cds--file-container'
+  );
 
   const fileContainerRoot = useRef<ReactDOM.Root>();
 
@@ -42,8 +51,6 @@ export default function FileUploaderWThumbnail({
   function addCustomDeleteButton() {
     if (!existingFileThumbnailUrl) return;
     setThumbnailUrl(existingFileThumbnailUrl);
-    const fileContainer: HTMLInputElement | null =
-      fileUploaderRef.current!.querySelector('.cds--file-container');
     if (fileContainer && !fileContainerRoot.current) {
       console.log(fileContainer);
 
@@ -82,10 +89,10 @@ export default function FileUploaderWThumbnail({
 
   function handleDelete(e: MouseEvent<HTMLElement, globalThis.MouseEvent>) {
     Props.onDelete && Props.onDelete(e);
-    fileInputRef.current!.value = '';
+    fileInput!.value = '';
     console.log('the selected file deleted');
-    fileInputRef.current?.files &&
-      console.log('the selected files are empty: ', fileInputRef.current.files);
+    fileInput?.files &&
+      console.log('the selected files are empty: ', fileInput.files);
     setThumbnailUrl(emptyThumbnailURL);
   }
 
@@ -97,10 +104,19 @@ export default function FileUploaderWThumbnail({
     removeTemporaryDeleteBtn();
 
     console.log('the existing file deleted');
-    fileInputRef.current?.files &&
-      console.log('the selected files are empty: ', fileInputRef.current.files);
+    fileInput?.files &&
+      console.log('the selected files are empty: ', fileInput.files);
     setThumbnailUrl(emptyThumbnailURL);
   }
+  useEffect(() => {
+    if (fileInput) {
+      fileInput.onchange = (e: Event) => {
+        const event: React.ChangeEvent<HTMLInputElement> =
+          e as unknown as React.ChangeEvent<HTMLInputElement>;
+        handleFileChange(event);
+      };
+    }
+  }, [fileInput]);
 
   useEffect(() => {
     if (fileUploaderRef.current) {
@@ -108,7 +124,7 @@ export default function FileUploaderWThumbnail({
         addCustomDeleteButton();
       }
     }
-    // fileInputRef.current?.files && console.log(fileInputRef.current?.files[0]);
+    // fileInput?.files && console.log(fileInput?.files[0]);
   }, [fileUploaderRef.current]);
 
   useEffect(() => {
@@ -120,22 +136,7 @@ export default function FileUploaderWThumbnail({
   }, [thumbnailUrl]);
 
   return (
-    <div
-      id="file-uploader-w-thumbnails"
-      ref={(el) => {
-        if (el) {
-          fileUploaderRef.current = el;
-          fileInputRef.current = el.querySelector('input.cds--visually-hidden');
-          if (fileInputRef.current) {
-            fileInputRef.current.onchange = (e: Event) => {
-              const event: React.ChangeEvent<HTMLInputElement> =
-                e as unknown as React.ChangeEvent<HTMLInputElement>;
-              handleFileChange(event);
-            };
-          }
-        }
-      }}
-    >
+    <div id="file-uploader-w-thumbnails" ref={fileUploaderRef}>
       <FileUploader
         {...Props}
         multiple={false}
