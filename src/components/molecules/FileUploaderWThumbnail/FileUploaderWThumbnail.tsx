@@ -1,7 +1,14 @@
 import './_fileUploaderWThumbnail.scss';
 import { FileUploader } from '@carbon/react';
 import { FileUploaderProps } from 'carbon-components-react';
-import { MouseEvent, useEffect, useRef, useState } from 'react';
+import {
+  MouseEvent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import ReactDOM from 'react-dom/client';
 import thumb from './assets/thumbnail-place-holder.jpg';
 
@@ -16,12 +23,14 @@ type Props = Omit<FileUploaderProps, 'multiple'> & {
 export default function FileUploaderWThumbnail({
   thumbnailPlaceholderURL,
   existingFileThumbnailUrl,
+  onDeleteUploaded,
   ...Props
 }: Props) {
   const fileUploaderRef = useRef<HTMLDivElement>(null);
   const [fileInputRef, setFileInputRef] = useState<HTMLInputElement | null>(
     null
   );
+  const fileContainerRoot = useRef<ReactDOM.Root>();
 
   const emptyThumbnailURL = thumbnailPlaceholderURL
     ? thumbnailPlaceholderURL
@@ -43,7 +52,7 @@ export default function FileUploaderWThumbnail({
     setThumbnailUrl(existingFileThumbnailUrl);
     const fileContainer: HTMLInputElement | null =
       fileUploaderRef.current!.querySelector('.cds--file-container');
-    if (fileContainer) {
+    if (fileContainer && !fileContainerRoot.current) {
       console.log(fileContainer);
 
       const jsx = (
@@ -64,6 +73,7 @@ export default function FileUploaderWThumbnail({
       // @ts-ignore
       const root = ReactDOM.createRoot(fileContainer);
       root.render(jsx);
+      fileContainerRoot.current = root;
     }
   }
 
@@ -82,19 +92,21 @@ export default function FileUploaderWThumbnail({
     Props.onDelete && Props.onDelete(e);
     fileInputRef!.value = '';
     console.log('the selected file deleted');
-    console.log('the selected files are empty: ', fileInputRef!.files);
+    fileInputRef?.files &&
+      console.log('the selected files are empty: ', fileInputRef.files);
     setThumbnailUrl(emptyThumbnailURL);
   }
 
   function handleDeleteExisiting(
     e: MouseEvent<HTMLElement, globalThis.MouseEvent>
   ) {
-    Props.onDeleteUploaded && Props.onDeleteUploaded(e);
-    fileInputRef!.value = '';
+    onDeleteUploaded && onDeleteUploaded(e);
+    // fileInputRef!.value = '';
     removeTemporaryDeleteBtn();
 
     console.log('the existing file deleted');
-    console.log('the selected files are empty: ', fileInputRef!.files);
+    fileInputRef?.files &&
+      console.log('the selected files are empty: ', fileInputRef.files);
     setThumbnailUrl(emptyThumbnailURL);
   }
 
@@ -104,7 +116,9 @@ export default function FileUploaderWThumbnail({
         fileUploaderRef.current.querySelector('input.cds--visually-hidden');
       if (fileInput && !fileInputRef) setFileInputRef(fileInput);
 
-      addCustomDeleteButton();
+      if (!fileContainerRoot.current) {
+        addCustomDeleteButton();
+      }
     }
     fileInputRef?.files && console.log(fileInputRef?.files[0]);
   }, [fileUploaderRef.current]);
