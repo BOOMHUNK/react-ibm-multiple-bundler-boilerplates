@@ -1,6 +1,4 @@
-import { RefObject } from 'react';
-
-export default function RemoveChild<T extends HTMLElement | null>(
+export function removeChild<T extends HTMLElement | null>(
   parentElement: T,
   querySelector: string
 ) {

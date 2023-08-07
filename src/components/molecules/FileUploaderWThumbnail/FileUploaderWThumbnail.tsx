@@ -5,7 +5,8 @@ import { FileUploaderProps } from 'carbon-components-react';
 import { MouseEvent, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import thumb from './assets/thumbnail-place-holder.jpg';
-import RemoveChild from '../../../utils/RemoveChild';
+import useJSXRenderer from '../../../hooks/useJSXRenderer';
+import { removeChild } from '../../../utils/DomManipulationHelpers';
 
 type Props = Omit<FileUploaderProps, 'multiple'> & {
   thumbnailPlaceholderURL?: string;
@@ -38,37 +39,31 @@ export default function FileUploaderWThumbnail({
     ? thumbnailPlaceholderURL
     : thumb;
   const [thumbnailUrl, setThumbnailUrl] = useState<string>(emptyThumbnailURL);
+  const [injectToFileContainer, removeFileContainerRoot] =
+    useJSXRenderer(fileContainer);
 
   function removeTemporaryDeleteBtn() {
-    RemoveChild(fileContainer, '#temporary-delete-btn');
+    removeFileContainerRoot();
+    // removeChild(fileContainer, "#temporary-delete-btn")
   }
 
   function addCustomDeleteButton() {
     if (!existingFileThumbnailUrl) return;
     setThumbnailUrl(existingFileThumbnailUrl);
-    if (fileContainer && !fileContainerRoot.current) {
-      console.log(fileContainer);
-
-      const jsx = (
-        <span
-          className="cds--file__selected-file cds--file__selected-file--md"
-          id="temporary-delete-btn"
-        >
-          <span className="cds--file__state-container">
-            <button
-              className="cds--file-close"
-              type="button"
-              onClick={handleDeleteExisiting}
-            ></button>
-          </span>
+    injectToFileContainer(
+      <span
+        className="cds--file__selected-file cds--file__selected-file--md"
+        id="temporary-delete-btn"
+      >
+        <span className="cds--file__state-container">
+          <button
+            className="cds--file-close"
+            type="button"
+            onClick={handleDeleteExisiting}
+          ></button>
         </span>
-      );
-
-      // @ts-ignore
-      const root = ReactDOM.createRoot(fileContainer);
-      root.render(jsx);
-      fileContainerRoot.current = root;
-    }
+      </span>
+    );
   }
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
