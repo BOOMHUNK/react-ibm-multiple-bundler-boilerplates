@@ -5,6 +5,7 @@ import { FileUploaderProps } from 'carbon-components-react';
 import { MouseEvent, useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import thumb from './assets/thumbnail-place-holder.jpg';
+import RemoveChild from '../../../utils/RemoveChild';
 
 type Props = Omit<FileUploaderProps, 'multiple'> & {
   thumbnailPlaceholderURL?: string;
@@ -39,13 +40,7 @@ export default function FileUploaderWThumbnail({
   const [thumbnailUrl, setThumbnailUrl] = useState<string>(emptyThumbnailURL);
 
   function removeTemporaryDeleteBtn() {
-    const tempDelete: HTMLInputElement | null =
-      fileUploaderRef.current!.querySelector('#temporary-delete-btn');
-    if (tempDelete) {
-      fileUploaderRef
-        .current!.querySelector('.cds--file-container')!
-        .removeChild(tempDelete);
-    }
+    RemoveChild(fileContainer, '#temporary-delete-btn');
   }
 
   function addCustomDeleteButton() {
