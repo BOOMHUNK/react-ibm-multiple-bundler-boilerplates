@@ -1,18 +1,21 @@
-import "./_fileUploaderWThumbnail.scss";
-import { FileUploader } from "@carbon/react";
-import { FileUploaderProps } from "carbon-components-react";
-import { MouseEvent, useEffect, useRef, useState } from "react";
-import ReactDOM from "react-dom";
-import thumb from "./assets/thumbnail-place-holder.jpg";
+import './_fileUploaderWThumbnail.scss';
+import { FileUploader } from '@carbon/react';
+import { FileUploaderProps } from 'carbon-components-react';
+import { MouseEvent, useEffect, useRef, useState } from 'react';
+import ReactDOM from 'react-dom/client';
+import thumb from './assets/thumbnail-place-holder.jpg';
 
-type Props = Omit<FileUploaderProps, "multiple"> & {
+type Props = Omit<FileUploaderProps, 'multiple'> & {
   thumbnailPlaceholderURL?: string;
-  existingFileThumbnail?: string;
+  existingFileThumbnailUrl?: string;
+  onDeleteUploaded?: (
+    event?: MouseEvent<HTMLElement, globalThis.MouseEvent>
+  ) => void;
 };
 
 export default function FileUploaderWThumbnail({
   thumbnailPlaceholderURL,
-  existingFileThumbnail,
+  existingFileThumbnailUrl,
   ...Props
 }: Props) {
   const fileUploaderRef = useRef<HTMLDivElement>(null);
@@ -25,28 +28,80 @@ export default function FileUploaderWThumbnail({
     : thumb;
   const [thumbnailUrl, setThumbnailUrl] = useState<string>(emptyThumbnailURL);
 
+  function removeTemporaryDeleteBtn() {
+    const tempDelete: HTMLInputElement | null =
+      fileUploaderRef.current!.querySelector('#temporary-delete-btn');
+    if (tempDelete) {
+      fileUploaderRef
+        .current!.querySelector('.cds--file-container')!
+        .removeChild(tempDelete);
+    }
+  }
+
+  function addCustomDeleteButton() {
+    if (!existingFileThumbnailUrl) return;
+    setThumbnailUrl(existingFileThumbnailUrl);
+    const fileContainer: HTMLInputElement | null =
+      fileUploaderRef.current!.querySelector('.cds--file-container');
+    if (fileContainer) {
+      console.log(fileContainer);
+
+      const jsx = (
+        <span
+          className="cds--file__selected-file cds--file__selected-file--md"
+          id="temporary-delete-btn"
+        >
+          <span className="cds--file__state-container">
+            <button
+              className="cds--file-close"
+              type="button"
+              onClick={handleDeleteExisiting}
+            ></button>
+          </span>
+        </span>
+      );
+
+      // @ts-ignore
+      const root = ReactDOM.createRoot(fileContainer);
+      root.render(jsx);
+    }
+  }
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    removeTemporaryDeleteBtn();
     if (event.target.files?.length) {
       const file = event.target.files[0];
       const fileUrl = URL.createObjectURL(file);
       setThumbnailUrl(fileUrl);
-      console.log("the selected file changed", file);
+      console.log('the selected file changed', file);
     }
     Props.onChange && Props.onChange(event);
   };
 
   function handleDelete(e: MouseEvent<HTMLElement, globalThis.MouseEvent>) {
     Props.onDelete && Props.onDelete(e);
-    fileInputRef!.value = "";
-    console.log("the selected file deleted");
-    console.log("the selected files are empty: ", fileInputRef!.files);
+    fileInputRef!.value = '';
+    console.log('the selected file deleted');
+    console.log('the selected files are empty: ', fileInputRef!.files);
+    setThumbnailUrl(emptyThumbnailURL);
+  }
+
+  function handleDeleteExisiting(
+    e: MouseEvent<HTMLElement, globalThis.MouseEvent>
+  ) {
+    Props.onDeleteUploaded && Props.onDeleteUploaded(e);
+    fileInputRef!.value = '';
+    removeTemporaryDeleteBtn();
+
+    console.log('the existing file deleted');
+    console.log('the selected files are empty: ', fileInputRef!.files);
     setThumbnailUrl(emptyThumbnailURL);
   }
 
   useEffect(() => {
     if (fileUploaderRef.current) {
       const fileInput: HTMLInputElement | null =
-        fileUploaderRef.current.querySelector("input.cds--visually-hidden");
+        fileUploaderRef.current.querySelector('input.cds--visually-hidden');
       if (fileInput && !fileInputRef) setFileInputRef(fileInput);
 
       addCustomDeleteButton();
@@ -67,7 +122,7 @@ export default function FileUploaderWThumbnail({
   useEffect(() => {
     fileUploaderRef.current &&
       fileUploaderRef.current.style.setProperty(
-        "--thumbnail-url",
+        '--thumbnail-url',
         `url(${thumbnailUrl})`
       );
   }, [thumbnailUrl]);
@@ -86,24 +141,4 @@ export default function FileUploaderWThumbnail({
       />
     </div>
   );
-
-  function addCustomDeleteButton() {
-    const fileContainer: HTMLInputElement | null =
-      fileUploaderRef.current.querySelector(".cds--file-container");
-    if (fileContainer) {
-      console.log(fileContainer);
-
-      const jsx = (
-        <span className="cds--file__selected-file cds--file__selected-file--md">
-          <span className="cds--file__state-container">
-            <button className="cds--file-close" type="button"></button>
-          </span>
-        </span>
-      );
-
-      // @ts-ignore
-      const root = ReactDOM.createRoot(fileContainer);
-      root.render(jsx);
-    }
-  }
 }
