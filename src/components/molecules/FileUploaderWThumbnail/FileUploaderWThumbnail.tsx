@@ -1,14 +1,14 @@
-import "./_fileUploaderWThumbnail.scss";
-import useQuerySelector from "../../../hooks/useQuerySelector";
-import { FileUploader } from "@carbon/react";
-import { FileUploaderProps } from "carbon-components-react";
-import { MouseEvent, useEffect, useRef, useState } from "react";
-import ReactDOM from "react-dom/client";
-import thumb from "./assets/thumbnail-place-holder.jpg";
-import useJSXRenderer from "../../../hooks/useJSXRenderer";
-import { removeChild } from "../../../utils/DomManipulationHelpers";
+import './_fileUploaderWThumbnail.scss';
+import useQuerySelector from '../../../hooks/useQuerySelector';
+import { FileUploader } from '@carbon/react';
+import { FileUploaderProps } from 'carbon-components-react';
+import { MouseEvent, useEffect, useRef, useState } from 'react';
+import ReactDOM from 'react-dom/client';
+import thumb from './assets/thumbnail-place-holder.jpg';
+import useJSXRenderer from '../../../hooks/useJSXRenderer';
+import { removeChild } from '../../../utils/DomManipulationHelpers';
 
-type Props = Omit<FileUploaderProps, "multiple"> & {
+type Props = Omit<FileUploaderProps, 'multiple'> & {
   thumbnailPlaceholderURL?: string;
   existingFileThumbnailUrl?: string;
   onDeleteUploaded?: (
@@ -27,12 +27,12 @@ export default function FileUploaderWThumbnail({
   const fileUploaderRef = useRef<HTMLDivElement | null>(null);
   const fileInput = useQuerySelector<HTMLInputElement>(
     fileUploaderRef,
-    "input.cds--visually-hidden"
+    'input.cds--visually-hidden'
   );
 
   const fileContainer = useQuerySelector(
     fileUploaderRef,
-    ".cds--file-container"
+    '.cds--file-container'
   );
 
   const emptyThumbnailURL = thumbnailPlaceholderURL
@@ -49,7 +49,6 @@ export default function FileUploaderWThumbnail({
   }
 
   function addCustomDeleteButton() {
-    setThumbnailUrl(existingFileThumbnailUrl!);
     injectToFileContainer(
       // <div style={{ width: "100%", height: "100%" }}>
       <span
@@ -71,11 +70,12 @@ export default function FileUploaderWThumbnail({
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     removeTemporaryDeleteBtn();
     if (event.target.files?.length) {
+      // addCustomDeleteButton();
       setFile(event.target.files[0]);
       const file = event.target.files[0];
       const fileUrl = URL.createObjectURL(file);
       setThumbnailUrl(fileUrl);
-      console.log("the selected file changed", file);
+      console.log('the selected file changed', file);
     }
     Props.onChange && Props.onChange(event);
   };
@@ -83,10 +83,10 @@ export default function FileUploaderWThumbnail({
   function handleDelete(e: MouseEvent<HTMLElement, globalThis.MouseEvent>) {
     Props.onDelete && Props.onDelete(e);
     removeTemporaryDeleteBtn();
-    fileInput!.value = "";
-    console.log("the selected file deleted");
+    fileInput!.value = '';
+    console.log('the selected file deleted');
     fileInput?.files &&
-      console.log("the selected files are empty: ", fileInput.files);
+      console.log('the selected files are empty: ', fileInput.files);
     setThumbnailUrl(emptyThumbnailURL);
     setFile(null);
   }
@@ -98,9 +98,9 @@ export default function FileUploaderWThumbnail({
     // fileInputRef!.value = '';
     removeTemporaryDeleteBtn();
 
-    console.log("the existing file deleted");
+    console.log('the existing file deleted');
     fileInput?.files &&
-      console.log("the selected files are empty: ", fileInput.files);
+      console.log('the selected files are empty: ', fileInput.files);
     setThumbnailUrl(emptyThumbnailURL);
     setFile(null);
   }
@@ -116,20 +116,16 @@ export default function FileUploaderWThumbnail({
 
   useEffect(() => {
     if (fileContainer && !file && existingFileThumbnailUrl) {
-      // fileContainer. = () => {
-      //   console.log("Changed!!!!");
-
-      //   addCustomDeleteButton();
-      // };
+      setThumbnailUrl(existingFileThumbnailUrl);
       addCustomDeleteButton();
     }
     // fileInput?.files && console.log(fileInput?.files[0]);
-  }, [fileContainer, file]);
+  }, [fileContainer]);
 
   useEffect(() => {
     fileUploaderRef.current &&
       fileUploaderRef.current.style.setProperty(
-        "--thumbnail-url",
+        '--thumbnail-url',
         `url(${thumbnailUrl})`
       );
   }, [thumbnailUrl]);
