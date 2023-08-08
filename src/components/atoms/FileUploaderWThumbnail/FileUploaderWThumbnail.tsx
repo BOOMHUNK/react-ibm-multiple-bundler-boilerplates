@@ -131,7 +131,7 @@ export default function FileUploaderWThumbnail({
   }, [thumbnailUrl]);
 
   return (
-    <div id="file-uploader-w-thumbnails" ref={fileUploaderRef}>
+    <div className="file-uploader-w-thumbnails" ref={fileUploaderRef}>
       <FileUploader
         {...Props}
         multiple={false}

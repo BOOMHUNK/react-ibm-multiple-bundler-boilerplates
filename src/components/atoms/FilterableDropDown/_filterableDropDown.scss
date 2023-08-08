@@ -1,0 +1,54 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/colors' as *;
+@use '@carbon/react/scss/breakpoint' as *;
+@use '@carbon/react/scss/theme' as *;
+
+.filterable-dropdown-container {
+  position: relative;
+  .filterable-dropdown {
+    .cds--list-box__menu-item {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      .cds--list-box__menu-item__option {
+        // padding: 0.6875rem 1.2rem;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+
+        .item {
+          padding-left: 1rem;
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          height: 100%;
+        }
+        .category {
+          font-weight: 600;
+          //     font-size: 12px;
+          background-color: $gray-40;
+          border-bottom: solid 2px $gray-40;
+          color: $gray-20;
+          padding-left: 0.3rem;
+          cursor: default;
+        }
+      }
+    }
+    //     .cds--list-box__menu-item[disabled] {
+    //       .cds--list-box__menu-item__option {
+    //       }
+    //     }
+  }
+  .suffix {
+    position: absolute;
+    right: 4rem;
+    bottom: 0.9rem;
+    color: #525252;
+    font-size: 12px;
+    user-select: none;
+    pointer-events: none;
+  }
+}

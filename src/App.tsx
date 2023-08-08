@@ -1,13 +1,11 @@
-import { Content } from '@carbon/react';
+import { ComboBox, Content, FilterableMultiSelect, FluidForm } from '@carbon/react';
 
 import './app.scss';
 import {
   DarkInvertedSection,
-  FileUploaderWThumbnail,
-  MegaTabbedMenu,
 } from './components/molecules';
 import { UserProfile } from '@carbon/react/icons';
-import { useState } from 'react';
+import { FileUploaderWThumbnail, FilterableDropDown, MegaTabbedMenu } from './components/atoms';
 
 const App = (): JSX.Element => {
   const MakeSampleData = (count: number) => {
@@ -88,7 +86,16 @@ const App = (): JSX.Element => {
     });
     return sampleData;
   };
-
+  const comboboxItems: DropDownItemType[] = [
+    { id: "0", label: 'Red Wines:', isCategory: true },
+    { id: "1", label: 'Cabernet Sauvignon' },
+    { id: "2", label: 'Merlot' },
+    { id: "3", label: 'Malbec' },
+    { id: "4", label: 'White Wines', isCategory: true },
+    { id: "5", label: 'Chardonnay' },
+    { id: "6", label: 'Sauvignon Blanc' },
+    { id: "7", label: 'Pinot Grigio' },
+  ];
   return (
     <Content>
       <DarkInvertedSection
@@ -115,6 +122,42 @@ const App = (): JSX.Element => {
         existingFileThumbnailUrl="/vite.svg"
         name=""
       />
+
+      <br />
+
+      <FilterableDropDown
+        onChange={(d) => {
+          console.log(d);
+        }}
+        // initialSelectedItem={comboboxItems[1]}
+        id="wines-filterable-dropdown"
+        suffix='optional'
+        items={comboboxItems}
+        // itemToElement={(item: any) => {
+        //   return (
+
+        //   );
+        // }}
+        downshiftProps={{
+          onStateChange: () => {
+            // console.log('the state has changed');
+          },
+        }}
+
+        titleText="Wines"
+        helperText="Combobox helper text"
+      // warn={true}
+      // warnText="adawd"
+
+      />
+
+
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
     </Content>
   );
 };

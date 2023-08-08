@@ -7,9 +7,9 @@ type Size = {
 };
 
 export default function useElementResizeObserver(
-  element: HTMLElement | undefined | null, delay = 0
+  element: HTMLElement | undefined | null,
+  delay = 0
 ): Size {
-
   const [size, setSize] = useState<Size>({ width: 0, height: 0 });
 
   const observer = useRef<ResizeObserver>();
@@ -23,7 +23,7 @@ export default function useElementResizeObserver(
         setSize({ width, height });
       }
     },
-    [size, setSize]
+    [element, size, setSize]
   );
 
   // Debounced resize handler

@@ -1,21 +1,21 @@
-@use "@carbon/react/scss/spacing" as *;
-@use "@carbon/react/scss/type" as *;
-@use "@carbon/react/scss/colors" as *;
-@use "@carbon/react/scss/breakpoint" as *;
-@use "@carbon/react/scss/theme" as *;
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/colors' as *;
+@use '@carbon/react/scss/breakpoint' as *;
+@use '@carbon/react/scss/theme' as *;
 
-#file-uploader-w-thumbnails {
-  --thumbnail-url: "";
+.file-uploader-w-thumbnails {
+  --thumbnail-url: '';
   position: relative;
   .cds--form-item {
-    @include breakpoint("md") {
+    @include breakpoint('md') {
       display: inline-block;
     }
     button {
       margin-bottom: 1rem;
-      @include breakpoint("md") {
+      @include breakpoint('md') {
         position: absolute;
-        left: 8rem;
+        left: 9rem;
         bottom: 0;
         margin-bottom: 0;
       }
@@ -24,8 +24,8 @@
       position: relative;
       float: left;
       margin-top: 0;
-      width: 7rem !important;
-      height: 7rem !important;
+      width: 7.96rem !important;
+      height: 7.96rem !important;
 
       background-image: var(--thumbnail-url);
       background-position: center;
@@ -59,14 +59,14 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-image: url("/images/trash-can.svg");
+            background-image: url('/images/trash-can.svg');
             background-position: center;
             background-size: 70%;
             background-repeat: no-repeat;
           }
           svg {
             opacity: 0;
-            content: "";
+            content: '';
           }
         }
       }
