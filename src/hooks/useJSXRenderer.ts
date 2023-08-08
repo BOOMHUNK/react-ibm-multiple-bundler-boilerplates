@@ -1,5 +1,5 @@
-import { useRef, useEffect, useCallback } from 'react';
-import { Root, createRoot } from 'react-dom/client';
+import { useRef, useEffect, useCallback } from "react";
+import { Root, createRoot } from "react-dom/client";
 
 export default function useJSXRenderer<T extends HTMLElement>(
   element: T | null
