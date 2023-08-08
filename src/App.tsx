@@ -112,8 +112,8 @@ const App = (): JSX.Element => {
         filenameStatus="edit"
         accept={['.jpg', '.png']}
         iconDescription="Delete file"
-        name=""
         existingFileThumbnailUrl="/vite.svg"
+        name=""
       />
     </Content>
   );
