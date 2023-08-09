@@ -4,6 +4,7 @@ import { ComboBoxProps } from 'carbon-components-react';
 import './_filterableDropDown.scss';
 import useQuerySelector from '../../../hooks/useQuerySelector';
 import useElementResizeObserver from '../../../hooks/useElementResizeObserver';
+import useJSXRenderer from '../../../hooks/useJSXRenderer';
 
 type Props = Omit<ComboBoxProps<DropDownItemType, DropDownItemType>, 'items' | 'itemToElement'> & {
   id: string;
@@ -15,9 +16,21 @@ type Props = Omit<ComboBoxProps<DropDownItemType, DropDownItemType>, 'items' | '
 
 export default function FilterableDropDown({ suffix, ...props }: Props): ReactElement {
   if (props.items) props.items = props.items.map(item => item.isCategory ? { ...item, disabled: true } : item);
+
+
+
+
   const ComboRef = useRef<HTMLDivElement | null>(null);
-  const labelEl = useQuerySelector(ComboRef, '.cds--label')
-  const { height: labelHeight } = useElementResizeObserver(labelEl);
+  const container = useQuerySelector(ComboRef, '.cds--list-box__field')
+  const [injectToFileContainer, removeFileContainerRoot] =
+    useJSXRenderer(container, suffix && <span
+      className='suffix'
+      style={{
+
+      }}
+    >
+      {suffix}
+    </span>, { style: "position: absolute; right: 0; bottom: 0rem; top: 0; left: 0; pointer-events:none;" });
 
   return (
     <div ref={ComboRef} className='filterable-dropdown-container' >
@@ -27,7 +40,7 @@ export default function FilterableDropDown({ suffix, ...props }: Props): ReactEl
         itemToElement={(item) => <div className={`item ${item.isCategory ? "category" : ""}`}>{item.label}</div>}
         {...props}
       />
-      {
+      {/* {
         suffix && (
           <span
             className='suffix'
@@ -38,7 +51,7 @@ export default function FilterableDropDown({ suffix, ...props }: Props): ReactEl
             {suffix}
           </span>
         )
-      }
+      } */}
     </div >
   );
 }

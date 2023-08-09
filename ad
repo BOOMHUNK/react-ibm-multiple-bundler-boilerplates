@@ -19,7 +19,7 @@ export default function useJSXRenderer<T extends HTMLElement>(
   const rootRef = useRef<Root | null>();
   const containerClass = "dom-dummy-element";
 
-  const [isRendered, setIsRendered] = useState(true);
+  const [isRendered, setIsRendered] = useState(false);
   const lastJSX = jsx;
 
 
@@ -37,10 +37,8 @@ export default function useJSXRenderer<T extends HTMLElement>(
         console.log("component mount");
         rootRef.current = createRoot(containerRef.current);
 
-        if (isRendered) {
-          rootRef.current.render(jsx);
-          element.appendChild(containerRef.current);
-        }
+        rootRef.current.render(jsx);
+        element.appendChild(containerRef.current)
         elementRef.current = element;
       }
       // else if (element && rootRef.current) {
@@ -66,34 +64,31 @@ export default function useJSXRenderer<T extends HTMLElement>(
 
   const render = useCallback<() => void>(
     () => {
-      // setIsRendered(true);
+      if (rootRef.current && containerRef.current) {
+
+        // rootRef.current.render(jsx);
+        // setIsRendered(true);
+      }
     },
     [jsx]
   );
 
   useEffect(() => {
-    if (elementRef.current && containerRef.current && rootRef.current) {
-      const exisiting = Array.from(elementRef.current?.getElementsByClassName(containerClass));
-      console.log("removing existing: ", exisiting);
-      exisiting.forEach(element => {
-        element.remove();
-      });
+    if (element && containerRef.current && rootRef.current) {
+      containerRef.current?.parentNode?.removeChild(containerRef.current);
 
-      if (isRendered) {
-        rootRef.current.render(jsx);
-        elementRef.current.appendChild(containerRef.current);
-      }
+      rootRef.current.render(jsx);
     }
-  }, [element, jsx, isRendered]);
+  }, [element, jsx]);
 
   function remove() {
     if (elementRef.current) {
 
-      const exisiting = Array.from(elementRef.current?.getElementsByClassName(containerClass));
-      console.log("removing existing: ", exisiting);
-      exisiting.forEach(element => {
-        element.remove();
-      });
+      const exisiting = elementRef.current?.getElementsByClassName(".dom-dummy-element")[0];
+      console.log("removing existing: ", containerRef.current?.parentNode);
+      containerRef.current?.parentNode?.removeChild(containerRef.current);
+      // if (exisiting)
+      //   elementRef.current?.removeChild(exisiting);
     }
     else console.log("no element given");
 
@@ -102,7 +97,7 @@ export default function useJSXRenderer<T extends HTMLElement>(
     const root = rootRef.current;
     rootRef.current = null;
     setTimeout(() => { if (root) root.unmount(); });
-    setIsRendered(false);
+    // setIsRendered(false);
 
   }
 
