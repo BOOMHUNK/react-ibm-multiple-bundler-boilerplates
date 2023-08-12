@@ -1,11 +1,11 @@
-import { ComboBox, Content, FilterableMultiSelect, FluidForm } from '@carbon/react';
+import { ComboBox, Content, ExpandableTile, TileAboveTheFoldContent, TileBelowTheFoldContent } from '@carbon/react';
 
 import './app.scss';
 import {
   DarkInvertedSection,
 } from './components/molecules';
 import { UserProfile } from '@carbon/react/icons';
-import { FileUploaderWThumbnail, FilterableDropDown, MegaTabbedMenu } from './components/atoms';
+import { FileUploaderWThumbnail, FilterableDropDown, MegaTileMenu } from './components/atoms';
 
 const App = (): JSX.Element => {
   const MakeSampleData = (count: number) => {
@@ -78,7 +78,7 @@ const App = (): JSX.Element => {
       ],
       ButtonTitle: 'Buy It',
     };
-    const sampleData: MegaTabbedMenuDataType = [];
+    const sampleData: MegaTileMenuDataType = [];
     for (let i = 0; i < count; i++) sampleData.push(singleSampleTabData);
     sampleData.push({
       IsButton: true,
@@ -108,7 +108,7 @@ const App = (): JSX.Element => {
       />
       <br />
 
-      <MegaTabbedMenu Data={MakeSampleData(15)} sm={1} md={2} lg={6} xl={6} />
+      <MegaTileMenu Data={MakeSampleData(15)} sm={1} md={2} lg={6} xl={6} />
       <br />
       <FileUploaderWThumbnail
         labelTitle="Upload file"

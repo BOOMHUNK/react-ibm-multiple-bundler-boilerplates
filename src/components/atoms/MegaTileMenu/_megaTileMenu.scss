@@ -4,14 +4,14 @@
 @use '@carbon/react/scss/breakpoint' as *;
 @use '@carbon/react/scss/theme' as *;
 
-.mega-tabbed-menu {
+.mega-tile-menu {
   position: relative;
   display: flex !important;
   justify-content: flex-start !important;
   align-items: stretch;
   flex-wrap: wrap !important;
 
-  .tab-button,
+  .tile-button,
   .simple-button {
     border: 0px solid $gray-30;
     padding: $spacing-05;
@@ -87,7 +87,7 @@
       }
     }
   }
-  .tab-button-active {
+  .tile-button-active {
     background-color: $gray-10;
     border-color: $gray-20;
     border-bottom-color: $gray-10 !important;
@@ -125,29 +125,29 @@
       }
     }
   }
-  .tab-content-parent {
+  .tile-content-parent {
     width: 100%;
     overflow: hidden;
     transition: all 0.4s;
   }
-  .tab-content-parent-active {
+  .tile-content-parent-active {
     background-color: $gray-10;
   }
-  .tab-content {
+  .tile-content {
     padding: $spacing-05;
   }
-  .tab-content-container {
+  .tile-content-container {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: start;
     width: 100%;
     height: 100%;
-    .tab-content-title {
+    .tile-content-title {
       @include type-style('heading-compact-02');
       color: $gray-100;
     }
-    .tab-content-sections {
+    .tile-content-sections {
       display: grid;
       width: 100%;
       height: 100%;
@@ -155,14 +155,14 @@
       grid-gap: 2rem 0rem;
       color: $gray-60;
 
-      .tab-content-section {
+      .tile-content-section {
         width: 100%;
         grid-auto-columns: auto;
         margin-top: 1.63rem;
-        .tab-content-section-title {
+        .tile-content-section-title {
           color: $blue-60;
         }
-        .tab-content-section-points {
+        .tile-content-section-points {
           margin-top: $spacing-05;
           padding: $spacing-02;
           li {
@@ -184,14 +184,14 @@
         grid-gap: 3rem 4.5rem;
       }
     }
-    .tab-content-button-container {
+    .tile-content-button-container {
       margin-top: 2rem;
       width: 100%;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 1.69rem;
-      .tab-content-tryItNow {
+      .tile-content-tryItNow {
         padding: 0.5rem 0.81rem;
         @include type-style('body-compact-01');
         color: $link-primary;
@@ -200,7 +200,7 @@
           display: none;
         }
       }
-      .tab-content-button {
+      .tile-content-button {
         width: 15rem;
         @include breakpoint-down('md') {
           width: 7.5rem !important;

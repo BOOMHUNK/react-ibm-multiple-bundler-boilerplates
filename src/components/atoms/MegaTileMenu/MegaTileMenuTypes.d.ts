@@ -1,4 +1,4 @@
-type TabData = {
+type TileData = {
   Icon: FC<any>;
   Title: string;
   Desc: string;
@@ -12,15 +12,15 @@ type TabData = {
   ButtonAction?: React.MouseEventHandler<HTMLElement> | undefined;
   SecondButtonAction?: React.MouseEventHandler<HTMLElement> | undefined;
 };
-type SimpleTabButtonType = {
+type SimpleTileButtonType = {
   IsButton: boolean;
   ButtonTitle: string;
   id?: number;
   ButtonAction?: (...args: any) => any;
 };
 
-type RawData = TabData | SimpleTabButtonType;
-type MegaTabbedMenuDataType = RawData[];
+type RawData = TileData | SimpleTileButtonType;
+type MegaTileMenuDataType = RawData[];
 
-type ProcessedTabData = TabData | SimpleTabButtonType | number;
-type ProcessedMegaTabbedMenuData = ProcessedTabData[];
+type ProcessedTileData = TileData | SimpleTileButtonType | number;
+type ProcessedMegaTileMenuData = ProcessedTileData[];

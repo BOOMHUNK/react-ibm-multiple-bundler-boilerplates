@@ -1,12 +1,12 @@
 import { Children, FC, useEffect, useRef, useState } from 'react';
-import './_megaTabbedMenu.scss';
+import './_megaTileMenu.scss';
 import { Button, Column, Grid, Row } from '@carbon/react';
 import { ChevronDown, ArrowRight } from '@carbon/react/icons';
 import useBreakpoints from '../../../hooks/useBreakpoints';
 import useElementResizeObserver from '../../../hooks/useElementResizeObserver';
 
 type Props = {
-  Data: MegaTabbedMenuDataType;
+  Data: MegaTileMenuDataType;
 
   sm: number;
   md?: number;
@@ -15,37 +15,37 @@ type Props = {
 };
 
 function processData(
-  Data: MegaTabbedMenuDataType,
-  rowAfterNTabs: number,
+  Data: MegaTileMenuDataType,
+  rowAfterNTiles: number,
   setProcessedData: React.Dispatch<
-    React.SetStateAction<ProcessedMegaTabbedMenuData>
+    React.SetStateAction<ProcessedMegaTileMenuData>
   >
 ) {
-  const processed: ProcessedMegaTabbedMenuData = [];
+  const processed: ProcessedMegaTileMenuData = [];
   for (let i = 0; i < Data.length; i++) {
-    const singleTabData: RawData = { ...Data[i] };
-    singleTabData.id = i;
-    // console.log('singleTabData id: ', singleTabData.id);
+    const singleTileData: RawData = { ...Data[i] };
+    singleTileData.id = i;
+    // console.log('singleTileData id: ', singleTileData.id);
 
-    if (i != 0 && i % rowAfterNTabs == 0) {
-      processed.push(i / rowAfterNTabs);
-      processed.push(singleTabData);
+    if (i != 0 && i % rowAfterNTiles == 0) {
+      processed.push(i / rowAfterNTiles);
+      processed.push(singleTileData);
     } else {
-      processed.push(singleTabData);
+      processed.push(singleTileData);
     }
   }
   // processed.push({ IsButton: true, ButtonTitle: "Watch pricing" });
-  processed.push(Math.ceil(Data.length / rowAfterNTabs));
+  processed.push(Math.ceil(Data.length / rowAfterNTiles));
 
   setProcessedData(processed);
 }
 
-export default function MegaTabbedMenu({ Data, ...Props }: Props) {
+export default function MegaTileMenu({ Data, ...Props }: Props) {
   const breakpoints = useBreakpoints(10);
   const [rowCapacity, setRowCapacity] = useState<number>(6);
   const [processedData, setProcessedData] =
-    useState<ProcessedMegaTabbedMenuData>(Data);
-  const [activeTab, setActiveTab] = useState<TabData | null>(null);
+    useState<ProcessedMegaTileMenuData>(Data);
+  const [activeTile, setActiveTile] = useState<TileData | null>(null);
 
   useEffect(() => {
     if (!Props.xl) {
@@ -64,42 +64,42 @@ export default function MegaTabbedMenu({ Data, ...Props }: Props) {
   }, [Props.lg, Props.md, Props.sm, Props.xl, breakpoints]);
 
   useEffect(() => {
-    // console.log(rowAfterNTabs);
+    // console.log(rowAfterNTiles);
     processData(Data, rowCapacity, setProcessedData);
   }, [rowCapacity]);
 
   useEffect(() => {
-    // console.log(activeTab?.id);
-  }, [activeTab]);
+    // console.log(activeTile?.id);
+  }, [activeTile]);
 
   return (
     <Grid fullWidth>
-      <Column className="mega-tabbed-menu" lg={16} md={8} sm={4}>
+      <Column className="mega-tile-menu" lg={16} md={8} sm={4}>
         {processedData?.length &&
           processedData.map((singleProcessedData, i) => {
             if (typeof singleProcessedData == 'number') {
               // console.log('rowOrder: ', singleProcessedData);
               return (
-                <TabContent
+                <TileContent
                   IsActive={
-                    activeTab?.id || activeTab?.id == 0
+                    activeTile?.id || activeTile?.id == 0
                       ? singleProcessedData ==
-                        Math.floor(activeTab.id / rowCapacity) + 1
+                        Math.floor(activeTile.id / rowCapacity) + 1
                       : false
                   }
-                  ActiveData={activeTab as TabData}
+                  ActiveData={activeTile as TileData}
                   order={singleProcessedData}
                   key={i}
                 />
               );
             } else {
               const simpleButtonData =
-                singleProcessedData as SimpleTabButtonType;
+                singleProcessedData as SimpleTileButtonType;
               if (simpleButtonData.IsButton) {
                 return (
-                  <TabButtun
+                  <TileButtun
                     ButtonTitle={simpleButtonData.ButtonTitle}
-                    TotalTabsCount={rowCapacity}
+                    TotalTilesCount={rowCapacity}
                     OnClick={(e) => {
                       simpleButtonData.ButtonAction &&
                         simpleButtonData.ButtonAction(e);
@@ -108,38 +108,38 @@ export default function MegaTabbedMenu({ Data, ...Props }: Props) {
                   />
                 );
               } else {
-                const tabData: TabData = singleProcessedData as TabData;
+                const tileData: TileData = singleProcessedData as TileData;
                 const makeBorderClasses = (): string => {
                   const s = new Set<string>();
-                  if (tabData?.id || tabData?.id == 0) {
-                    if (tabData.id == 0) {
+                  if (tileData?.id || tileData?.id == 0) {
+                    if (tileData.id == 0) {
                       s.add('top-border');
                       s.add('left-border');
                       s.add('bottom-border');
                       s.add('right-border');
-                    } else if (tabData.id == Data.length - 1) {
+                    } else if (tileData.id == Data.length - 1) {
                       s.add('bottom-border');
                       s.add('right-border');
                       if (
-                        tabData.id < rowCapacity ||
-                        ((activeTab?.id || activeTab?.id == 0) &&
-                          Math.floor(activeTab.id / rowCapacity) + 1 ==
-                            Math.floor(tabData.id / rowCapacity))
+                        tileData.id < rowCapacity ||
+                        ((activeTile?.id || activeTile?.id == 0) &&
+                          Math.floor(activeTile.id / rowCapacity) + 1 ==
+                            Math.floor(tileData.id / rowCapacity))
                       )
                         s.add('top-border');
                     } else {
                       s.add('right-border');
                       s.add('bottom-border');
                       if (
-                        tabData.id < rowCapacity ||
-                        ((activeTab?.id || activeTab?.id == 0) &&
-                          Math.floor(activeTab.id / rowCapacity) + 1 ==
-                            Math.floor(tabData.id / rowCapacity))
+                        tileData.id < rowCapacity ||
+                        ((activeTile?.id || activeTile?.id == 0) &&
+                          Math.floor(activeTile.id / rowCapacity) + 1 ==
+                            Math.floor(tileData.id / rowCapacity))
                       )
                         s.add('top-border');
                       if (
-                        tabData.id % rowCapacity == 0 ||
-                        activeTab?.id == tabData.id - 1
+                        tileData.id % rowCapacity == 0 ||
+                        activeTile?.id == tileData.id - 1
                       )
                         s.add('left-border');
                     }
@@ -147,13 +147,13 @@ export default function MegaTabbedMenu({ Data, ...Props }: Props) {
                   return [...s].join(' ');
                 };
                 return (
-                  <TabButtun
+                  <TileButtun
                     BordersClasses={makeBorderClasses()}
-                    Data={tabData}
-                    TotalTabsCount={rowCapacity}
-                    IsActive={activeTab?.id == tabData.id}
+                    Data={tileData}
+                    TotalTilesCount={rowCapacity}
+                    IsActive={activeTile?.id == tileData.id}
                     OnClick={(isActive) =>
-                      !isActive ? setActiveTab(tabData) : setActiveTab(null)
+                      !isActive ? setActiveTile(tileData) : setActiveTile(null)
                     }
                     key={i}
                   />
@@ -168,33 +168,33 @@ export default function MegaTabbedMenu({ Data, ...Props }: Props) {
 
 // //////////////////////////////////////////////////////////////////////////////// //
 
-type TabButtunProps = {
-  Data?: TabData;
+type TileButtunProps = {
+  Data?: TileData;
   ButtonTitle?: string;
   IsActive?: boolean;
-  TotalTabsCount: number;
+  TotalTilesCount: number;
   OnClick: (...args: any) => any;
   BordersClasses?: string;
 };
 
-function TabButtun({
+function TileButtun({
   Data,
   ButtonTitle,
-  TotalTabsCount,
+ TotalTilesCount,
   IsActive,
   OnClick,
   BordersClasses,
-}: TabButtunProps) {
+}: TileButtunProps) {
   if (Data && IsActive != undefined) {
-    // console.log("It's a Tab button.");
+    // console.log("It's a Tile button.");
     return (
       <div
-        className={`tab-button ${
-          IsActive && 'tab-button-active'
+        className={`tile-button ${
+          IsActive && 'tile-button-active'
         } ${BordersClasses}
       )}`}
         style={{
-          width: `${100.0 / TotalTabsCount}%`,
+          width: `${100.0 / TotalTilesCount}%`,
         }}
         onClick={() => OnClick(IsActive)}
       >
@@ -230,7 +230,7 @@ function TabButtun({
       <div
         className={`simple-button`}
         style={{
-          width: `${100 / TotalTabsCount}%`,
+          width: `${100 / TotalTilesCount}%`,
         }}
         onClick={() => OnClick()}
       >
@@ -245,12 +245,12 @@ function TabButtun({
 
 // //////////////////////////////////////////////////////////////////////////////// //
 
-type TabContentProps = {
-  ActiveData: TabData;
+type TileContentProps = {
+  ActiveData: TileData;
   IsActive?: boolean;
   order: number;
 };
-function TabContent({ order, IsActive, ActiveData }: TabContentProps) {
+function TileContent({ order, IsActive, ActiveData }: TileContentProps) {
   const contentRef = useRef<HTMLDivElement>(null);
   const [contentHeight, setContentHeight] = useState<string | null>(null);
   const { height } = useElementResizeObserver(contentRef.current, 100);
@@ -265,25 +265,25 @@ function TabContent({ order, IsActive, ActiveData }: TabContentProps) {
 
   return (
     <div
-      className={`tab-content-parent ${
-        IsActive && 'tab-content-parent-active'
+      className={`tile-content-parent ${
+        IsActive && 'tile-content-parent-active'
       }`}
       style={{ width: '100%', height: contentHeight || 0 }}
     >
-      <div className={`tab-content`} ref={contentRef}>
+      <div className={`tile-content`} ref={contentRef}>
         {ActiveData && IsActive && (
-          <div className="tab-content-container">
-            <div className="tab-content-title">{ActiveData.ContentTitle}</div>
-            <div className="tab-content-sections">
+          <div className="tile-content-container">
+            <div className="tile-content-title">{ActiveData.ContentTitle}</div>
+            <div className="tile-content-sections">
               {ActiveData.ContentSections?.length &&
                 ActiveData.ContentSections.map((currentSection, i) => {
                   return (
-                    <div className="tab-content-section" key={i}>
-                      <span className="tab-content-section-title">
+                    <div className="tile-content-section" key={i}>
+                      <span className="tile-content-section-title">
                         {currentSection.SectionTitle}
                       </span>
                       {currentSection.SectionPoints?.length && (
-                        <ul className="tab-content-section-points">
+                        <ul className="tile-content-section-points">
                           {currentSection.SectionPoints.map(
                             (sectionPoint, i) => (
                               <li key={i}>{sectionPoint}</li>
@@ -296,19 +296,19 @@ function TabContent({ order, IsActive, ActiveData }: TabContentProps) {
                 })}
             </div>
             {ActiveData.ButtonTitle && (
-              <div className="tab-content-button-container">
+              <div className="tile-content-button-container">
                 <span
                   onClick={(e) => {
                     ActiveData.SecondButtonAction &&
                       ActiveData.SecondButtonAction(e);
                   }}
-                  className="tab-content-tryItNow"
+                  className="tile-content-tryItNow"
                 >
                   Try it now
                 </span>
                 <Button
                   size="md"
-                  className="tab-content-button"
+                  className="tile-content-button"
                   renderIcon={ArrowRight}
                   onClick={(e) =>
                     ActiveData.ButtonAction && ActiveData.ButtonAction(e)

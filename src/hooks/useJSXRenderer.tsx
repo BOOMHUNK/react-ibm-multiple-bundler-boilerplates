@@ -7,9 +7,6 @@ type RootElementOptions = {
   class?: string;
 }
 
-
-
-
 export default function useJSXRenderer<T extends HTMLElement>(
   element: T | null, jsx: React.ReactNode, rootElementOptions?: RootElementOptions
 ): [render: () => void, remove: () => void] {
@@ -20,8 +17,6 @@ export default function useJSXRenderer<T extends HTMLElement>(
   const containerClass = "dom-dummy-element";
 
   const [isRendered, setIsRendered] = useState(true);
-  const lastJSX = jsx;
-
 
   useEffect(() => {
 
@@ -34,7 +29,7 @@ export default function useJSXRenderer<T extends HTMLElement>(
         containerRef.current.setAttribute('class', containerClass);
         rootElementOptions?.class && containerRef.current.setAttribute('class', rootElementOptions.class);
         containerRef.current.setAttribute('style', ` ${rootElementOptions?.style ? rootElementOptions.style + " " : "width: 100%; height: 100%; "}`);
-        console.log("component mount");
+        // console.log("component mount");
         rootRef.current = createRoot(containerRef.current);
 
         if (isRendered) {
@@ -43,30 +38,22 @@ export default function useJSXRenderer<T extends HTMLElement>(
         }
         elementRef.current = element;
       }
-      // else if (element && rootRef.current) {
-      //   rootRef.current.unmount();
-
-      // }
     });
     return () => {
       clearTimeout(renderTimeout);
-      // if (containerRef.current?.innerHTML) containerRef.current.innerHTML = '';
       // const root = rootRef.current;
       // rootRef.current = null;
-
       // setTimeout(() => {
-      //   if (root) {
-      //     console.log("component unmount");
-      //     root.unmount();
-      //   }
-      // });
+      //   if (root) root.unmount();
+      //   // console.log("*removed");
+      // }, 1000);
     };
   }, [element, rootElementOptions?.style, rootElementOptions?.class, rootElementOptions?.tag]);
 
 
   const render = useCallback<() => void>(
     () => {
-      // setIsRendered(true);
+      setIsRendered(true);
     },
     [jsx]
   );
@@ -74,7 +61,7 @@ export default function useJSXRenderer<T extends HTMLElement>(
   useEffect(() => {
     if (elementRef.current && containerRef.current && rootRef.current) {
       const exisiting = Array.from(elementRef.current?.getElementsByClassName(containerClass));
-      console.log("removing existing: ", exisiting);
+      // console.log("removing existing: ", exisiting);
       exisiting.forEach(element => {
         element.remove();
       });
@@ -90,12 +77,12 @@ export default function useJSXRenderer<T extends HTMLElement>(
     if (elementRef.current) {
 
       const exisiting = Array.from(elementRef.current?.getElementsByClassName(containerClass));
-      console.log("removing existing: ", exisiting);
+      // console.log("removing existing: ", exisiting);
       exisiting.forEach(element => {
         element.remove();
       });
     }
-    else console.log("no element given");
+    // else console.log("no element given");
 
 
 
