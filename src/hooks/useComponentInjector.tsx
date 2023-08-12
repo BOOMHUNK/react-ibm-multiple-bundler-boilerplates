@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback, useState, createElement } from "react";
+import React, { useRef, useEffect, useCallback, useState, createElement, ComponentType } from "react";
 import { Root, createRoot } from "react-dom/client";
 
 type RootElementOptions = {
@@ -8,7 +8,7 @@ type RootElementOptions = {
 }
 
 type ComponentInjectorOptions<T> = {
-  component: React.FC<T>;
+  component: ComponentType<T>;
   props?: T;
   rootElementOptions?: RootElementOptions;
 };
@@ -20,7 +20,7 @@ export default function useComponentInjector<T extends Record<string, any>>(
   const containerRef = useRef<HTMLElement | null>(null);
   const elementRef = useRef<HTMLElement | null>(null);
   const rootRef = useRef<Root | null>();
-  const containerClass = "dom-dummy-element";
+  const [containerId, setContainerId] = useState<string>(() => generateContainerId());
 
   const [isRendered, setIsRendered] = useState(isInitiallyRendered);
 
@@ -31,7 +31,7 @@ export default function useComponentInjector<T extends Record<string, any>>(
           `${options.rootElementOptions?.tag ? options.rootElementOptions.tag : 'div'}`
         );
 
-        containerRef.current.setAttribute('class', containerClass);
+        containerRef.current.setAttribute('class', containerId);
         options.rootElementOptions?.class &&
           containerRef.current.setAttribute('class', options.rootElementOptions.class);
         containerRef.current.setAttribute(
@@ -60,7 +60,7 @@ export default function useComponentInjector<T extends Record<string, any>>(
 
   useEffect(() => {
     if (elementRef.current && containerRef.current && rootRef.current) {
-      const existing = Array.from(elementRef.current.getElementsByClassName(containerClass));
+      const existing = Array.from(elementRef.current.getElementsByClassName(containerId));
       existing.forEach(element => {
         element.remove();
       });
@@ -74,7 +74,7 @@ export default function useComponentInjector<T extends Record<string, any>>(
 
   function remove() {
     if (elementRef.current) {
-      const existing = Array.from(elementRef.current.getElementsByClassName(containerClass));
+      const existing = Array.from(elementRef.current.getElementsByClassName(containerId));
       existing.forEach(element => {
         element.remove();
       });
@@ -93,24 +93,28 @@ export default function useComponentInjector<T extends Record<string, any>>(
   return [render, remove, isRendered, setIsRendered];
 }
 
+function generateContainerId(): string {
+  const randomString = Math.random().toString(36).substring(7);
+  return `injected-root-${randomString}`;
+}
 
 
 
 /* usage example:
-
+ 
 import { useRef, useState } from "react";
 import useComponentInjector from "./hooks/useComponentInjector";
 import useQuerySelector from "./hooks/useQuerySelector";
-
+ 
 function MyComponent(props: { message: string }) {
   return <div>{props.message}</div>;
 }
-
+ 
 function App() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [text, setText] = useState<string>("Hello, World!");
   const thaDiv = useQuerySelector(containerRef, "#thaContainer");
-
+ 
   const [render, remove, isComponentRendered, setIsComponentRendered] = useComponentInjector(
     document.getElementById("thaContainer"),
     {
@@ -119,15 +123,15 @@ function App() {
     },
     false
   );
-
+ 
   const handleRenderClick = () => {
     setIsComponentRendered(true);
   };
-
+ 
   const handleRemoveClick = () => {
     setIsComponentRendered(false);
   };
-
+ 
   return (
     <div ref={containerRef}>
       <div id="thaContainer" />
@@ -137,6 +141,6 @@ function App() {
     </div>
   );
 }
-
+ 
 export default App; 
 */

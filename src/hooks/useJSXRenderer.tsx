@@ -14,7 +14,7 @@ export default function useJSXRenderer<T extends HTMLElement>(
   const containerRef = useRef<HTMLElement | null>(null);
   const elementRef = useRef<HTMLElement | null>(null);
   const rootRef = useRef<Root | null>();
-  const containerClass = "dom-dummy-element";
+  const [containerId, setContainerId] = useState<string>(() => generateContainerId());
 
   const [isRendered, setIsRendered] = useState(true);
 
@@ -26,7 +26,7 @@ export default function useJSXRenderer<T extends HTMLElement>(
 
         containerRef.current = document.createElement(`${rootElementOptions?.tag ? rootElementOptions.tag : 'div'}`);
 
-        containerRef.current.setAttribute('class', containerClass);
+        containerRef.current.setAttribute('class', containerId);
         rootElementOptions?.class && containerRef.current.setAttribute('class', rootElementOptions.class);
         containerRef.current.setAttribute('style', ` ${rootElementOptions?.style ? rootElementOptions.style + " " : "width: 100%; height: 100%; "}`);
         // console.log("component mount");
@@ -60,7 +60,7 @@ export default function useJSXRenderer<T extends HTMLElement>(
 
   useEffect(() => {
     if (elementRef.current && containerRef.current && rootRef.current) {
-      const exisiting = Array.from(elementRef.current?.getElementsByClassName(containerClass));
+      const exisiting = Array.from(elementRef.current?.getElementsByClassName(containerId));
       // console.log("removing existing: ", exisiting);
       exisiting.forEach(element => {
         element.remove();
@@ -76,7 +76,7 @@ export default function useJSXRenderer<T extends HTMLElement>(
   function remove() {
     if (elementRef.current) {
 
-      const exisiting = Array.from(elementRef.current?.getElementsByClassName(containerClass));
+      const exisiting = Array.from(elementRef.current?.getElementsByClassName(containerId));
       // console.log("removing existing: ", exisiting);
       exisiting.forEach(element => {
         element.remove();
@@ -94,4 +94,9 @@ export default function useJSXRenderer<T extends HTMLElement>(
   }
 
   return [render, remove];
+}
+
+function generateContainerId(): string {
+  const randomString = Math.random().toString(36).substring(7);
+  return `injected-root-${randomString}`;
 }
