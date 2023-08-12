@@ -86,20 +86,6 @@ export default function FileUploaderWThumbnail({
 
   function addCustomDeleteButton() {
     injectToFileContainer(
-
-      // <span
-      //   className="cds--file__selected-file cds--file__selected-file--md"
-      //   id="temporary-delete-btn"
-      // >
-      //   <span className="cds--file__state-container">
-      //     <button
-      //       className="cds--file-close"
-      //       type="button"
-      //       onClick={handleDeleteExisiting}
-      //     ></button>
-      //   </span>
-      // </span>
-
     );
   }
 

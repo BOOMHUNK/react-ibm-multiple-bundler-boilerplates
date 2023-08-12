@@ -13,16 +13,16 @@ type ComponentInjectorOptions<T> = {
   rootElementOptions?: RootElementOptions;
 };
 
-export default function useComponentInjector<T extends HTMLElement>(
-  element: T | null, options: ComponentInjectorOptions<any>
-): [render: () => void, remove: () => void] {
+export default function useComponentInjector<T extends Record<string, any>>(
+  element: HTMLElement | null, options: ComponentInjectorOptions<T>, isInitiallyRendered = true
+): [render: () => void, remove: () => void, isRendered: boolean, setIsRendered: React.Dispatch<React.SetStateAction<boolean>>] {
 
   const containerRef = useRef<HTMLElement | null>(null);
   const elementRef = useRef<HTMLElement | null>(null);
   const rootRef = useRef<Root | null>();
   const containerClass = "dom-dummy-element";
 
-  const [isRendered, setIsRendered] = useState(true);
+  const [isRendered, setIsRendered] = useState(isInitiallyRendered);
 
   useEffect(() => {
     const renderTimeout = setTimeout(() => {
@@ -52,7 +52,7 @@ export default function useComponentInjector<T extends HTMLElement>(
     return () => {
       clearTimeout(renderTimeout);
     };
-  }, [element, options]);
+  }, [element, options, isRendered]);
 
   const render = useCallback(() => {
     setIsRendered(true);
@@ -90,5 +90,53 @@ export default function useComponentInjector<T extends HTMLElement>(
     setIsRendered(false);
   }
 
-  return [render, remove];
+  return [render, remove, isRendered, setIsRendered];
 }
+
+
+
+
+/* usage example:
+
+import { useRef, useState } from "react";
+import useComponentInjector from "./hooks/useComponentInjector";
+import useQuerySelector from "./hooks/useQuerySelector";
+
+function MyComponent(props: { message: string }) {
+  return <div>{props.message}</div>;
+}
+
+function App() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [text, setText] = useState<string>("Hello, World!");
+  const thaDiv = useQuerySelector(containerRef, "#thaContainer");
+
+  const [render, remove, isComponentRendered, setIsComponentRendered] = useComponentInjector(
+    document.getElementById("thaContainer"),
+    {
+      component: MyComponent,
+      props: { message: text },
+    },
+    false
+  );
+
+  const handleRenderClick = () => {
+    setIsComponentRendered(true);
+  };
+
+  const handleRemoveClick = () => {
+    setIsComponentRendered(false);
+  };
+
+  return (
+    <div ref={containerRef}>
+      <div id="thaContainer" />
+      <button onClick={handleRenderClick}>Render Component</button>
+      <button onClick={handleRemoveClick}>Remove Component</button>
+      <input value={text} onChange={(e) => setText(e.target.value)} />
+    </div>
+  );
+}
+
+export default App; 
+*/
