@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom/client';
 import thumb from './assets/thumbnail-place-holder.jpg';
 import useJSXRenderer from '../../../hooks/useJSXRenderer';
 import { removeChild } from '../../../utils/DomManipulationHelpers';
+import useSetSCSSVariable from '../../../hooks/useSetSCSSVariable';
 
 type Props = Omit<FileUploaderProps, 'multiple'> & {
   thumbnailPlaceholderURL?: string;
@@ -39,45 +40,24 @@ export default function FileUploaderWThumbnail({
   const emptyThumbnailURL = thumbnailPlaceholderURL
     ? thumbnailPlaceholderURL
     : thumb;
-  const [jsxState, setjsxState] = useState<ReactNode>(<span
+  const tempDeleteBtnate = (<span
     className="cds--file__selected-file cds--file__selected-file--md"
     id="temporary-delete-btn"
   >
     <span className="cds--file__state-container">
-      <span onClick={() => {
-        updateJsx(); console.log("clicked");
-      }}>test</span>
       <button
         className="cds--file-close"
         type="button"
         onClick={handleDeleteExisiting}
       ></button>
-    </span>
-  </span >);
+    </span>  </span>);
 
-
-  function updateJsx() {
-    setjsxState(<span
-      className="cds--file__selected-file cds--file__selected-file--md"
-      id="temporary-delete-btn"
-    >
-      <span className="cds--file__state-container">
-        <span onClick={() => {
-          updateJsx(); console.log("clicked");
-        }}>new</span>
-        <button
-          className="cds--file-close"
-          type="button"
-          onClick={handleDeleteExisiting}
-        ></button>
-      </span>
-    </span >)
-  }
 
 
   const [thumbnailUrl, setThumbnailUrl] = useState<string>(emptyThumbnailURL);
+  useSetSCSSVariable(fileUploaderRef.current, 'thumbnail-url', `url(${thumbnailUrl})`);
   const [injectToFileContainer, removeFileContainerRoot] =
-    useJSXRenderer(fileContainer, jsxState);
+    useJSXRenderer(fileContainer, tempDeleteBtnate);
 
   function removeTemporaryDeleteBtn() {
     removeFileContainerRoot();
@@ -146,14 +126,6 @@ export default function FileUploaderWThumbnail({
     }
     // fileInput?.files && console.log(fileInput?.files[0]);
   }, [fileContainer]);
-
-  useEffect(() => {
-    fileUploaderRef.current &&
-      fileUploaderRef.current.style.setProperty(
-        '--thumbnail-url',
-        `url(${thumbnailUrl})`
-      );
-  }, [thumbnailUrl]);
 
   return (
     <div className="file-uploader-w-thumbnails" ref={fileUploaderRef}>
