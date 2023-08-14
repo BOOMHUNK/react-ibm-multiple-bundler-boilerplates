@@ -1,0 +1,22 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/type' as *;
+@use '@carbon/react/scss/colors' as *;
+@use '@carbon/react/scss/breakpoint' as *;
+@use '@carbon/react/scss/theme' as *;
+
+.swiper-container {
+  .swiper {
+    position: relative;
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    .swiper-grid {
+      flex-shrink: 0;
+      background-color: $blue-60;
+      color: $white;
+    }
+    .swiper-grid-col {
+      background-color: $gray-60;
+    }
+  }
+}

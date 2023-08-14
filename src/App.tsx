@@ -6,6 +6,7 @@ import {
 } from './components/molecules';
 import { UserProfile } from '@carbon/react/icons';
 import { FileUploaderWThumbnail, FilterableDropDown, MegaTileMenu } from './components/atoms';
+import Swiper from './components/molecules/Swiper/Swiper';
 
 const App = (): JSX.Element => {
   const MakeSampleData = (count: number) => {
@@ -153,7 +154,8 @@ const App = (): JSX.Element => {
 
 
       <br />
-        
+      <Swiper tiles={[{ colSpans: { sm: 4 }, element: (<span>tile element 1</span>) },
+      { colSpans: { sm: 4 }, element: (<span>tile element 2</span>) }]} />
       <br />
 
 

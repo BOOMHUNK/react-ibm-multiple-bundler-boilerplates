@@ -1,13 +1,20 @@
 import { useState, useEffect } from 'react';
 import useDebouncedCallback from './useDebounce';
 
+export type BreakPointsType = {
+  sm: boolean;
+  md: boolean;
+  lg: boolean;
+  xl: boolean;
+};
+
 const BREAKPOINTS = {
   sm: 672,
   md: 1056,
   lg: 1312,
 };
 
-function useBreakpoints(debounceDelay = 0) {
+function useBreakpoints(debounceDelay = 0): BreakPointsType {
   const [isSM, setIsSM] = useState(false);
   const [isMD, setIsMD] = useState(false);
   const [isLG, setIsLG] = useState(false);
@@ -23,10 +30,10 @@ function useBreakpoints(debounceDelay = 0) {
     );
     const mqlXL = window.matchMedia(`(min-width: ${BREAKPOINTS.lg}px)`);
 
-    setIsXL(mqlXL.matches);
-    setIsLG(mqlLG.matches);
-    setIsMD(mqlMD.matches);
-    setIsSM(mqlSM.matches);
+    isXL !== mqlXL.matches && setIsXL(mqlXL.matches);
+    isLG !== mqlLG.matches && setIsLG(mqlLG.matches);
+    isMD !== mqlMD.matches && setIsMD(mqlMD.matches);
+    isSM !== mqlSM.matches && setIsSM(mqlSM.matches);
   }, debounceDelay);
 
   useEffect(() => {
