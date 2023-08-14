@@ -37,9 +37,11 @@ export default function Swiper({
   const [totalSlidesCount, setTotalSlidesCount] = useState<number>(0);
   const swiperContainerRef = useRef<HTMLDivElement | null>(null);
   const { width: containerWidth } = useElementResizeObserver(swiperContainerRef.current, 50);
+  const swiperRef = useRef<HTMLDivElement | null>(null);
+  const { height: swiperHeight } = useElementResizeObserver(swiperContainerRef.current, 50);
 
 
-  const preprocessedTiles = useCallback(() => {
+  const preprocessedTiles = useMemo(() => {
     return tiles.map(tile => {
       if (!tile.colSpans.md)
         tile.colSpans.md = tile.colSpans.sm;
@@ -52,8 +54,8 @@ export default function Swiper({
   }, [tiles])
 
 
-  const processedTiles = useCallback(() => {
-    return preprocessedTiles().map(tile => {
+  const processedTiles = useMemo(() => {
+    return preprocessedTiles.map(tile => {
       const pt: ProcessedTileData = {
         colSpans: tile.colSpans.sm,
         element: tile.element
@@ -70,9 +72,9 @@ export default function Swiper({
   }, [preprocessedTiles, breakpoint])
 
 
-  const gridData = useCallback(() => {
+  const gridData = useMemo(() => {
     let colsCount = 0;
-    const ptiles = processedTiles();
+    const ptiles = processedTiles;
     ptiles.forEach(tile => {
       colsCount += tile.colSpans;
     });
@@ -104,14 +106,14 @@ export default function Swiper({
     }
     // console.log("data: ", grids);
     return grids
-  }, [processedTiles, breakpoint]);
+  }, [processedTiles, breakpoint.sm, breakpoint.md, breakpoint.lg, breakpoint.xl]);
 
 
   const [grids, setGrids] = useState<TileContainerGridData[]>([]);
 
   useEffect(() => {
     // console.log(preprocessedTiles());
-    setGrids(gridData());
+    setGrids(gridData);
 
   }, [breakpoint.sm, breakpoint.md, breakpoint.lg, breakpoint.xl,])
 
@@ -131,7 +133,7 @@ export default function Swiper({
       <Heading> Swiper Component</Heading>
       <br />
       <div className='swiper-container' ref={swiperContainerRef}>
-        <Section className='swiper' style={{ right: `${containerWidth * (currentSlideNum - 0)}px` }}>
+        <div className='swiper' style={{ right: `${containerWidth * (currentSlideNum - 0)}px` }} ref={swiperRef}>
           {
             grids.map((grid, i) => <Grid key={i} fullWidth className='swiper-grid'>
               {/* grid number   {i} */}
@@ -140,10 +142,12 @@ export default function Swiper({
               </Column>)}
             </Grid>)
           }
-        </Section>
+        </div>
       </div>
       <br />
-      <Section className='swiper-buttons-container' >
+      <Section className='swiper-buttons-container'
+        style={{ top: `${swiperHeight}px` }}
+      >
 
         <ChevronLeft className={`${currentSlideNum != 0 ? "chevron-icon" : "chevron-icon-disabled"}`} onClick={handlePrevSlideBtn} />
 

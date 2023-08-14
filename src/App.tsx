@@ -147,15 +147,17 @@ const App = (): JSX.Element => {
 
         titleText="Wines"
         helperText="Combobox helper text"
-      // warn={true}
-      // warnText="adawd"
-
+        warn={true}
+        warnText="adawd"
       />
 
 
       <br />
       <Swiper tiles={[{ colSpans: { sm: 4 }, element: (<span>tile element 1</span>) },
-      { colSpans: { sm: 4 }, element: (<span>tile element 2</span>) }]} />
+      { colSpans: { sm: 4 }, element: (<span>tile element 2</span>) },
+      {
+        colSpans: { sm: 4, md: 8, lg: 16 }, element: (<MegaTileMenu Data={MakeSampleData(15)} sm={1} md={2} lg={6} xl={6} />)
+      }]} />
       <br />
 
 
