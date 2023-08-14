@@ -4,19 +4,54 @@
 @use '@carbon/react/scss/breakpoint' as *;
 @use '@carbon/react/scss/theme' as *;
 
-.swiper-container {
-  .swiper {
-    position: relative;
-    display: flex;
+.swiper-parent-container {
+  // position: relative;
+  overflow: hidden;
+  width: 100%;
+  .swiper-container {
     width: 100%;
-    overflow: hidden;
-    .swiper-grid {
-      flex-shrink: 0;
-      background-color: $blue-60;
-      color: $white;
+    position: relative;
+    padding: 0;
+    margin: 0;
+
+    .swiper {
+      position: absolute;
+      // left: 0px;
+      position: relative;
+      display: flex;
+      width: 100%;
+      transition: all 0.43s;
+      .swiper-grid {
+        flex-shrink: 0;
+        background-color: $blue-60;
+        color: $white;
+      }
+      .swiper-grid-col {
+        background-color: $gray-60;
+      }
     }
-    .swiper-grid-col {
-      background-color: $gray-60;
+  }
+
+  .swiper-buttons-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1px;
+
+    .chevron-icon,
+    .chevron-icon-disabled {
+      width: 34px;
+      height: 34px;
+      padding: 9px;
+      background-color: $gray-10;
+      cursor: pointer;
+    }
+    .chevron-icon {
+      color: $blue-60;
+    }
+    .chevron-icon-disabled {
+      color: $gray-50;
     }
   }
 }

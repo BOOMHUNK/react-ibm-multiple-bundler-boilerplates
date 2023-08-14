@@ -1,10 +1,12 @@
-import { ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
+import { ReactElement, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Column, Grid, Heading, Stack, } from '@carbon/react';
+import { ChevronLeft, ChevronRight } from '@carbon/react/icons';
 
 import './_swiper.scss';
 import useBreakpoints from '../../../hooks/useBreakpoints';
 import { breakpointsToColumns } from '../../../utils/BreakpointMaxColumnsCalculator';
 import { Section } from '@carbon/react';
+import useElementResizeObserver from '../../../hooks/useElementResizeObserver';
 
 type TileData = {
   colSpans: {
@@ -31,7 +33,10 @@ export default function Swiper({
   tiles
 }: Props): ReactElement {
   const breakpoint = useBreakpoints(50);
-
+  const [currentSlideNum, setCurrentSlideNum] = useState<number>(0);
+  const [totalSlidesCount, setTotalSlidesCount] = useState<number>(0);
+  const swiperContainerRef = useRef<HTMLDivElement | null>(null);
+  const { width: containerWidth } = useElementResizeObserver(swiperContainerRef.current, 50);
 
 
   const preprocessedTiles = useCallback(() => {
@@ -72,7 +77,12 @@ export default function Swiper({
       colsCount += tile.colSpans;
     });
     const gridsCount = Math.ceil(colsCount / breakpointsToColumns(breakpoint));
-    console.log("g count: ", gridsCount);
+    if (totalSlidesCount != gridsCount) {
+      setTotalSlidesCount(gridsCount);
+      setCurrentSlideNum(0);
+    }
+
+    // console.log("g count: ", gridsCount);
 
 
     const grids = [];
@@ -82,7 +92,7 @@ export default function Swiper({
       let currentSpanNumber = 0;
       for (let j = lastAddedTile + 1; j < ptiles.length; j++) {
         const tile = ptiles[j];
-        console.log("tile: ", tile);
+        // console.log("tile: ", tile);
 
         currentSpanNumber += tile.colSpans;
         if (breakpointsToColumns(breakpoint) >= currentSpanNumber) {
@@ -92,7 +102,7 @@ export default function Swiper({
       }
       grids.push(gridData);
     }
-    console.log("data: ", grids);
+    // console.log("data: ", grids);
     return grids
   }, [processedTiles, breakpoint]);
 
@@ -106,25 +116,39 @@ export default function Swiper({
   }, [breakpoint.sm, breakpoint.md, breakpoint.lg, breakpoint.xl,])
 
 
-
-
-
-
+  function handlePrevSlideBtn() {
+    // console.log("clicked prev");
+    setCurrentSlideNum(p => p > 0 ? p - 1 : 0);
+  }
+  function handleNextSlideBtn() {
+    // console.log("clicked next");
+    setCurrentSlideNum(p => p < totalSlidesCount - 1 ? p + 1 : p);
+  }
 
   return (
-    <Stack className="swiper-container">
+    <Stack className="swiper-parent-container">
       <br />
       <Heading> Swiper Component</Heading>
       <br />
-      <Section className='swiper'>
-        {
-          grids.map((grid, i) => <Grid key={i} fullWidth className='swiper-grid'>
-            {/* grid number   {i} */}
-            {grid.map((tile, j) => <Column key={j} sm={tile.colSpans} className='swiper-grid-col'>
-              {tile.element}
-            </Column>)}
-          </Grid>)
-        }
+      <div className='swiper-container' ref={swiperContainerRef}>
+        <Section className='swiper' style={{ right: `${containerWidth * (currentSlideNum - 0)}px` }}>
+          {
+            grids.map((grid, i) => <Grid key={i} fullWidth className='swiper-grid'>
+              {/* grid number   {i} */}
+              {grid.map((tile, j) => <Column key={j} sm={tile.colSpans} md={tile.colSpans} lg={tile.colSpans} xlg={tile.colSpans} className='swiper-grid-col'>
+                {tile.element}
+              </Column>)}
+            </Grid>)
+          }
+        </Section>
+      </div>
+      <br />
+      <Section className='swiper-buttons-container' >
+
+        <ChevronLeft className={`${currentSlideNum != 0 ? "chevron-icon" : "chevron-icon-disabled"}`} onClick={handlePrevSlideBtn} />
+
+        <ChevronRight className={`${currentSlideNum != totalSlidesCount - 1 ? "chevron-icon" : "chevron-icon-disabled"}`} onClick={handleNextSlideBtn} />
+
       </Section>
     </Stack >
   );
