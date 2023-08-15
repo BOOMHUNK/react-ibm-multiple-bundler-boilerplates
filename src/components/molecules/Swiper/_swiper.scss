@@ -9,7 +9,14 @@
   overflow: hidden;
   width: 100%;
   .heading {
-    margin-bottom: 1.5625rem;
+    margin-bottom: 0.25rem;
+    color: $gray-100;
+    @include type-style('heading-06');
+  }
+  .desc {
+    margin-bottom: $spacing-05 * 2;
+    color: $gray-70;
+    @include type-style('body-compact-02');
   }
   .swiper-container {
     width: 100%;

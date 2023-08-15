@@ -39,6 +39,9 @@
     justify-content: space-between;
     align-items: flex-end;
     @include type-style('legal-01');
+    * {
+      width: 100%;
+    }
   }
 
   .desc-col {
@@ -74,6 +77,8 @@
   .button {
     width: 100%;
     max-width: 100%;
+    white-space: nowrap;
+    // padding-right: 24px;
     @include breakpoint('lg') {
       max-width: 16rem;
     }

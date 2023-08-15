@@ -155,7 +155,7 @@ const App = (): JSX.Element => {
       <br />
       <br />
       <br />
-      <Swiper heading='Swiper Example' tiles={[{
+      <Swiper heading='Bundles' desc='In publishing and graphic design, Lorem ipsum is a In publishing and graphic design, Lorem ipsum is a publishing and graphic design' tiles={[{
         colSpans: { sm: 4, md: 5, lg: 10 }, element: (<DarkInvertedSection
           Title="First Component Title"
           Desc="This is a component in the swiper while spanning columns with settings: sm: 4, md: 5, lg: 10"
