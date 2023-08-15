@@ -8,6 +8,9 @@
   position: relative;
   overflow: hidden;
   width: 100%;
+  .heading {
+    margin-bottom: 1.5625rem;
+  }
   .swiper-container {
     width: 100%;
     position: relative;
@@ -25,18 +28,17 @@
       .swiper-grid {
         flex: 0 0 auto;
         height: min-content;
-        background-color: $blue-60;
+        // background-color: $blue-60;
         color: $white;
       }
       .swiper-grid-col {
-        background-color: $gray-60;
+        // background-color: $gray-60;
       }
     }
   }
 
   .swiper-buttons-container {
-    position: absolute;
-
+    margin-top: 1.5625rem;
     width: 100%;
     display: flex;
     justify-content: flex-end;

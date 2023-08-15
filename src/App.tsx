@@ -153,10 +153,31 @@ const App = (): JSX.Element => {
 
 
       <br />
-      <Swiper tiles={[{ colSpans: { sm: 4 }, element: (<span>tile element 1</span>) },
-      { colSpans: { sm: 4 }, element: (<span>tile element 2</span>) },
+      <br />
+      <br />
+      <Swiper heading='Swiper Example' tiles={[{
+        colSpans: { sm: 4, md: 5, lg: 10 }, element: (<DarkInvertedSection
+          Title="First Component Title"
+          Desc="This is a component in the swiper while spanning columns with settings: sm: 4, md: 5, lg: 10"
+          ButtonTitle="Try it"
+          ButtonAction={() => console.log('Clicked!')}
+        />)
+      },
       {
-        colSpans: { sm: 4, md: 8, lg: 16 }, element: (<MegaTileMenu Data={MakeSampleData(15)} sm={1} md={2} lg={6} xl={6} />)
+        colSpans: { sm: 4, md: 3, lg: 6 }, element: (<DarkInvertedSection
+          Title="Second Component"
+          Desc="A component in the swiper spanning with settings: sm: 4, md: 3, lg: 6"
+          ButtonTitle="Try"
+          ButtonAction={() => console.log('Clicked!')}
+        />)
+      },
+      {
+        colSpans: { sm: 4, md: 8, lg: 16 }, element: (<DarkInvertedSection
+          Title="You Can use Carbon Grid Column sizing in this Swiper!"
+          Desc="This is a completely individual component in the swiper while spanning columns with settings: sm: 4, md: 8, lg: 16"
+          ButtonTitle="Try it now"
+          ButtonAction={() => console.log('Clicked!')}
+        />)
       }]} />
       <br />
 

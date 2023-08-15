@@ -26,10 +26,12 @@ type ProcessedTileData = {
 type TileContainerGridData = ProcessedTileData[];
 
 interface Props {
+  heading: string;
   tiles: TileData[];
 }
 
 export default function Swiper({
+  heading,
   tiles
 }: Props): ReactElement {
   const breakpoint = useBreakpoints(50);
@@ -129,9 +131,7 @@ export default function Swiper({
 
   return (
     <Stack className="swiper-parent-container">
-      <br />
-      <Heading> Swiper Component</Heading>
-      <br />
+      {heading && <Heading className="heading">{heading}</Heading>}
       <div className='swiper-container' ref={swiperContainerRef}>
         <div className='swiper' style={{ right: `${containerWidth * (currentSlideNum - 0)}px` }} ref={swiperRef}>
           {
@@ -144,9 +144,8 @@ export default function Swiper({
           }
         </div>
       </div>
-      <br />
       <Section className='swiper-buttons-container'
-        style={{ top: `${swiperHeight}px` }}
+      // style={{ top: `${swiperHeight}px` }}
       >
 
         <ChevronLeft className={`${currentSlideNum != 0 ? "chevron-icon" : "chevron-icon-disabled"}`} onClick={handlePrevSlideBtn} />
