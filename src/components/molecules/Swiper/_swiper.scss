@@ -24,6 +24,10 @@
     padding: 0;
     margin: 0;
 
+    * {
+      pointer-events: all;
+    }
+
     .swiper {
       position: absolute;
       // left: 0px;
@@ -31,7 +35,8 @@
       display: flex;
       flex-wrap: nowrap;
       width: 100%;
-      transition: all 0.43s;
+      pointer-events: all;
+      // transition: all 0.43s;
       .swiper-grid {
         flex: 0 0 auto;
         height: min-content;

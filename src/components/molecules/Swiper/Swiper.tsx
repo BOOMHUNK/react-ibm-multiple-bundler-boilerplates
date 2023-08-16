@@ -7,6 +7,7 @@ import useBreakpoints from '../../../hooks/useBreakpoints';
 import { breakpointsToColumns } from '../../../utils/BreakpointMaxColumnsCalculator';
 import { Section } from '@carbon/react';
 import useElementResizeObserver from '../../../hooks/useElementResizeObserver';
+import useDragAndDrop from '../../../hooks/useDnD';
 
 type TileData = {
   colSpans: {
@@ -131,12 +132,26 @@ export default function Swiper({
     setCurrentSlideNum(p => p < totalSlidesCount - 1 ? p + 1 : p);
   }
 
+  const { dragActive, dragPosition, handleDragStart, handleDragOver } = useDragAndDrop({
+    onDragOver: (e) => {
+      console.log(dragPosition);
+    }
+  })
+
   return (
     <Stack className="swiper-parent-container">
       {heading && <Heading className="heading">{heading}</Heading>}
       {desc && <p className="desc">{desc}</p>}
-      <div className='swiper-container' ref={swiperContainerRef}>
-        <div className='swiper' style={{ right: `${containerWidth * (currentSlideNum - 0)}px` }} ref={swiperRef}>
+      <div className='swiper-container' ref={swiperContainerRef}
+        onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
+      >
+        <div
+          className='swiper'
+          style={{ right: `${(containerWidth * (currentSlideNum - 0)) + (dragActive ? dragPosition.x : 0)}px` }}
+          ref={swiperRef}
+
+        >
           {
             grids.map((grid, i) => <Grid key={i} fullWidth className='swiper-grid'>
               {/* grid number   {i} */}
